@@ -10,6 +10,11 @@
 
     <!--Description-->
     
+        <meta name="description" content="异常当使用utf-8编码向mysql插入数据时报错。
+产生原因使用MySQLWorkbench创建schema时没有选择collation字符集，则会使用默认的字符集（非utf-8）。
+解决方式(修改某张表的collation)mysql -uroot -p输入密码登录
+alter table ${">
+    
 
     <!--Author-->
     
@@ -18,7 +23,7 @@
 
     <!--Open Graph Title-->
     
-        <meta property="og:title" content="马面"/>
+        <meta property="og:title" content="mysql修改字符集"/>
     
 
     <!--Open Graph Description-->
@@ -29,7 +34,7 @@
 
     <!--Type page-->
     
-        <meta property="og:type" content="website" />
+        <meta property="og:type" content="article" />
     
 
     <!--Page Cover-->
@@ -40,7 +45,7 @@
 
     <!-- Title -->
     
-    <title>Archiv - 马面</title>
+    <title>mysql修改字符集 - 马面</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
@@ -123,76 +128,61 @@
 </nav>
 
     <!-- Main Content -->
-    
+    <!-- Page Header -->
+<!-- Set your background image for this header in your post front-matter: cover -->
 
-<!-- Page Header -->
-<!-- Set your background image for this header in the theme's configuration: index_cover -->
 <header class="intro-header" style="background-image: url('http://www.codeblocq.com/assets/projects/hexo-theme-clean-blog/img/home-bg.jpg')">
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <div class="site-heading">
-                    <h1>Archiv</h1>
+                <div class="post-heading">
+                    <h1>mysql修改字符集</h1>
+                    
+                    <span class="meta">
+                        <!-- Date and Author -->
+                        
+                        2016-07-18
+                    </span>
                 </div>
             </div>
         </div>
     </div>
 </header>
 
-<!-- Main Content -->
-<div class="container">
-    <div class="row">
-        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Tags and categories -->
+           
+
+            <!-- Gallery -->
             
-                <div class="post-preview">
-    <a href="/2016/07/18/mysql修改字符集/">
-        <h1 class="post-title archive">
-            mysql修改字符集
-        </h1>
-    </a>
-    <p class="post-meta archive">
-        <!-- Date and Author -->
-        
-        2016-07-18
-    </p>
-</div>
+
+            <!-- Post Main Content -->
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <h5 id="异常"><a href="#异常" class="headerlink" title="异常"></a>异常</h5><pre><code>当使用utf-8编码向mysql插入数据时报错。
+</code></pre><h5 id="产生原因"><a href="#产生原因" class="headerlink" title="产生原因"></a>产生原因</h5><pre><code>使用MySQLWorkbench创建schema时没有选择collation字符集，则会使用默认的字符集（非utf-8）。
+</code></pre><h5 id="解决方式-修改某张表的collation"><a href="#解决方式-修改某张表的collation" class="headerlink" title="解决方式(修改某张表的collation)"></a>解决方式(修改某张表的collation)</h5><pre><code>mysql -uroot -p输入密码登录
+alter table ${schemaName}.${tableName} convert to character set utf8 collate utf8_general_ci;
+</code></pre><h5 id="创建表"><a href="#创建表" class="headerlink" title="创建表"></a>创建表</h5><pre><code>创建schema时要选择utf8_general_ci作为collation。
+</code></pre>
+
+                
+            </div>
+
+            <!-- Comments -->
             
-                <div class="post-preview">
-    <a href="/2016/07/17/hexo安装/">
-        <h1 class="post-title archive">
-            hexo安装
-        </h1>
-    </a>
-    <p class="post-meta archive">
-        <!-- Date and Author -->
-        
-        2016-07-17
-    </p>
-</div>
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    
+
+
+                </div>
             
-                <div class="post-preview">
-    <a href="/2016/07/07/github-mamian/">
-        <h1 class="post-title archive">
-            My open source projects on github
-        </h1>
-    </a>
-    <p class="post-meta archive">
-        <!-- Date and Author -->
-        
-        2016-07-07
-    </p>
-</div>
-            
-            <div class="archive-before-pagination"></div>
-            <ul class="pager">
-    
-    
-</ul>
         </div>
     </div>
-</div>
-
-
+</article>
 
     <!-- Footer -->
     <hr />
