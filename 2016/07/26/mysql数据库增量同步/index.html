@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--Description-->
+    
+        <meta name="description" content="同步方法
+将如下脚本写入sync.sh文本文件中
+需提前配置好源数据库与目标数据库的地址、用户名、密码、shema信息，及shema中的哪些table需同步
+需提前在目标数据中建好相关的表，且表结构与源数据库相同
+配置增量数据的本地下载地址
+配置好增量更新的sql where条件子句，如”creat">
+    
+
+    <!--Author-->
+    
+        <meta name="author" content="mamian">
+    
+
+    <!--Open Graph Title-->
+    
+        <meta property="og:title" content="mysql数据库增量同步"/>
+    
+
+    <!--Open Graph Description-->
+    
+
+    <!--Open Graph Site Name-->
+    <meta property="og:site_name" content="马面"/>
+
+    <!--Type page-->
+    
+        <meta property="og:type" content="article" />
+    
+
+    <!--Page Cover-->
+    
+
+        <meta name="twitter:card" content="summary" />
+    
+
+    <!-- Title -->
+    
+    <title>mysql数据库增量同步 - 马面</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/style.css">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Gallery -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.css" type="text/css" rel="stylesheet" />
+
+    <!-- Google Analytics -->
+    
+
+
+</head>
+
+
+<body>
+
+    <!-- Menu -->
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Configurable Title</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                
+                    <li>
+                        <a href="/">
+                            
+                                Home
+                            
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/archives">
+                            
+                                Archives
+                            
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="https://github.com/mamian">
+                            
+                                <i class="fa fa-github fa-stack-2x"></i>
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+    <!-- Main Content -->
+    <!-- Page Header -->
+<!-- Set your background image for this header in your post front-matter: cover -->
+
+<header class="intro-header" style="background-image: url('http://www.codeblocq.com/assets/projects/hexo-theme-clean-blog/img/home-bg.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <h1>mysql数据库增量同步</h1>
+                    
+                    <span class="meta">
+                        <!-- Date and Author -->
+                        
+                        2016-07-26
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Tags and categories -->
+           
+
+            <!-- Gallery -->
+            
+
+            <!-- Post Main Content -->
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <h3 id="同步方法"><a href="#同步方法" class="headerlink" title="同步方法"></a>同步方法</h3><ul>
+<li>将如下脚本写入sync.sh文本文件中</li>
+<li>需提前配置好源数据库与目标数据库的地址、用户名、密码、shema信息，及shema中的哪些table需同步</li>
+<li>需提前在目标数据中建好相关的表，且表结构与源数据库相同</li>
+<li>配置增量数据的本地下载地址</li>
+<li>配置好增量更新的sql where条件子句，如”createDate &gt;= ‘2016-07-01’”</li>
+<li>从操作系统级别启动定时任务执行sync.sh</li>
+</ul>
+<h3 id="配置信息"><a href="#配置信息" class="headerlink" title="配置信息"></a>配置信息</h3><pre><code>#!/bin/sh
+# 远程数据库服务器信息（从此数据库下载数据）
+remoteMysqlServer=&quot;远程数据库ip&quot;
+remoteMysqlUser=&quot;远程数据库用户名&quot;
+remoteMysqlPassword=&quot;远程数据库密码&quot;
+remoteMysqlDB=&quot;远程数据库表shema&quot;
+# 本地数据库服务器信息（将数据导入到此数据库）
+localMysqlServer=&quot;本地数据库ip&quot;
+localMysqlUser=&quot;本地数据库用户名&quot;
+localMysqlPassword=&quot;本地数据库密码&quot;
+localMysqlDB=&quot;本地数据库schema&quot;
+# 数据下载目录
+dataDownloadPath=&quot;/usr/local/data/download/&quot;
+
+# 处理哪些数据库表（注意，需提前在localMysql中建好相关的表，且表结构与remoteMysql相同）
+array_name=(
+    table1 table2 table3 table4 table5
+)
+</code></pre><h3 id="根据不同操作系统计算日期"><a href="#根据不同操作系统计算日期" class="headerlink" title="根据不同操作系统计算日期"></a>根据不同操作系统计算日期</h3><pre><code>today=$(date +%Y%m%d)
+
+case &quot;$OSTYPE&quot; in
+  linux*)
+    echo &quot;LINUX&quot;
+    deleteDay=$(date -d &quot;-7 day&quot; +%Y%m%d)
+    ;;
+  darwin*)
+    echo &quot;OSX&quot;
+    deleteDay=$(date -v -7d +%Y%m%d)
+    ;;
+  win*)
+    echo &quot;Windows&quot;
+    ;;
+  cygwin*)
+    echo &quot;Cygwin&quot;
+    ;;
+  bsd*)
+    echo &quot;BSD&quot;
+    ;;
+  solaris*)
+    echo &quot;SOLARIS&quot;
+    ;;
+  *)
+    echo &quot;unknown: $OSTYPE&quot;
+    ;;
+esac
+</code></pre><h3 id="下载远程数据到本地"><a href="#下载远程数据到本地" class="headerlink" title="下载远程数据到本地"></a>下载远程数据到本地</h3><pre><code># 这里的-d 参数判断$today是否存在
+if [ ! -d &quot;${dataDownloadPath}/${today}&quot; ]; then
+  mkdir ${dataDownloadPath}/${today}
+fi
+echo &quot;下载远程数据库到本地文件${dataDownloadPath}/${today}-----------------&quot;
+
+
+for i in ${array_name[@]}
+    do
+        echo &quot;        &quot;正在下载远程数据库表 ${i} 的数据
+        mysqldump -t -h ${remoteMysqlServer} -u${remoteMysqlUser} -p${remoteMysqlPassword} ${remoteMysqlDB} ${i} --where=&quot;createDate &gt;= &apos;2016-07-01&apos;&quot;&gt;${dataDownloadPath}/${today}/${i}_${today}.sql
+        echo &quot;        &quot;远程数据库表 ${i} 的增量数据下载成功
+    done
+echo &quot;-----------------------------------------------------------------&quot;
+</code></pre><h3 id="将文件中的数据导入到本地数据库"><a href="#将文件中的数据导入到本地数据库" class="headerlink" title="将文件中的数据导入到本地数据库"></a>将文件中的数据导入到本地数据库</h3><pre><code>echo &quot;从${dataDownloadPath}中提取数据，导入本地数据库中----------------------&quot;
+for i in ${array_name[@]}
+    do
+        echo &quot;        &quot;即将从本地 ${dataDownloadPath}/${today}/${i}_${today}.sql 提取数据并导入到 ${i} 的数据库表
+        mysql  -h ${localMysqlServer} -P3306 -u${localMysqlUser} -p${localMysqlPassword} ${localMysqlDB} -e &quot;source ${dataDownloadPath}/${today}/${i}_${today}.sql&quot;
+        echo &quot;        &quot;成功导入数据到数据库表 ${i}
+        echo 
+        echo 
+    done
+echo &quot;-----------------------------------------------------------------&quot;
+echo 
+</code></pre><h3 id="删除1周前的本地旧数据"><a href="#删除1周前的本地旧数据" class="headerlink" title="删除1周前的本地旧数据"></a>删除1周前的本地旧数据</h3><pre><code>if [ -z &quot;${deleteDay}&quot; ]; then 
+    echo &quot;deleteDay is empty----------------------------------------------&quot;
+    exit
+fi
+
+if [ -d &quot;${deleteDay}&quot; ]; then
+    echo &quot;${deleteDay}文件夹即将删除-----------------------------------------&quot;
+    rm -rf ${dataDownloadPath}/${deleteDay}/
+    echo &quot;${deleteDay}文件夹删除成功-----------------------------------------&quot;
+fi
+
+exit
+</code></pre>
+
+                
+            </div>
+
+            <!-- Comments -->
+            
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    
+
+
+                </div>
+            
+        </div>
+    </div>
+</article>
+
+    <!-- Footer -->
+    <hr />
+
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+
+                    
+
+                    
+                        <li>
+                            <a href="https://github.com/mamian" target="_blank">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                    
+
+                    
+
+                    
+
+                    
+                </ul>
+                <p class="copyright text-muted">© 2016  <a href="http://www.mamian.net/" target="_blank">mamian</a>  All Rights Reserved</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+    <!-- After footer scripts -->
+    
+<!-- jQuery -->
+<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+
+<!-- Bootstrap -->
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+<!-- Gallery -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.js" type="text/javascript" charset="utf-8"></script>
+
+<!-- Disqus Comments -->
+
+
+
+</body>
+
+</html>
