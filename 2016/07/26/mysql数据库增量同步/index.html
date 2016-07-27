@@ -186,6 +186,9 @@ localMysqlDB=&quot;本地数据库schema&quot;
 # 数据下载目录
 dataDownloadPath=&quot;/usr/local/data/download/&quot;
 
+# 从哪天开始更新数据，若为空，则从今日开始
+dataStartDate=&quot;2016-07-01&quot;
+
 # 处理哪些数据库表（注意，需提前在localMysql中建好相关的表，且表结构与remoteMysql相同）
 array_name=(
     table1 table2 table3 table4 table5
@@ -217,9 +220,14 @@ case &quot;$OSTYPE&quot; in
     echo &quot;unknown: $OSTYPE&quot;
     ;;
 esac
-</code></pre><h3 id="下载远程数据到本地"><a href="#下载远程数据到本地" class="headerlink" title="下载远程数据到本地"></a>下载远程数据到本地</h3><pre><code># 这里的-d 参数判断$today是否存在
+
+
+if [ -z &quot;${dataStartDate}&quot; ]; then 
+    dataStartDate=${today}
+fi
+</code></pre><h3 id="下载远程数据到本地"><a href="#下载远程数据到本地" class="headerlink" title="下载远程数据到本地"></a>下载远程数据到本地</h3><pre><code># 判断${dataDownloadPath}/$today目录是否存在
 if [ ! -d &quot;${dataDownloadPath}/${today}&quot; ]; then
-  mkdir ${dataDownloadPath}/${today}
+  mkdir -p ${dataDownloadPath}/${today}
 fi
 echo &quot;下载远程数据库到本地文件${dataDownloadPath}/${today}-----------------&quot;
 
@@ -227,7 +235,7 @@ echo &quot;下载远程数据库到本地文件${dataDownloadPath}/${today}-----
 for i in ${array_name[@]}
     do
         echo &quot;        &quot;正在下载远程数据库表 ${i} 的数据
-        mysqldump -t -h ${remoteMysqlServer} -u${remoteMysqlUser} -p${remoteMysqlPassword} ${remoteMysqlDB} ${i} --where=&quot;createDate &gt;= &apos;2016-07-01&apos;&quot;&gt;${dataDownloadPath}/${today}/${i}_${today}.sql
+        mysqldump -t -h ${remoteMysqlServer} -u${remoteMysqlUser} -p${remoteMysqlPassword} ${remoteMysqlDB} ${i} --where=&quot;createDate &gt;= &apos;${dataStartDate}&apos;&quot;&gt;${dataDownloadPath}/${today}/${i}_${today}.sql
         echo &quot;        &quot;远程数据库表 ${i} 的增量数据下载成功
     done
 echo &quot;-----------------------------------------------------------------&quot;
