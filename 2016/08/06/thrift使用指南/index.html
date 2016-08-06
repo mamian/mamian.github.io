@@ -160,7 +160,8 @@
             <!-- Post Main Content -->
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                 <pre><code>多个系统间存在相互调用，同步调用可用的方式有tcp层的dubbo、thrift，http层的rest、grpc，使用zookeeper进行服务的注册与发布管理。异步调用可使用消息队列。通过tcp层通信的dubbo、thrift比普通的rest通信耗时快2-3个数量级，所以系统间调用尽量使用dubbo或thrift通信。
-</code></pre><h3 id="安装thrift"><a href="#安装thrift" class="headerlink" title="安装thrift"></a>安装thrift</h3><pre><code>在apache官网下载的thrift为源码，需编译才可用，mac环境下编译thrift还需要添加boost和libevent依赖（中间会因为缺少openssl而编译失败）。安装较复杂，可使用brew安装的方式。
+</code></pre><hr>
+<h3 id="安装thrift"><a href="#安装thrift" class="headerlink" title="安装thrift"></a>安装thrift</h3><pre><code>在apache官网下载的thrift为源码，需编译才可用，mac环境下编译thrift还需要添加boost和libevent依赖（中间会因为缺少openssl而编译失败）。安装较复杂，可使用brew安装的方式。
 </code></pre><ul>
 <li><p>安装命令如下</p>
 <ul>
@@ -169,6 +170,7 @@
 </ul>
 </li>
 </ul>
+<hr>
 <h3 id="编写thrift接口"><a href="#编写thrift接口" class="headerlink" title="编写thrift接口"></a>编写thrift接口</h3><ul>
 <li><p>下面编写一个HelloWorld.thrift 来测试一下,内容如下：</p>
 <pre><code>namespace java net.mamian.thriftTest.service
@@ -183,6 +185,7 @@ service HelloWorldService {
 </ul>
 </li>
 </ul>
+<hr>
 <h3 id="编写服务端"><a href="#编写服务端" class="headerlink" title="编写服务端"></a>编写服务端</h3><h5 id="pom添加如下maven依赖"><a href="#pom添加如下maven依赖" class="headerlink" title="pom添加如下maven依赖"></a>pom添加如下maven依赖</h5><pre><code>&lt;dependency&gt;
     &lt;groupId&gt;org.apache.thrift&lt;/groupId&gt;
     &lt;artifactId&gt;libthrift&lt;/artifactId&gt;
@@ -313,7 +316,8 @@ public class ZooKeeperConfig {
 </code></pre><h5 id="在application-properties中增加thrift、zookeeper配置信息如下"><a href="#在application-properties中增加thrift、zookeeper配置信息如下" class="headerlink" title="在application.properties中增加thrift、zookeeper配置信息如下"></a>在application.properties中增加thrift、zookeeper配置信息如下</h5><pre><code>#service name
 service.name=cloud-thrift-service
 zookeeper.server.list=127.0.0.1\:2181
-</code></pre><h3 id="编写客户端"><a href="#编写客户端" class="headerlink" title="编写客户端"></a>编写客户端</h3><h5 id="pom添加如下maven依赖（与服务端一样）"><a href="#pom添加如下maven依赖（与服务端一样）" class="headerlink" title="pom添加如下maven依赖（与服务端一样）"></a>pom添加如下maven依赖（与服务端一样）</h5><pre><code>&lt;dependency&gt;
+</code></pre><hr>
+<h3 id="编写客户端"><a href="#编写客户端" class="headerlink" title="编写客户端"></a>编写客户端</h3><h5 id="pom添加如下maven依赖（与服务端一样）"><a href="#pom添加如下maven依赖（与服务端一样）" class="headerlink" title="pom添加如下maven依赖（与服务端一样）"></a>pom添加如下maven依赖（与服务端一样）</h5><pre><code>&lt;dependency&gt;
     &lt;groupId&gt;org.apache.thrift&lt;/groupId&gt;
     &lt;artifactId&gt;libthrift&lt;/artifactId&gt;
     &lt;version&gt;0.9.2&lt;/version&gt;
@@ -359,7 +363,8 @@ String result= svr.sayHello(&quot;aldsfjpqoij43efonawoie4r&quot;);
 <h5 id="在application-properties中增加thrift、zookeeper配置信息如下-1"><a href="#在application-properties中增加thrift、zookeeper配置信息如下-1" class="headerlink" title="在application.properties中增加thrift、zookeeper配置信息如下"></a>在application.properties中增加thrift、zookeeper配置信息如下</h5><pre><code>#service name
 service.name=cloud-thrift-service
 zookeeper.server.list=127.0.0.1\:2181
-</code></pre><h3 id="测试rpc通信"><a href="#测试rpc通信" class="headerlink" title="测试rpc通信"></a>测试rpc通信</h3><ul>
+</code></pre><hr>
+<h3 id="测试rpc通信"><a href="#测试rpc通信" class="headerlink" title="测试rpc通信"></a>测试rpc通信</h3><ul>
 <li>启动zookeeper<ul>
 <li>下载zookeeper并修改conf/zoo_sample.cfg为zoo.cfg(可个性化自己的配置)</li>
 <li>sudo bin/zkServer.sh start</li>
