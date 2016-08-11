@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--Description-->
+    
+        <meta name="description" content="注册账号并验证邮箱设置全局git变量
+git config –global user.name &amp;quot;${userName}&amp;quot;
+git config –global user.email ${userEmail}
+git config –global color.status aut">
+    
+
+    <!--Author-->
+    
+        <meta name="author" content="mamian">
+    
+
+    <!--Open Graph Title-->
+    
+        <meta property="og:title" content="git使用指南"/>
+    
+
+    <!--Open Graph Description-->
+    
+
+    <!--Open Graph Site Name-->
+    <meta property="og:site_name" content="马面"/>
+
+    <!--Type page-->
+    
+        <meta property="og:type" content="article" />
+    
+
+    <!--Page Cover-->
+    
+
+        <meta name="twitter:card" content="summary" />
+    
+
+    <!-- Title -->
+    
+    <title>git使用指南 - 马面</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/style.css">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Gallery -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.css" type="text/css" rel="stylesheet" />
+
+    <!-- Google Analytics -->
+    
+
+
+</head>
+
+
+<body>
+
+    <!-- Menu -->
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Configurable Title</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                
+                    <li>
+                        <a href="/">
+                            
+                                Home
+                            
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/archives">
+                            
+                                Archives
+                            
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="https://github.com/mamian">
+                            
+                                <i class="fa fa-github fa-stack-2x"></i>
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+    <!-- Main Content -->
+    <!-- Page Header -->
+<!-- Set your background image for this header in your post front-matter: cover -->
+
+<header class="intro-header" style="background-image: url('http://www.codeblocq.com/assets/projects/hexo-theme-clean-blog/img/home-bg.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <h1>git使用指南</h1>
+                    
+                    <span class="meta">
+                        <!-- Date and Author -->
+                        
+                        2016-08-12
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Tags and categories -->
+           
+
+            <!-- Gallery -->
+            
+
+            <!-- Post Main Content -->
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <h5 id="注册账号并验证邮箱"><a href="#注册账号并验证邮箱" class="headerlink" title="注册账号并验证邮箱"></a><a href="https://github.com/" target="_blank" rel="external">注册账号并验证邮箱</a></h5><h5 id="设置全局git变量"><a href="#设置全局git变量" class="headerlink" title="设置全局git变量"></a>设置全局git变量</h5><ul>
+<li><strong><em>git config –global user.name <code>&quot;${userName}&quot;</code></em></strong></li>
+<li><strong><em>git config –global user.email <code>${userEmail}</code></em></strong></li>
+<li><strong><em>git config –global color.status auto</em></strong></li>
+<li><strong><em>git config –global color.branch auto</em></strong></li>
+</ul>
+<h5 id="查询全局变量"><a href="#查询全局变量" class="headerlink" title="查询全局变量"></a>查询全局变量</h5><ul>
+<li><strong><em>git config –list</em></strong></li>
+</ul>
+<h5 id="密钥管理"><a href="#密钥管理" class="headerlink" title="密钥管理"></a>密钥管理</h5><ul>
+<li>获取本机公钥： <strong><em>cat ~/.ssh/id_rsa.pub</em></strong></li>
+<li>将本机公钥上传至个人github账户</li>
+</ul>
+<hr>
+<h3 id="个人项目"><a href="#个人项目" class="headerlink" title="个人项目"></a><center>个人项目</center></h3><h5 id="创建远程仓库"><a href="#创建远程仓库" class="headerlink" title="创建远程仓库"></a>创建远程仓库</h5><ul>
+<li>github.com/<code>${userName}</code>新建repository，名称为<code>${repositoryName}</code></li>
+</ul>
+<h5 id="初始化本地仓库"><a href="#初始化本地仓库" class="headerlink" title="初始化本地仓库"></a>初始化本地仓库</h5><ul>
+<li>进入本地代码目录 <strong><em>cd ${Localpath}/<code>${repositoryName}</code></em></strong></li>
+<li>git初始化 <strong><em>git init</em></strong></li>
+</ul>
+<h5 id="安装图形化工具github桌面版"><a href="#安装图形化工具github桌面版" class="headerlink" title="安装图形化工具github桌面版"></a>安装图形化工具github桌面版</h5><ul>
+<li>在图形工具中直接 commit 所有文件</li>
+</ul>
+<h5 id="添加远程仓库链接"><a href="#添加远程仓库链接" class="headerlink" title="添加远程仓库链接"></a>添加远程仓库链接</h5><ul>
+<li><strong><em>git remote add origin <a href="https://github.com/`${userName}`/`${repositoryName}`.git" target="_blank" rel="external">https://github.com/`${userName}`/`${repositoryName}`.git</a></em></strong></li>
+</ul>
+<h5 id="提交本地代码至远程仓库"><a href="#提交本地代码至远程仓库" class="headerlink" title="提交本地代码至远程仓库"></a>提交本地代码至远程仓库</h5><ul>
+<li><strong><em>git push -u origin master</em></strong></li>
+</ul>
+<h5 id="更新远程代码至本地"><a href="#更新远程代码至本地" class="headerlink" title="更新远程代码至本地"></a>更新远程代码至本地</h5><ul>
+<li><strong><em>git fetch origin</em></strong></li>
+</ul>
+<h5 id="合并代码"><a href="#合并代码" class="headerlink" title="合并代码"></a>合并代码</h5><ul>
+<li><strong><em>git merge origin/master</em></strong></li>
+</ul>
+<h5 id="提交本地代码至个人远程仓库"><a href="#提交本地代码至个人远程仓库" class="headerlink" title="提交本地代码至个人远程仓库"></a>提交本地代码至个人远程仓库</h5><ul>
+<li><strong><em>git push origin master</em></strong></li>
+</ul>
+<hr>
+<h3 id="他人项目"><a href="#他人项目" class="headerlink" title="他人项目"></a><center>他人项目</center></h3><h5 id="将他人项目folk至个人github名下"><a href="#将他人项目folk至个人github名下" class="headerlink" title="将他人项目folk至个人github名下"></a>将他人项目folk至个人github名下</h5><ul>
+<li>网页上直接folk</li>
+</ul>
+<h5 id="从个人远程仓库下载代码至本地"><a href="#从个人远程仓库下载代码至本地" class="headerlink" title="从个人远程仓库下载代码至本地"></a>从个人远程仓库下载代码至本地</h5><ul>
+<li>下载至本地：<strong><em>git clone <a href="https://github.com/`${userName}`/`${repositoryName}`.git" target="_blank" rel="external">https://github.com/`${userName}`/`${repositoryName}`.git</a></em></strong></li>
+<li>下载至本地其他分支：<strong><em>git clone -b <code>${BRANCH}</code> <a href="https://github.com/`${userName}`/`${repositoryName}`.git" target="_blank" rel="external">https://github.com/`${userName}`/`${repositoryName}`.git</a></em></strong></li>
+</ul>
+<h5 id="添加远程仓库链接upstream"><a href="#添加远程仓库链接upstream" class="headerlink" title="添加远程仓库链接upstream"></a>添加远程仓库链接upstream</h5><ul>
+<li>进入本地代码目录</li>
+<li><strong><em>git remote add upstream <a href="https://github.com/`${otherUserName}`/`${repositoryName}`.git" target="_blank" rel="external">https://github.com/`${otherUserName}`/`${repositoryName}`.git</a></em></strong></li>
+</ul>
+<h5 id="从远程仓库更新代码"><a href="#从远程仓库更新代码" class="headerlink" title="从远程仓库更新代码"></a>从远程仓库更新代码</h5><ul>
+<li><strong><em>git fetch upstream</em></strong></li>
+<li>更新远程某分支的代码：<strong><em>git fetch upstream <code>${remoteBranch}</code></em></strong></li>
+</ul>
+<h5 id="合并远程代码"><a href="#合并远程代码" class="headerlink" title="合并远程代码"></a>合并远程代码</h5><ul>
+<li><strong><em>git merge upstream/master</em></strong></li>
+<li>把远程的某分支代码合并到本地的某分支：<strong><em>git merge upstream/<code>${remoteBranch}</code>[:<code>${localBranch}</code>]</em></strong></li>
+</ul>
+<h5 id="提交本地代码至个人远程仓库-1"><a href="#提交本地代码至个人远程仓库-1" class="headerlink" title="提交本地代码至个人远程仓库"></a>提交本地代码至个人远程仓库</h5><ul>
+<li><strong><em>git push origin master</em></strong></li>
+</ul>
+<h5 id="从个人远程仓库向目标仓库提交代码"><a href="#从个人远程仓库向目标仓库提交代码" class="headerlink" title="从个人远程仓库向目标仓库提交代码"></a>从个人远程仓库向目标仓库提交代码</h5><ul>
+<li>发起merge request</li>
+</ul>
+<hr>
+<h3 id="仓库、分支命令"><a href="#仓库、分支命令" class="headerlink" title="仓库、分支命令"></a><center>仓库、分支命令</center></h3><h5 id="查询代码的远程仓库及url"><a href="#查询代码的远程仓库及url" class="headerlink" title="查询代码的远程仓库及url"></a>查询代码的远程仓库及url</h5><ul>
+<li><strong><em>git remote -v</em></strong></li>
+</ul>
+<h5 id="查询代码的远程分支名称"><a href="#查询代码的远程分支名称" class="headerlink" title="查询代码的远程分支名称"></a>查询代码的远程分支名称</h5><ul>
+<li><strong><em>git branch -r</em></strong></li>
+</ul>
+<h5 id="查询代码的所有本地分支"><a href="#查询代码的所有本地分支" class="headerlink" title="查询代码的所有本地分支"></a>查询代码的所有本地分支</h5><ul>
+<li><strong><em>git branch</em></strong></li>
+</ul>
+<h5 id="创建本地分支"><a href="#创建本地分支" class="headerlink" title="创建本地分支"></a>创建本地分支</h5><ul>
+<li><strong><em>git branch <code>${branchName}</code></em></strong></li>
+</ul>
+<h5 id="删除分支"><a href="#删除分支" class="headerlink" title="删除分支"></a>删除分支</h5><ul>
+<li><strong><em>git branch -d <code>${branchName}</code></em></strong></li>
+</ul>
+<h5 id="切换分支"><a href="#切换分支" class="headerlink" title="切换分支"></a>切换分支</h5><ul>
+<li><strong><em>git checkout <code>${branchName}</code></em></strong></li>
+</ul>
+<hr>
+<h3 id="文件处理命令"><a href="#文件处理命令" class="headerlink" title="文件处理命令"></a><center>文件处理命令</center></h3><h5 id="查询本地代码修改状态"><a href="#查询本地代码修改状态" class="headerlink" title="查询本地代码修改状态"></a>查询本地代码修改状态</h5><ul>
+<li><strong><em>git status</em></strong></li>
+</ul>
+<h5 id="添加本地已修改代码至本地待提交列表"><a href="#添加本地已修改代码至本地待提交列表" class="headerlink" title="添加本地已修改代码至本地待提交列表"></a>添加本地已修改代码至本地待提交列表</h5><ul>
+<li><strong><em>git add .</em></strong></li>
+</ul>
+<h5 id="将本地待提交列表中的代码提交至待推送列表"><a href="#将本地待提交列表中的代码提交至待推送列表" class="headerlink" title="将本地待提交列表中的代码提交至待推送列表"></a>将本地待提交列表中的代码提交至待推送列表</h5><ul>
+<li><strong><em>git commit -m “Initial commit”</em></strong></li>
+</ul>
+<h5 id="查询本地代码版本记录"><a href="#查询本地代码版本记录" class="headerlink" title="查询本地代码版本记录"></a>查询本地代码版本记录</h5><ul>
+<li><strong><em>git log</em></strong></li>
+</ul>
+<h5 id="撤销本地文件的修改"><a href="#撤销本地文件的修改" class="headerlink" title="撤销本地文件的修改"></a>撤销本地文件的修改</h5><ul>
+<li><strong><em>git checkout – src/main/user.java</em></strong></li>
+<li>仅限未commit的已修改的本地代码</li>
+</ul>
+<h5 id="建议使用gui工具提交代码"><a href="#建议使用gui工具提交代码" class="headerlink" title="建议使用gui工具提交代码"></a>建议使用gui工具提交代码</h5><ul>
+<li>github</li>
+<li>sourcetree</li>
+</ul>
+<hr>
+<h3 id="版本命令"><a href="#版本命令" class="headerlink" title="版本命令"></a><center>版本命令</center></h3><h5 id="reset撤销本地commit，恢复已commit文件的修改部分到待commit区"><a href="#reset撤销本地commit，恢复已commit文件的修改部分到待commit区" class="headerlink" title="reset撤销本地commit，恢复已commit文件的修改部分到待commit区"></a>reset撤销本地commit，恢复已commit文件的修改部分到待commit区</h5><ul>
+<li><strong><em>git reset –soft HEAD^</em></strong></li>
+</ul>
+<h5 id="reset撤销最近3次本地commit，这3次本地修改将不会恢复"><a href="#reset撤销最近3次本地commit，这3次本地修改将不会恢复" class="headerlink" title="reset撤销最近3次本地commit，这3次本地修改将不会恢复"></a>reset撤销最近3次本地commit，这3次本地修改将不会恢复</h5><ul>
+<li><strong><em>git reset –hard HEAD^3</em></strong></li>
+</ul>
+<h5 id="revert撤销上次的commit"><a href="#revert撤销上次的commit" class="headerlink" title="revert撤销上次的commit"></a>revert撤销上次的commit</h5><ul>
+<li><strong><em>git revert HEAD</em></strong></li>
+<li>原commit提前记录在log中还存在，新增一条commit内容为”revert ‘commit2’:this reverts commit…”</li>
+</ul>
+<h5 id="撤销远程push"><a href="#撤销远程push" class="headerlink" title="撤销远程push"></a>撤销远程push</h5><ul>
+<li><strong><em>git reset –hard {version}</em></strong></li>
+<li><strong><em>git push -f origin master</em></strong></li>
+</ul>
+<hr>
+<h3 id="冲突处理"><a href="#冲突处理" class="headerlink" title="冲突处理"></a><center>冲突处理</center></h3><h5 id="commit前发现冲突"><a href="#commit前发现冲突" class="headerlink" title="commit前发现冲突"></a>commit前发现冲突</h5><ul>
+<li>在commit前要先fetch、merge，此时如果有冲突，则会有提示</li>
+<li>使用 <strong><em>git checkout – src/XX.java</em></strong>依次撤销冲突文件的修改（提前备份到sublime中）</li>
+<li>此时merge时不会有冲突</li>
+<li>将备份到sublime中的文件恢复</li>
+<li>此时再处理冲突的部分</li>
+<li>处理完结再commit push</li>
+</ul>
+<hr>
+
+
+                
+            </div>
+
+            <!-- Comments -->
+            
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    
+
+
+                </div>
+            
+        </div>
+    </div>
+</article>
+
+    <!-- Footer -->
+    <hr />
+
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+
+                    
+
+                    
+                        <li>
+                            <a href="https://github.com/mamian" target="_blank">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                    
+
+                    
+
+                    
+
+                    
+                </ul>
+                <p class="copyright text-muted">© 2016  <a href="http://www.mamian.net/" target="_blank">mamian</a>  All Rights Reserved</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+    <!-- After footer scripts -->
+    
+<!-- jQuery -->
+<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+
+<!-- Bootstrap -->
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+<!-- Gallery -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.js" type="text/javascript" charset="utf-8"></script>
+
+<!-- Disqus Comments -->
+
+
+
+</body>
+
+</html>
