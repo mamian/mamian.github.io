@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--Description-->
+    
+        <meta name="description" content="多个系统间存在相互调用，同步调用可用的方式有tcp层的dubbo、thrift，http层的rest、grpc，使用zookeeper进行服务的注册与发布管理。异步调用可使用消息队列。通过tcp层通信的dubbo、thrift比普通的rest通信耗时快2-3个数量级，所以系统间调用尽量使用dubbo">
+    
+
+    <!--Author-->
+    
+        <meta name="author" content="mamian">
+    
+
+    <!--Open Graph Title-->
+    
+        <meta property="og:title" content="dubbo使用指南"/>
+    
+
+    <!--Open Graph Description-->
+    
+
+    <!--Open Graph Site Name-->
+    <meta property="og:site_name" content="马面"/>
+
+    <!--Type page-->
+    
+        <meta property="og:type" content="article" />
+    
+
+    <!--Page Cover-->
+    
+
+        <meta name="twitter:card" content="summary" />
+    
+
+    <!-- Title -->
+    
+    <title>dubbo使用指南 - 马面</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/style.css">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Gallery -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.css" type="text/css" rel="stylesheet" />
+
+    <!-- Google Analytics -->
+    
+
+
+</head>
+
+
+<body>
+
+    <!-- Menu -->
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Configurable Title</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                
+                    <li>
+                        <a href="/">
+                            
+                                Home
+                            
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/archives">
+                            
+                                Archives
+                            
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="https://github.com/mamian">
+                            
+                                <i class="fa fa-github fa-stack-2x"></i>
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+    <!-- Main Content -->
+    <!-- Page Header -->
+<!-- Set your background image for this header in your post front-matter: cover -->
+
+<header class="intro-header" style="background-image: url('http://www.codeblocq.com/assets/projects/hexo-theme-clean-blog/img/home-bg.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <h1>dubbo使用指南</h1>
+                    
+                    <span class="meta">
+                        <!-- Date and Author -->
+                        
+                        2016-08-11
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Tags and categories -->
+           
+
+            <!-- Gallery -->
+            
+
+            <!-- Post Main Content -->
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <pre><code>多个系统间存在相互调用，同步调用可用的方式有tcp层的dubbo、thrift，http层的rest、grpc，使用zookeeper进行服务的注册与发布管理。异步调用可使用消息队列。通过tcp层通信的dubbo、thrift比普通的rest通信耗时快2-3个数量级，所以系统间调用尽量使用dubbo或thrift通信。
+</code></pre><p><a href="https://github.com/mamian/springboot-samples" target="_blank" rel="external">可运行demo</a></p>
+<hr>
+<h3 id="编写服务端"><a href="#编写服务端" class="headerlink" title="编写服务端"></a>编写服务端</h3><h5 id="pom添加如下maven依赖"><a href="#pom添加如下maven依赖" class="headerlink" title="pom添加如下maven依赖"></a>pom添加如下maven依赖</h5><pre><code>&lt;dependency&gt;
+    &lt;groupId&gt;com.alibaba&lt;/groupId&gt;
+    &lt;artifactId&gt;dubbo&lt;/artifactId&gt;
+    &lt;version&gt;2.5.3&lt;/version&gt;
+    &lt;exclusions&gt;
+        &lt;exclusion&gt;&lt;!-- 这个排除低版本的spring--&gt;
+            &lt;groupId&gt;org.springframework&lt;/groupId&gt;
+            &lt;artifactId&gt;spring&lt;/artifactId&gt;
+        &lt;/exclusion&gt;
+    &lt;/exclusions&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;org.apache.zookeeper&lt;/groupId&gt;
+    &lt;artifactId&gt;zookeeper&lt;/artifactId&gt;
+    &lt;version&gt;3.4.6&lt;/version&gt;
+    &lt;exclusions&gt;
+        &lt;exclusion&gt;&lt;!-- 冲突排除--&gt;
+            &lt;groupId&gt;org.slf4j&lt;/groupId&gt;
+            &lt;artifactId&gt;slf4j-log4j12&lt;/artifactId&gt;
+        &lt;/exclusion&gt;
+        &lt;exclusion&gt;&lt;!-- 冲突排除--&gt;
+            &lt;groupId&gt;log4j&lt;/groupId&gt;
+            &lt;artifactId&gt;log4j&lt;/artifactId&gt;
+        &lt;/exclusion&gt;
+    &lt;/exclusions&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;com.github.sgroschupf&lt;/groupId&gt;
+    &lt;artifactId&gt;zkclient&lt;/artifactId&gt;
+    &lt;version&gt;0.1&lt;/version&gt;
+&lt;/dependency&gt;
+</code></pre><h5 id="编写service接口及实现类"><a href="#编写service接口及实现类" class="headerlink" title="编写service接口及实现类"></a>编写service接口及实现类</h5><pre><code>package net.mamian.dubboDemoProvider.rpc;
+
+public interface DemoService {
+
+    String sayHello(String name);
+
+}
+
+
+package net.mamian.dubboDemoProvider.rpc;
+
+import org.springframework.stereotype.Service;
+
+@Service(&quot;demoService&quot;)
+public class DemoServiceImpl implements DemoService {
+
+    public String sayHello(String name) {
+        return &quot;Hello &quot; + name;
+    }
+}
+</code></pre><h5 id="src-main-resources下增加配置文件dubbo-provide-xml"><a href="#src-main-resources下增加配置文件dubbo-provide-xml" class="headerlink" title="src/main/resources下增加配置文件dubbo-provide.xml"></a>src/main/resources下增加配置文件dubbo-provide.xml</h5><pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;
+       xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; 
+       xmlns:jee=&quot;http://www.springframework.org/schema/jee&quot;
+       xmlns:tx=&quot;http://www.springframework.org/schema/tx&quot;
+       xmlns:dubbo=&quot;http://code.alibabatech.com/schema/dubbo&quot;
+       xmlns:context=&quot;http://www.springframework.org/schema/context&quot;
+       xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+    http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
+    http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.1.xsd
+    http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd
+    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd&quot;
+       default-lazy-init=&quot;false&quot; &gt;
+
+    &lt;!-- 提供方应用名称信息，这个相当于起一个名字，我们dubbo管理页面比较清晰是哪个应用暴露出来的 --&gt;
+    &lt;dubbo:application name=&quot;dubbo_service_provider&quot;&gt;&lt;/dubbo:application&gt;
+
+    &lt;!-- 具体的实现bean,方式1:通过注入的方式 --&gt;
+    &lt;!--&lt;dubbo:annotation package=&quot;net.mamian.dubboDemoProvider.rpc.*&quot; /&gt;--&gt;
+    &lt;!-- 具体的实现bean,方式2 --&gt;
+    &lt;bean id=&quot;demoService&quot; class=&quot;net.mamian.dubboDemoProvider.rpc.DemoServiceImpl&quot; /&gt; 
+
+    &lt;!-- 使用zookeeper注册中心暴露服务地址 --&gt;
+    &lt;dubbo:registry address=&quot;zookeeper://127.0.0.1:2181&quot; check=&quot;false&quot; subscribe=&quot;false&quot; register=&quot;&quot;&gt;&lt;/dubbo:registry&gt;
+
+    &lt;!-- 声明需要暴露的服务接口 --&gt;
+    &lt;dubbo:service interface=&quot;net.mamian.dubboDemoProvider.rpc.DemoService&quot; ref=&quot;demoService&quot; /&gt;  
+
+&lt;/beans&gt;
+</code></pre><h5 id="application注入dubbo配置文件"><a href="#application注入dubbo配置文件" class="headerlink" title="application注入dubbo配置文件"></a>application注入dubbo配置文件</h5><pre><code>/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package net.mamian.dubboDemoProvider;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ImportResource;
+
+/**
+ * 程序入口
+ *
+ * @author mamian
+ * @mail mamianskyma@aliyun.com
+ * @date 2016-07-05 11:31
+ * @copyright ©2016 马面 All Rights Reserved
+ */
+@SpringBootApplication
+@ImportResource(&quot;classpath:dubbo-provide.xml&quot;)
+public class Application {
+
+    public static void main(String[] args) {
+        SpringApplication.run(Application.class, args);
+    }
+
+}
+</code></pre><hr>
+<h3 id="编写客户端"><a href="#编写客户端" class="headerlink" title="编写客户端"></a>编写客户端</h3><h5 id="pom添加如下maven依赖（与服务端一样）"><a href="#pom添加如下maven依赖（与服务端一样）" class="headerlink" title="pom添加如下maven依赖（与服务端一样）"></a>pom添加如下maven依赖（与服务端一样）</h5><pre><code>&lt;dependency&gt;
+    &lt;groupId&gt;com.alibaba&lt;/groupId&gt;
+    &lt;artifactId&gt;dubbo&lt;/artifactId&gt;
+    &lt;version&gt;2.5.3&lt;/version&gt;
+    &lt;exclusions&gt;
+        &lt;exclusion&gt;&lt;!-- 这个排除低版本的spring--&gt;
+            &lt;groupId&gt;org.springframework&lt;/groupId&gt;
+            &lt;artifactId&gt;spring&lt;/artifactId&gt;
+        &lt;/exclusion&gt;
+    &lt;/exclusions&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;org.apache.zookeeper&lt;/groupId&gt;
+    &lt;artifactId&gt;zookeeper&lt;/artifactId&gt;
+    &lt;version&gt;3.4.6&lt;/version&gt;
+    &lt;exclusions&gt;
+        &lt;exclusion&gt;&lt;!-- 冲突排除--&gt;
+            &lt;groupId&gt;org.slf4j&lt;/groupId&gt;
+            &lt;artifactId&gt;slf4j-log4j12&lt;/artifactId&gt;
+        &lt;/exclusion&gt;
+        &lt;exclusion&gt;&lt;!-- 冲突排除--&gt;
+            &lt;groupId&gt;log4j&lt;/groupId&gt;
+            &lt;artifactId&gt;log4j&lt;/artifactId&gt;
+        &lt;/exclusion&gt;
+    &lt;/exclusions&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;com.github.sgroschupf&lt;/groupId&gt;
+    &lt;artifactId&gt;zkclient&lt;/artifactId&gt;
+    &lt;version&gt;0.1&lt;/version&gt;
+&lt;/dependency&gt;
+</code></pre><h5 id="复制服务端的接口类放在相同Package下-接口可以比服务端的少"><a href="#复制服务端的接口类放在相同Package下-接口可以比服务端的少" class="headerlink" title="复制服务端的接口类放在相同Package下(接口可以比服务端的少)"></a>复制服务端的接口类放在相同Package下(接口可以比服务端的少)</h5><pre><code>package net.mamian.dubboDemoProvider.rpc;
+
+public interface DemoService {
+
+    String sayHello(String name);
+
+}
+</code></pre><h5 id="src-main-resources下增加配置文件dubbo-consumer-xml"><a href="#src-main-resources下增加配置文件dubbo-consumer-xml" class="headerlink" title="src/main/resources下增加配置文件dubbo-consumer.xml"></a>src/main/resources下增加配置文件dubbo-consumer.xml</h5><pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;
+       xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:dubbo=&quot;http://code.alibabatech.com/schema/dubbo&quot;
+       xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://code.alibabatech.com/schema/dubbo
+        http://code.alibabatech.com/schema/dubbo/dubbo.xsd
+        &quot;&gt;
+
+    &lt;!-- 消费方应用名，用于计算依赖关系，不是匹配条件，不要与提供方一样 --&gt;
+    &lt;dubbo:application name=&quot;dubbo_service_consumer&quot; /&gt;
+
+    &lt;!-- 使用zookeeper注册中心暴露服务地址 --&gt;
+    &lt;!-- &lt;dubbo:registry address=&quot;multicast://224.5.6.7:1234&quot; /&gt; --&gt;
+    &lt;dubbo:registry address=&quot;zookeeper://127.0.0.1:2181&quot; /&gt;
+
+    &lt;!-- 生成远程服务代理，可以像使用本地bean一样使用demoService --&gt;
+    &lt;dubbo:reference id=&quot;demoService&quot; interface=&quot;net.mamian.dubboDemoProvider.rpc.DemoService&quot; /&gt;
+
+&lt;/beans&gt;
+</code></pre><h5 id="controller层直接使用DemoService"><a href="#controller层直接使用DemoService" class="headerlink" title="controller层直接使用DemoService"></a>controller层直接使用DemoService</h5><pre><code>@RequestMapping(value=&quot;/dubbo&quot;, method = RequestMethod.GET)
+@ResponseBody
+public String test() throws IOException{
+    ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(
+            new String[]{&quot;dubbo-consumer.xml&quot;});
+    context.start();
+
+    DemoService demoService = (DemoService) context.getBean(&quot;demoService&quot;);
+    return demoService.sayHello(&quot;马面&quot;);
+}
+</code></pre><hr>
+<h3 id="测试rpc通信"><a href="#测试rpc通信" class="headerlink" title="测试rpc通信"></a>测试rpc通信</h3><ul>
+<li>zookeeper<ul>
+<li>sudo ./zookeeper/bin/zkServer.sh start</li>
+</ul>
+</li>
+<li>provider<ul>
+<li>mvn package</li>
+<li>java -jar XX.jar</li>
+</ul>
+</li>
+<li>consumer<ul>
+<li>mvn package</li>
+<li>java -jar XX.jar</li>
+<li><a href="http://127.0.0.1:18004/dubbo" target="_blank" rel="external">http://127.0.0.1:18004/dubbo</a></li>
+</ul>
+</li>
+</ul>
+
+
+                
+            </div>
+
+            <!-- Comments -->
+            
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    
+
+
+                </div>
+            
+        </div>
+    </div>
+</article>
+
+    <!-- Footer -->
+    <hr />
+
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+
+                    
+
+                    
+                        <li>
+                            <a href="https://github.com/mamian" target="_blank">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                    
+
+                    
+
+                    
+
+                    
+                </ul>
+                <p class="copyright text-muted">© 2016  <a href="http://www.mamian.net/" target="_blank">mamian</a>  All Rights Reserved</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+    <!-- After footer scripts -->
+    
+<!-- jQuery -->
+<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+
+<!-- Bootstrap -->
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+<!-- Gallery -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.js" type="text/javascript" charset="utf-8"></script>
+
+<!-- Disqus Comments -->
+
+
+
+</body>
+
+</html>
