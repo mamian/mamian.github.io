@@ -10,10 +10,7 @@
 
     <!--Description-->
     
-        <meta name="description" content="远程数据库服务器信息（从此数据库下载数据）#!/usr/bin/env bash
-remoteMysqlServer=&amp;quot;127.0.0.1&amp;quot;
-remoteMysqlUser=&amp;quot;testuser&amp;quot;
-remoteMysqlPassword=&amp;quot;testpa">
+        <meta name="description" content="gitmysqlthrift">
     
 
     <!--Author-->
@@ -23,7 +20,7 @@ remoteMysqlPassword=&amp;quot;testpa">
 
     <!--Open Graph Title-->
     
-        <meta property="og:title" content="导出远程mysql至本地csv文件"/>
+        <meta property="og:title" content="tags"/>
     
 
     <!--Open Graph Description-->
@@ -45,7 +42,7 @@ remoteMysqlPassword=&amp;quot;testpa">
 
     <!-- Title -->
     
-    <title>导出远程mysql至本地csv文件 - 马面</title>
+    <title>tags - 马面</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
@@ -160,12 +157,12 @@ remoteMysqlPassword=&amp;quot;testpa">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                 <div class="post-heading">
-                    <h1>导出远程mysql至本地csv文件</h1>
+                    <h1>tags</h1>
                     
                     <span class="meta">
                         <!-- Date and Author -->
                         
-                        2016-08-01
+                        2016-08-12
                     </span>
                 </div>
             </div>
@@ -180,64 +177,14 @@ remoteMysqlPassword=&amp;quot;testpa">
 
             <!-- Tags and categories -->
            
-                <div class="col-lg-4 col-lg-offset-2 col-md-5 col-md-offset-1 post-tags">
-                    
-                        
-
-
-<a href="/tags/mysql/">#mysql</a>
-
-
-                    
-                </div>
-                <div class="col-lg-4 col-md-5 post-categories">
-                    
-                        
-
-<a href="/categories/数据库/">数据库</a>
-
-                    
-                </div>
-            
 
             <!-- Gallery -->
             
 
             <!-- Post Main Content -->
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <h3 id="远程数据库服务器信息（从此数据库下载数据）"><a href="#远程数据库服务器信息（从此数据库下载数据）" class="headerlink" title="远程数据库服务器信息（从此数据库下载数据）"></a>远程数据库服务器信息（从此数据库下载数据）</h3><pre><code>#!/usr/bin/env bash
-remoteMysqlServer=&quot;127.0.0.1&quot;
-remoteMysqlUser=&quot;testuser&quot;
-remoteMysqlPassword=&quot;testpassword&quot;
-remoteMysqlDB=&quot;testSchema&quot;
-</code></pre><h3 id="下载哪个数据库表"><a href="#下载哪个数据库表" class="headerlink" title="下载哪个数据库表"></a>下载哪个数据库表</h3><pre><code>tableName=&quot;testTable&quot;
-</code></pre><h3 id="下载哪几个月的数据"><a href="#下载哪几个月的数据" class="headerlink" title="下载哪几个月的数据"></a>下载哪几个月的数据</h3><pre><code>array_month=(
-    2015-09
-    2015-10
-    2015-11
-    2015-12
-    2016-01
-    2016-02
-    2016-03
-)
-</code></pre><h3 id="本地数据下载目录"><a href="#本地数据下载目录" class="headerlink" title="本地数据下载目录"></a>本地数据下载目录</h3><pre><code>dataDownloadPath=&quot;data/&quot;
+                <p><a href="/tags/git/">git</a><br><a href="/tags/mysql/">mysql</a><br><a href="/tags/thrift/">thrift</a></p>
 
-if [ ! -d &quot;${dataDownloadPath}&quot; ]; then
-  mkdir -p ${dataDownloadPath}
-fi
-</code></pre><h3 id="导出数据至文件"><a href="#导出数据至文件" class="headerlink" title="导出数据至文件"></a>导出数据至文件</h3><pre><code>for i in ${array_month[@]}
-    do
-        if [ ! -f &quot;${dataDownloadPath}/${tableName}_${i}.csv&quot; ]; then 
-            touch ${dataDownloadPath}/${tableName}_${i}.csv
-            mysql -h ${remoteMysqlServer} -P3306 -u${remoteMysqlUser} -p${remoteMysqlPassword} --compress ${remoteMysqlDB} -e &quot;select * from ${tableName} where date_format(keytime,&apos;%Y-%m&apos;)= ${i} order by keytime asc&quot;&gt;${dataDownloadPath}/${tableName}_${i}.csv
-        fi
-    done
-
-
-exit
-</code></pre><h5 id="异常"><a href="#异常" class="headerlink" title="异常"></a>异常</h5><pre><code>Can&apos;t create/write to file &apos;/Users/XX/Desktop/data/XX_2015-11.csv&apos; (Errcode: 13 - Permission denied)
-</code></pre><h5 id="产生原因"><a href="#产生原因" class="headerlink" title="产生原因"></a>产生原因</h5><pre><code>SELECT...INTO OUTFILE语句无权限在本地创建结果文件，使用“mysql –e &quot;SELECT ...&quot; &gt; file_name”的命令，来生成文件。
-</code></pre>
 
                 
             </div>

@@ -109,7 +109,7 @@ hexo ">
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/">Configurable Title</a>
+            <a class="navbar-brand" href="/">马面</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -128,6 +128,30 @@ hexo ">
                         <a href="/archives">
                             
                                 Archives
+                            
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/tags">
+                            
+                                Tags
+                            
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/categories">
+                            
+                                Categories
+                            
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/about">
+                            
+                                About
                             
                         </a>
                     </li>
@@ -176,6 +200,25 @@ hexo ">
 
             <!-- Tags and categories -->
            
+                <div class="col-lg-4 col-lg-offset-2 col-md-5 col-md-offset-1 post-tags">
+                    
+                        
+
+
+<a href="/tags/hexo/">#hexo</a>
+
+
+                    
+                </div>
+                <div class="col-lg-4 col-md-5 post-categories">
+                    
+                        
+
+<a href="/categories/使用指南/">使用指南</a>
+
+                    
+                </div>
+            
 
             <!-- Gallery -->
             
@@ -273,6 +316,88 @@ hexo ">
 theme:yilia
 </code></pre></li>
 <li>改成theme: yilia，theme:后面接你自己的主题名字就行了,然后分别执行</li>
+<li>部署 hexo g</li>
+<li>提交 hexo d</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="增加about页面"><a href="#增加about页面" class="headerlink" title="增加about页面"></a>增加about页面</h3><ul>
+<li>生成about页面<ul>
+<li>hexo new page “about”</li>
+<li>cd hexo/source/about</li>
+<li>编缉index.md即可</li>
+</ul>
+</li>
+<li>添加about链接<ul>
+<li>cd hexo/themes/<theme_name></theme_name></li>
+<li>vim _config.yml</li>
+<li>找到menu项，添加一行About: /about</li>
+</ul>
+</li>
+<li>提交修改<ul>
+<li>部署 hexo g</li>
+<li>提交 hexo d</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="增加tag"><a href="#增加tag" class="headerlink" title="增加tag"></a>增加tag</h3><ul>
+<li>生成tag目录<ul>
+<li>hexo new page tags</li>
+<li>cd hexo/source/tags</li>
+<li>编缉index.md，添加如下内容<ul>
+<li><a href="/tags/tag1/">tag1</a></li>
+<li><a href="/tags/tag2/">tag2</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>添加tag链接<ul>
+<li>cd hexo/themes/<theme_name></theme_name></li>
+<li>vim _config.yml</li>
+<li>找到menu项，添加一行Tags: /tags</li>
+</ul>
+</li>
+<li>文章添加tag<ul>
+<li>cd hexo/source/_posts</li>
+<li>vim 文章.md</li>
+<li>添加如下内容<br>  tags:<pre><code>- tag1
+- tag2 
+</code></pre></li>
+</ul>
+</li>
+<li>提交修改<ul>
+<li>部署 hexo g</li>
+<li>提交 hexo d</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="增加categories"><a href="#增加categories" class="headerlink" title="增加categories"></a>增加categories</h3><ul>
+<li>生成tag目录<ul>
+<li>hexo new page categories</li>
+<li>cd hexo/source/categories</li>
+<li>编缉index.md即可，添加如下内容<ul>
+<li><a href="/categories/categories1/">categorie1</a></li>
+<li><a href="/categories/categories2/">categorie2</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>添加about链接<ul>
+<li>cd hexo/themes/<theme_name></theme_name></li>
+<li>vim _config.yml</li>
+<li>找到menu项，添加一行Categories: /categories</li>
+</ul>
+</li>
+<li>文章添加categories<ul>
+<li>cd hexo/source/_posts</li>
+<li>vim 文章.md</li>
+<li>添加如下内容<br>  categories: 分类1</li>
+</ul>
+</li>
+<li>提交修改<ul>
 <li>部署 hexo g</li>
 <li>提交 hexo d</li>
 </ul>
