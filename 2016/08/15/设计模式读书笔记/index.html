@@ -248,21 +248,21 @@
     }
 }
 </code></pre></li>
+<li><p>饿汉式</p>
+<pre><code>public class Singleton {
+    private static Singleton item = new Singleton();
+
+    private Singleton(){}
+
+    public static Singleton getInstance() {
+        return item;
+    }
+}
+</code></pre></li>
 </ul>
 </li>
 </ul>
-<pre><code>- 饿汉式
-
-        public class Singleton {
-            private static Singleton item = new Singleton();
-
-            private Singleton(){}
-
-            public static Singleton getInstance() {
-                return item;
-            }
-        }
-</code></pre><hr>
+<hr>
 <h1 id="多例模式"><a href="#多例模式" class="headerlink" title="多例模式"></a><center>多例模式</center></h1><hr>
 <h1 id="状态模式"><a href="#状态模式" class="headerlink" title="状态模式"></a><center>状态模式</center></h1><hr>
 <h1 id="责任链模式"><a href="#责任链模式" class="headerlink" title="责任链模式"></a><center>责任链模式</center></h1><hr>
