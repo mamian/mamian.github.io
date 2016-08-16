@@ -10,7 +10,8 @@
 
     <!--Description-->
     
-        <meta name="description" content="组合模式
+        <meta name="description" content="使用设计模块注意度，结合业务，不能过度设计。
+组合模式
 单例模式
 多例模式
 状态模式
@@ -33,8 +34,7 @@
 简单工厂模式
 工厂模式
 抽象工厂模式
-解释器模式
-迭代器模式">
+解">
     
 
     <!--Author-->
@@ -226,7 +226,8 @@
 
             <!-- Post Main Content -->
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <h1 id="组合模式"><a href="#组合模式" class="headerlink" title="组合模式"></a><center>组合模式</center></h1><hr>
+                <p>使用设计模块注意度，结合业务，不能过度设计。</p>
+<h1 id="组合模式"><a href="#组合模式" class="headerlink" title="组合模式"></a><center>组合模式</center></h1><hr>
 <h1 id="单例模式"><a href="#单例模式" class="headerlink" title="单例模式"></a><center>单例模式</center></h1><hr>
 <h1 id="多例模式"><a href="#多例模式" class="headerlink" title="多例模式"></a><center>多例模式</center></h1><hr>
 <h1 id="状态模式"><a href="#状态模式" class="headerlink" title="状态模式"></a><center>状态模式</center></h1><hr>
@@ -251,6 +252,31 @@
 <h1 id="抽象工厂模式"><a href="#抽象工厂模式" class="headerlink" title="抽象工厂模式"></a><center>抽象工厂模式</center></h1><hr>
 <h1 id="解释器模式"><a href="#解释器模式" class="headerlink" title="解释器模式"></a><center>解释器模式</center></h1><hr>
 <h1 id="迭代器模式"><a href="#迭代器模式" class="headerlink" title="迭代器模式"></a><center>迭代器模式</center></h1><hr>
+<h1 id="六大设计原则"><a href="#六大设计原则" class="headerlink" title="六大设计原则"></a><center>六大设计原则</center></h1><h3 id="单一职责原则"><a href="#单一职责原则" class="headerlink" title="单一职责原则"></a>单一职责原则</h3><ul>
+<li>定义：有且仅有一个原因引起类的变更。</li>
+<li>单一职责是指接口（类）的职责，一个类可以实现多个单职责的接口，但此实现类并不是说就不是单一职责了，实现类应该是更上一层粒度的单一职责。</li>
+<li>职责的粒度需根据具体业务来定，追求学术上的单职责会导致接口数量巨增，设计太复杂。</li>
+</ul>
+<h3 id="里氏替换原则"><a href="#里氏替换原则" class="headerlink" title="里氏替换原则"></a>里氏替换原则</h3><ul>
+<li>定义：父类出现的地方，可以使用子类替换。</li>
+<li>在类中调用其他类时必使用其他类的父类或接口。</li>
+</ul>
+<h3 id="依赖倒置原则（即面向接口编程）"><a href="#依赖倒置原则（即面向接口编程）" class="headerlink" title="依赖倒置原则（即面向接口编程）"></a>依赖倒置原则（即<strong><em>面向接口编程</em></strong>）</h3><ul>
+<li>定义：高层模块不应依赖低层模块，两者均只依赖各自的抽象；细节依赖抽象，抽象不依赖细节。</li>
+<li>模块间的依赖通过各自的抽象发生，实现类间不直接依赖。</li>
+</ul>
+<h3 id="接口隔离原则"><a href="#接口隔离原则" class="headerlink" title="接口隔离原则"></a>接口隔离原则</h3><ul>
+<li>定义：接口尽量细化，接口中的方法尽量少。</li>
+<li>与单一职责的不同：单一职责是从业务层考虑。</li>
+</ul>
+<h3 id="迪米特法则"><a href="#迪米特法则" class="headerlink" title="迪米特法则"></a>迪米特法则</h3><ul>
+<li>定义：一个类需要对自己需要耦合或调用的类知道的最少。</li>
+</ul>
+<h3 id="开闭原则"><a href="#开闭原则" class="headerlink" title="开闭原则"></a>开闭原则</h3><ul>
+<li>定义：模块、类、方法均应对扩展开放，对修改关闭。</li>
+<li>尽量通过扩展现有模块、类、方法来实现变化，而不是修改现有代码来完成变化。</li>
+</ul>
+<hr>
 
 
                 
