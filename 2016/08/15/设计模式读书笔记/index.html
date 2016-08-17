@@ -281,9 +281,682 @@
 <h1 id="适配器模式"><a href="#适配器模式" class="headerlink" title="适配器模式"></a><center>适配器模式</center></h1><hr>
 <h1 id="访问者模式"><a href="#访问者模式" class="headerlink" title="访问者模式"></a><center>访问者模式</center></h1><hr>
 <h1 id="装饰模式"><a href="#装饰模式" class="headerlink" title="装饰模式"></a><center>装饰模式</center></h1><hr>
-<h1 id="简单工厂模式"><a href="#简单工厂模式" class="headerlink" title="简单工厂模式"></a><center>简单工厂模式</center></h1><hr>
-<h1 id="工厂模式"><a href="#工厂模式" class="headerlink" title="工厂模式"></a><center>工厂模式</center></h1><hr>
-<h1 id="抽象工厂模式"><a href="#抽象工厂模式" class="headerlink" title="抽象工厂模式"></a><center>抽象工厂模式</center></h1><hr>
+<h1 id="简单工厂模式"><a href="#简单工厂模式" class="headerlink" title="简单工厂模式"></a><center>简单工厂模式</center></h1><ul>
+<li>Client中将参数传递给Factory，Factory根据参数决定生产哪个具体的实例类。</li>
+<li><p>代码</p>
+<pre><code>public class Operater {
+
+    public int getResult(int a,int b){
+
+        return 0;
+
+    }
+
+}
+</code></pre></li>
+</ul>
+<pre><code>public class OperaterAdd extends Operater{
+
+    public int getResult(int addA,int addB){
+
+        System.out.println(&quot;加法&quot;);
+
+        return addA+addB;
+
+    }
+
+}
+
+
+
+public class OperaterDiv extends Operater{
+
+    public int getResult(int divA,int divB){
+
+        System.out.println(&quot;除法&quot;);
+
+        return divA/divB;
+
+    }
+
+}
+
+
+
+public class Factory {
+
+    private static Operater operater;
+
+    public static Operater createOperater(char choose){
+
+        switch(choose){
+
+            case &apos;+&apos;:
+
+                operater = new OperaterAdd();break;
+
+            case &apos;/&apos;:
+
+                operater = new OperaterDiv();break;
+
+        }
+
+        return operater;
+
+    }
+
+}
+
+
+
+public class Client {
+
+    public static void main(String[] args){
+
+        Operater operater = Factory.createOperater(&apos;+&apos;);
+
+        int result = operater.getResult(15,25);
+
+    }
+
+}
+</code></pre><hr>
+<h1 id="工厂模式"><a href="#工厂模式" class="headerlink" title="工厂模式"></a><center>工厂模式</center></h1><ul>
+<li><p>代码</p>
+<pre><code>public interface HumanInterface {
+
+    public void laugh();
+
+    public void cry();
+
+    public void talk();
+
+}
+</code></pre></li>
+</ul>
+<pre><code>public class BlackHuman implements HumanInterface{
+
+    public void laugh() {
+
+        System.out.println(&quot;黑人会笑&quot;);
+
+    }
+
+    public void cry() {
+
+        System.out.println(&quot;黑人会哭&quot;);
+
+    }
+
+    public void talk() {
+
+        System.out.println(&quot;黑人可以说话，一般人听不懂&quot;);
+
+    }
+
+}
+
+
+
+public class WhiteHuman implements HumanInterface{
+
+    public void laugh() {
+
+        System.out.println(&quot;白色人类会大笑，侵略的笑声&quot;);
+
+    }
+
+    public void cry() {
+
+        System.out.println(&quot;白色人类会哭&quot;);
+
+    }
+
+    public void talk() {
+
+        System.out.println(&quot;白色人类会说话，一般都是但是单字节！&quot;);
+
+    }
+
+}
+
+
+
+public class YellowHuman implements HumanInterface{
+
+    public void laugh() {
+
+        System.out.println(&quot;黄色人类会大笑，幸福呀！&quot;);
+
+    }
+
+    public void cry() {
+
+        System.out.println(&quot;黄色人类会哭&quot;);
+
+    }
+
+    public void talk() {
+
+        System.out.println(&quot;黄色人类会说话，一般说的都是双字节&quot;);
+
+    }
+
+}
+
+
+
+public class ClassUtils {
+
+    //给一个接口，返回这个接口的所有实现类
+
+    public static List&lt;Class&gt; getAllClassByInterface(Class c){
+
+        List&lt;Class&gt; returnClassList = new ArrayList&lt;Class&gt;(); //返回结果
+
+        //如果不是一个接口，则不做处理
+
+        if(c.isInterface()){
+
+            String packageName = c.getPackage().getName(); //获得当前的包名
+
+            try {
+
+                List&lt;Class&gt; allClass = getClasses(packageName);//获得当前包下以及子包下的所有类
+
+                //判断是否是同一个接口
+
+                for(int i=0;i&lt;allClass.size();i++){
+
+                    if(c.isAssignableFrom(allClass.get(i))){//判断是不是一个接口
+
+                        if(!c.equals(allClass.get(i))){//本身不加进去
+
+                            returnClassList.add(allClass.get(i));
+
+                        }
+
+                    }
+
+                }
+
+            } catch (ClassNotFoundException e) {
+
+                e.printStackTrace();
+
+            } catch (IOException e) {
+
+                e.printStackTrace();
+
+            }
+
+        }
+
+        return returnClassList;
+
+    }
+
+
+
+    //从一个包中查找出所有的类，在jar包中不能查找
+
+    private static List&lt;Class&gt; getClasses(String packageName)throws ClassNotFoundException, IOException {
+
+        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+
+        String path = packageName.replace(&apos;.&apos;, &apos;/&apos;);
+
+        Enumeration&lt;URL&gt; resources = classLoader.getResources(path);
+
+        List&lt;File&gt; dirs = new ArrayList&lt;File&gt;();
+
+        while (resources.hasMoreElements()) {
+
+            URL resource = resources.nextElement();
+
+            dirs.add(new File(resource.getFile()));
+
+        }
+
+        ArrayList&lt;Class&gt; classes = new ArrayList&lt;Class&gt;();
+
+        for (File directory : dirs) {
+
+            classes.addAll(findClasses(directory, packageName));
+
+        }
+
+        return classes;
+
+    }
+
+
+
+    private static List&lt;Class&gt; findClasses(File directory, String packageName) throws ClassNotFoundException {
+
+        List&lt;Class&gt; classes = new ArrayList&lt;Class&gt;();
+
+        if (!directory.exists()) {
+
+            return classes;
+
+        }
+
+        File[] files = directory.listFiles();
+
+        for (File file : files) {
+
+            if (file.isDirectory()) {
+
+                assert !file.getName().contains(&quot;.&quot;);
+
+                classes.addAll(findClasses(file, packageName + &quot;.&quot; + file.getName()));
+
+            } else if (file.getName().endsWith(&quot;.class&quot;)) {
+
+                classes.add(Class.forName(packageName + &apos;.&apos; + file.getName().substring(0, file.getName().length() - 6)));
+
+            }
+
+        }
+
+        return classes;
+
+    }
+
+}
+
+
+
+public class Client {
+
+    public static void main(String[] args) {
+
+        //女娲第一次造人，试验性质，少造点，火候不足，缺陷产品
+
+        System.out.println(&quot;-----造出的第一批人是这样的：白人----&quot;);
+
+        HumanInterface whiteHuman = HumanFactory.createHuman(WhiteHuman.class);
+
+        whiteHuman.cry();
+
+        whiteHuman.laugh();
+
+        whiteHuman.talk();
+
+        //女娲第二次造人，火候加足点，然后又出了个次品，黑人
+
+        System.out.println(&quot;\n\n---造出的第二批人是这样的：黑人-------&quot;);
+
+        HumanInterface blackHuman = HumanFactory.createHuman(BlackHuman.class);
+
+        blackHuman.cry();
+
+        blackHuman.laugh();
+
+        blackHuman.talk();
+
+        //第三批人了，这次火候掌握的正好，黄色人类（不写黄人，免得引起歧义），备注：RB人不属于此列
+
+        System.out.println(&quot;\n\n----造出的第三批人是这样的：黄色人类--------&quot;);
+
+        HumanInterface yellowHuman = HumanFactory.createHuman(YellowHuman.class);
+
+        yellowHuman.cry();
+
+        yellowHuman.laugh();
+
+        yellowHuman.talk();
+
+        //女娲烦躁了，爱是啥人类就是啥人类，烧吧
+
+        for(int i=0;i&lt;1000000;i++){
+
+            System.out.println(&quot;\n\n-----随机产生人类了-----&quot; + i);
+
+            HumanInterface human = HumanFactory.createHuman();
+
+            human.cry();
+
+            human.laugh();
+
+            human.talk();
+
+        }
+
+    }
+
+}
+</code></pre><hr>
+<h1 id="抽象工厂模式"><a href="#抽象工厂模式" class="headerlink" title="抽象工厂模式"></a><center>抽象工厂模式</center></h1><ul>
+<li><p>代码</p>
+<pre><code>public interface HumanInterface {
+
+        public void laugh();
+
+        public void cry();
+
+        public void talk();
+
+        public void sex();
+
+    }
+</code></pre></li>
+</ul>
+<pre><code>public abstract class AbstractBlackHuman implements HumanInterface{
+
+    public void laugh() {
+
+        System.out.println(&quot;黑人会笑&quot;);
+
+    }
+
+    public void cry() {
+
+        System.out.println(&quot;黑人会哭&quot;);
+
+    }
+
+    public void talk() {
+
+        System.out.println(&quot;黑人可以说话，一般人听不懂&quot;);
+
+    }
+
+}
+
+
+
+public abstract class AbstractWhiteHuman implements HumanInterface{
+
+    public void laugh() {
+
+        System.out.println(&quot;白色人类会大笑，侵略的笑声&quot;);
+
+    }
+
+    public void cry() {
+
+        System.out.println(&quot;白色人类会哭&quot;);
+
+    }
+
+    public void talk() {
+
+        System.out.println(&quot;白色人类会说话，一般都是但是单字节！&quot;);
+
+    }
+
+}
+
+
+
+public abstract class AbstractYellowHuman implements HumanInterface{
+
+    public void laugh() {
+
+        System.out.println(&quot;黄色人类会大笑，幸福呀！&quot;);
+
+    }
+
+    public void cry() {
+
+        System.out.println(&quot;黄色人类会哭&quot;);
+
+    }
+
+    public void talk() {
+
+        System.out.println(&quot;黄色人类会说话，一般说的都是双字节&quot;);
+
+    }
+
+}
+
+
+
+public class BlackHuman_Female extends AbstractBlackHuman{
+
+    public void sex(){
+
+        System.out.println(&quot;该黑种人的性别为女...&quot;);
+
+    }
+
+}
+
+
+
+public class BlackHuman_Male extends AbstractBlackHuman{
+
+    public void sex(){
+
+        System.out.println(&quot;该黑种人的性别为男...&quot;);
+
+    }
+
+}
+
+
+
+public class WhiteHuman_Female extends AbstractWhiteHuman{
+
+    public void sex(){
+
+        System.out.println(&quot;该白种人的性别为女...&quot;);
+
+    }
+
+}
+
+
+
+public class WhiteHuman_Male extends AbstractWhiteHuman{
+
+    public void sex(){
+
+        System.out.println(&quot;该白种人的性别为男...&quot;);
+
+    }
+
+}
+
+
+
+public class YellowHuman_Female extends AbstractYellowHuman{
+
+    public void sex(){
+
+        System.out.println(&quot;该黄种人的性别为女...&quot;);
+
+    }
+
+}
+
+
+
+public class YellowHuman_Male extends AbstractYellowHuman{
+
+    public void sex(){
+
+        System.out.println(&quot;该黄种人的性别为男...&quot;);
+
+    }
+
+}
+
+
+
+public enum HumanEnum {
+
+    //把世界上所有人类型都定义出来
+
+    YelloMaleHuman(&quot;抽象工厂模式.humanImpl.YellowHuman_Male&quot;),
+
+    YelloFemaleHuman(&quot;抽象工厂模式.humanImpl.YellowHuman_Female&quot;),
+
+    WhiteFemaleHuman(&quot;抽象工厂模式.humanImpl.WhiteHuman_Female&quot;),
+
+    WhiteMaleHuman(&quot;抽象工厂模式.humanImpl.WhiteHuman_Male&quot;),
+
+    BlackFemaleHuman(&quot;抽象工厂模式.humanImpl.BlackHuman_Female&quot;),
+
+    BlackMaleHuman(&quot;抽象工厂模式.humanImpl.BlackHuman_Male&quot;);
+
+
+
+    //定义构造函数，目的是Data(value)类型的相匹配
+
+    private HumanEnum(String value){
+
+        this.value = value;
+
+    }
+
+    private String value = &quot;&quot;;
+
+    public String getValue(){
+
+        return this.value;
+
+    }
+
+}
+
+
+
+public interface HumanFactoryInterface {
+
+    public HumanInterface createYellowHuman();//制造黄色人类
+
+    public HumanInterface createWhiteHuman();//制造一个白色人类
+
+    public HumanInterface createBlackHuman();//制造一个黑色人类
+
+}
+
+
+
+public abstract class AbstractHumanFactory implements HumanFactoryInterface{
+
+    protected HumanInterface createHuman(HumanEnum humanEnum){
+
+        HumanInterface human = null;
+
+        //如果传递进来不是一个Enum中具体的一个Element的话，则不处理
+
+        if (!humanEnum.getValue().equals(&quot;&quot;)) {
+
+            try {
+
+                //直接产生一个实例
+
+                human = (HumanInterface) Class.forName(humanEnum.getValue()).newInstance();
+
+            } catch (Exception e) {
+
+                //因为使用了enum，这个种异常情况不会产生了，除非你的enum有问题；
+
+                e.printStackTrace();
+
+            }
+
+        }
+
+        return human;
+
+    }
+
+}
+
+
+
+public class HumanFactory_Female extends AbstractHumanFactory{
+
+    public HumanInterface createBlackHuman() {//创建一个女性黑种人
+
+        return super.createHuman(HumanEnum.BlackFemaleHuman);
+
+    }
+
+    public HumanInterface createWhiteHuman() {//创建一个女性白种人
+
+        return super.createHuman(HumanEnum.WhiteFemaleHuman);
+
+    }
+
+    public HumanInterface createYellowHuman() {//创建一个女性黄种人
+
+        return super.createHuman(HumanEnum.YelloFemaleHuman);
+
+    }
+
+}
+
+
+
+public class HumanFactory_Male extends AbstractHumanFactory{
+
+    public HumanInterface createBlackHuman() {//创建一个男性黑种人
+
+        return super.createHuman(HumanEnum.BlackMaleHuman);
+
+    }
+
+    public HumanInterface createWhiteHuman() {//创建一个男性白种人
+
+        return super.createHuman(HumanEnum.WhiteMaleHuman);
+
+    }
+
+    public HumanInterface createYellowHuman() {//创建一个男性黄种人
+
+        return super.createHuman(HumanEnum.YelloMaleHuman);
+
+    }
+
+}
+
+
+
+public class Client {
+
+    public static void main(String[] args){
+
+        //第一条生产线，男性生产线
+
+        HumanFactoryInterface maleHumanFactory = new HumanFactory_Male();
+
+        //第二条生产线，女性生产线
+
+        HumanFactoryInterface femaleHumanFactory = new HumanFactory_Female();
+
+
+
+        //生产线建立完毕，开始生产人了:
+
+        HumanInterface maleYellowHuman = maleHumanFactory.createYellowHuman();
+
+        HumanInterface femaleYellowHuman = femaleHumanFactory.createYellowHuman();
+
+        maleYellowHuman.cry();
+
+        maleYellowHuman.laugh();
+
+        femaleYellowHuman.sex();
+
+
+
+        /*
+
+        * 后面可以续了.....
+
+        */
+
+    }
+
+}
+</code></pre><hr>
 <h1 id="解释器模式"><a href="#解释器模式" class="headerlink" title="解释器模式"></a><center>解释器模式</center></h1><hr>
 <h1 id="迭代器模式"><a href="#迭代器模式" class="headerlink" title="迭代器模式"></a><center>迭代器模式</center></h1><hr>
 <h1 id="六大设计原则"><a href="#六大设计原则" class="headerlink" title="六大设计原则"></a><center>六大设计原则</center></h1><h3 id="单一职责原则"><a href="#单一职责原则" class="headerlink" title="单一职责原则"></a>单一职责原则</h3><ul>
