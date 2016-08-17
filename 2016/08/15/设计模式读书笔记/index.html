@@ -334,14 +334,15 @@ public class Client {
     public static void main(String[] args){
         Model modelA = new ModelA();
         modelA.run();
-</code></pre></li>
-</ul>
-<pre><code>        Model modelB = new ModelB();
+
+        Model modelB = new ModelB();
         modelB.run();
     }
 
 }
-</code></pre><hr>
+</code></pre></li>
+</ul>
+<hr>
 <h1 id="建造者模式"><a href="#建造者模式" class="headerlink" title="建造者模式"></a><center>建造者模式</center></h1><ul>
 <li>与模板模式类似，建造者模式增加建造者且模板父类中增加了方法执行顺序变量sequence</li>
 <li>建造者实现两个方法：一个返回要建造的对象，另一个设置要建造的对象中的通用方法中调用自身方法的顺序</li>
@@ -734,18 +735,15 @@ public class Client {
 }
 </code></pre><hr>
 <h1 id="抽象工厂模式"><a href="#抽象工厂模式" class="headerlink" title="抽象工厂模式"></a><center>抽象工厂模式</center></h1><ul>
-<li><p>代码</p>
+<li>代码</li>
+</ul>
 <pre><code>public interface HumanInterface {
-
     public void laugh();
-
     public void cry();
-
     public void talk();
-
     public void sex();
-
 }
+
 
 public abstract class AbstractBlackHuman implements HumanInterface{
 
@@ -762,9 +760,9 @@ public abstract class AbstractBlackHuman implements HumanInterface{
     }
 
 }
-</code></pre></li>
-</ul>
-<pre><code>public abstract class AbstractWhiteHuman implements HumanInterface{
+
+
+public abstract class AbstractWhiteHuman implements HumanInterface{
 
     public void laugh() {
         System.out.println(&quot;白色人类会大笑，侵略的笑声&quot;);
