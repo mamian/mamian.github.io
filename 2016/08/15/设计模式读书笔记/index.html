@@ -272,8 +272,294 @@
 <h1 id="代理模式"><a href="#代理模式" class="headerlink" title="代理模式"></a><center>代理模式</center></h1><hr>
 <h1 id="策略模式"><a href="#策略模式" class="headerlink" title="策略模式"></a><center>策略模式</center></h1><hr>
 <h1 id="备忘录模式"><a href="#备忘录模式" class="headerlink" title="备忘录模式"></a><center>备忘录模式</center></h1><hr>
-<h1 id="模板模式"><a href="#模板模式" class="headerlink" title="模板模式"></a><center>模板模式</center></h1><hr>
-<h1 id="建造者模式"><a href="#建造者模式" class="headerlink" title="建造者模式"></a><center>建造者模式</center></h1><hr>
+<h1 id="模板模式"><a href="#模板模式" class="headerlink" title="模板模式"></a><center>模板模式</center></h1><ul>
+<li>当我们写一个文档时（如需求文档）通常首先要找一个模板，模板里会清楚的写着要写几大模块且说明这些模块的先后顺序。我们再照着模板填充每一模块的具体内容。</li>
+<li>定义一个操作中的算法的框架，而将一些步骤延迟到子类中。使得子类可以不改变一个算法的结构即可重定义该算法的某些特定步骤。</li>
+<li>基本方法：由子类实现的方法，并且在模板方法中被调用。</li>
+<li>模板方法：一个框架，实现对基本方法的调度，完成固定的逻辑。为防止恶意操作，一般模板方法会加final关键字，不允许覆盖。</li>
+<li>父类模板中用一个方法规定了其所有子类要执行的一系列方法的顺序，即定义中所说的算法的框架。在高层的执行步骤是确定的（即每一步要实现什么功能），但具体执行的操作，每个子类均有自己的实现（即每一步具体如何实现，各子类均不同）。</li>
+<li><p>代码</p>
+<pre><code>public abstract class Model {
+
+    protected abstract void start();//protected
+
+    protected abstract void alarm();
+
+    protected abstract void stop();
+
+    public final void run(){//final
+
+        this.start();
+
+        this.alarm();
+
+        this.stop();
+
+    }
+
+}
+
+public class ModelA extends Model{
+
+    protected void start() {
+
+        System.out.println(&quot;车辆A启动&quot;);
+
+    }
+
+    protected void alarm() {
+
+        System.out.println(&quot;车辆A鸣笛&quot;);
+
+    }
+
+    protected void stop() {
+
+        System.out.println(&quot;车辆A刹车&quot;);
+
+    }
+
+}
+</code></pre></li>
+</ul>
+<pre><code>public class ModelB extends Model{
+
+    protected void start() {
+
+        System.out.println(&quot;车辆B启动&quot;);
+
+    }
+
+    protected void alarm() {
+
+        System.out.println(&quot;车辆B鸣笛&quot;);
+
+    }
+
+    protected void stop() {
+
+        System.out.println(&quot;车辆B刹车&quot;);
+
+    }
+
+}
+
+
+
+public class Client {
+
+    public static void main(String[] args){
+
+        Model modelA = new ModelA();
+
+        modelA.run();
+
+
+
+        Model modelB = new ModelB();
+
+        modelB.run();
+
+    }
+
+}
+</code></pre><hr>
+<h1 id="建造者模式"><a href="#建造者模式" class="headerlink" title="建造者模式"></a><center>建造者模式</center></h1><ul>
+<li>与模板模式类似，建造者模式增加建造者且模板父类中增加了方法执行顺序变量sequence</li>
+<li>建造者实现两个方法：一个返回要建造的对象，另一个设置要建造的对象中的通用方法中调用自身方法的顺序</li>
+<li>Client中实例sequence和具体Builder，并执行Builder中的model的某方法。</li>
+<li><p>代码</p>
+<pre><code>public abstract class Model {
+
+    private ArrayList&lt;String&gt; sequence = new ArrayList&lt;String&gt;();
+</code></pre></li>
+</ul>
+<pre><code>    public final void setSequence(ArrayList&lt;String&gt; sequence){
+
+        this.sequence = sequence;
+
+    }
+
+    final public void run(){
+
+        for(int i=0;i&lt;sequence.size();i++){
+
+            String nowOrperate = sequence.get(i);
+
+            if(nowOrperate.equals(&quot;start&quot;)){
+
+                this.start();
+
+            }else if(nowOrperate.equals(&quot;alarm&quot;)){
+
+                this.alarm();
+
+            }else if(nowOrperate.equals(&quot;stop&quot;)){
+
+                this.stop();
+
+            }
+
+        }
+
+    }
+
+
+
+    protected abstract void start();
+
+    protected abstract void alarm();
+
+    protected abstract void stop();
+
+}
+
+public class ModelA extends Model{
+
+    protected void start() {
+
+        System.out.println(&quot;车辆A启动&quot;);
+
+    }
+
+    protected void alarm() {
+
+        System.out.println(&quot;车辆A鸣笛&quot;);
+
+    }
+
+    protected void stop() {
+
+        System.out.println(&quot;车辆A刹车&quot;);
+
+    }
+
+}
+
+
+
+public class ModelB extends Model{
+
+    protected void start() {
+
+        System.out.println(&quot;车辆B启动&quot;);
+
+    }
+
+    protected void alarm() {
+
+        System.out.println(&quot;车辆B鸣笛&quot;);
+
+    }
+
+    protected void stop() {
+
+        System.out.println(&quot;车辆B刹车&quot;);
+
+    }
+
+}
+
+
+
+public abstract class Builder {
+
+    public abstract void setSequence(ArrayList&lt;String&gt; sequence);
+
+    public abstract Model getModel();
+
+}
+
+
+
+public class BuilderA extends Builder{
+
+    private ModelA modelA = new ModelA();
+
+
+
+    public void setSequence(ArrayList&lt;String&gt; sequence) {
+
+        modelA.setSequence(sequence);
+
+    }
+
+    public Model getModel() {
+
+        return modelA;
+
+    }
+
+}
+
+
+
+public class BuilderB extends Builder{
+
+    private ModelB modelB = new ModelB();
+
+
+
+    public void setSequence(ArrayList&lt;String&gt; sequence) {
+
+        modelB.setSequence(sequence);
+
+    }
+
+    public Model getModel() {
+
+        return modelB;
+
+    }
+
+}
+
+
+
+public class Client {
+
+    public static void main(String[] args){
+
+        ArrayList&lt;String&gt; sequence1 = new ArrayList&lt;String&gt;();
+
+        sequence1.add(&quot;alarm&quot;);
+
+        sequence1.add(&quot;start&quot;);
+
+        sequence1.add(&quot;stop&quot;);
+
+
+
+        Builder builderA = new BuilderA();
+
+        builderA.setSequence(sequence1);
+
+        builderA.getModel().run();
+
+
+
+
+
+        ArrayList&lt;String&gt; sequence2 = new ArrayList&lt;String&gt;();
+
+        sequence2.add(&quot;start&quot;);
+
+        sequence2.add(&quot;alarm&quot;);
+
+        sequence2.add(&quot;stop&quot;);
+
+
+
+        Builder builderB = new BuilderB();
+
+        builderB.setSequence(sequence2);
+
+        builderB.getModel().run();
+
+    }
+
+}
+</code></pre><hr>
 <h1 id="原型模式"><a href="#原型模式" class="headerlink" title="原型模式"></a><center>原型模式</center></h1><hr>
 <h1 id="门面模式"><a href="#门面模式" class="headerlink" title="门面模式"></a><center>门面模式</center></h1><hr>
 <h1 id="享元模式"><a href="#享元模式" class="headerlink" title="享元模式"></a><center>享元模式</center></h1><hr>
@@ -293,9 +579,8 @@
     }
 
 }
-</code></pre></li>
-</ul>
-<pre><code>public class OperaterAdd extends Operater{
+
+public class OperaterAdd extends Operater{
 
     public int getResult(int addA,int addB){
 
@@ -306,10 +591,9 @@
     }
 
 }
-
-
-
-public class OperaterDiv extends Operater{
+</code></pre></li>
+</ul>
+<pre><code>public class OperaterDiv extends Operater{
 
     public int getResult(int divA,int divB){
 
@@ -372,9 +656,8 @@ public class Client {
     public void talk();
 
 }
-</code></pre></li>
-</ul>
-<pre><code>public class BlackHuman implements HumanInterface{
+
+public class BlackHuman implements HumanInterface{
 
     public void laugh() {
 
@@ -395,10 +678,9 @@ public class Client {
     }
 
 }
-
-
-
-public class WhiteHuman implements HumanInterface{
+</code></pre></li>
+</ul>
+<pre><code>public class WhiteHuman implements HumanInterface{
 
     public void laugh() {
 
@@ -641,33 +923,31 @@ public class Client {
         public void sex();
 
     }
+
+    public abstract class AbstractBlackHuman implements HumanInterface{
+
+        public void laugh() {
+
+            System.out.println(&quot;黑人会笑&quot;);
+
+        }
+
+        public void cry() {
+
+            System.out.println(&quot;黑人会哭&quot;);
+
+        }
+
+        public void talk() {
+
+            System.out.println(&quot;黑人可以说话，一般人听不懂&quot;);
+
+        }
+
+    }
 </code></pre></li>
 </ul>
-<pre><code>public abstract class AbstractBlackHuman implements HumanInterface{
-
-    public void laugh() {
-
-        System.out.println(&quot;黑人会笑&quot;);
-
-    }
-
-    public void cry() {
-
-        System.out.println(&quot;黑人会哭&quot;);
-
-    }
-
-    public void talk() {
-
-        System.out.println(&quot;黑人可以说话，一般人听不懂&quot;);
-
-    }
-
-}
-
-
-
-public abstract class AbstractWhiteHuman implements HumanInterface{
+<pre><code>public abstract class AbstractWhiteHuman implements HumanInterface{
 
     public void laugh() {
 
