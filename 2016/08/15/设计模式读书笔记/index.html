@@ -320,9 +320,8 @@ public class ModelA extends Model{
     }
 
 }
-</code></pre></li>
-</ul>
-<pre><code>public class ModelB extends Model{
+
+public class ModelB extends Model{
 
     protected void start() {
 
@@ -344,8 +343,6 @@ public class ModelA extends Model{
 
 }
 
-
-
 public class Client {
 
     public static void main(String[] args){
@@ -353,10 +350,9 @@ public class Client {
         Model modelA = new ModelA();
 
         modelA.run();
-
-
-
-        Model modelB = new ModelB();
+</code></pre></li>
+</ul>
+<pre><code>        Model modelB = new ModelB();
 
         modelB.run();
 
@@ -372,9 +368,8 @@ public class Client {
 <pre><code>public abstract class Model {
 
     private ArrayList&lt;String&gt; sequence = new ArrayList&lt;String&gt;();
-</code></pre></li>
-</ul>
-<pre><code>    public final void setSequence(ArrayList&lt;String&gt; sequence){
+
+    public final void setSequence(ArrayList&lt;String&gt; sequence){
 
         this.sequence = sequence;
 
@@ -403,8 +398,6 @@ public class Client {
         }
 
     }
-
-
 
     protected abstract void start();
 
@@ -436,8 +429,6 @@ public class ModelA extends Model{
 
 }
 
-
-
 public class ModelB extends Model{
 
     protected void start() {
@@ -460,8 +451,6 @@ public class ModelB extends Model{
 
 }
 
-
-
 public abstract class Builder {
 
     public abstract void setSequence(ArrayList&lt;String&gt; sequence);
@@ -470,15 +459,12 @@ public abstract class Builder {
 
 }
 
-
-
 public class BuilderA extends Builder{
 
     private ModelA modelA = new ModelA();
-
-
-
-    public void setSequence(ArrayList&lt;String&gt; sequence) {
+</code></pre></li>
+</ul>
+<pre><code>    public void setSequence(ArrayList&lt;String&gt; sequence) {
 
         modelA.setSequence(sequence);
 
@@ -491,8 +477,6 @@ public class BuilderA extends Builder{
     }
 
 }
-
-
 
 public class BuilderB extends Builder{
 
@@ -514,8 +498,6 @@ public class BuilderB extends Builder{
 
 }
 
-
-
 public class Client {
 
     public static void main(String[] args){
@@ -529,13 +511,11 @@ public class Client {
         sequence1.add(&quot;stop&quot;);
 
 
-
         Builder builderA = new BuilderA();
 
         builderA.setSequence(sequence1);
 
         builderA.getModel().run();
-
 
 
 
@@ -914,37 +894,37 @@ public class Client {
 <li><p>代码</p>
 <pre><code>public interface HumanInterface {
 
-        public void laugh();
+    public void laugh();
 
-        public void cry();
+    public void cry();
 
-        public void talk();
+    public void talk();
 
-        public void sex();
+    public void sex();
+
+}
+
+public abstract class AbstractBlackHuman implements HumanInterface{
+
+    public void laugh() {
+
+        System.out.println(&quot;黑人会笑&quot;);
+
+    }
+
+    public void cry() {
+
+        System.out.println(&quot;黑人会哭&quot;);
 
     }
 
-    public abstract class AbstractBlackHuman implements HumanInterface{
+    public void talk() {
 
-        public void laugh() {
-
-            System.out.println(&quot;黑人会笑&quot;);
-
-        }
-
-        public void cry() {
-
-            System.out.println(&quot;黑人会哭&quot;);
-
-        }
-
-        public void talk() {
-
-            System.out.println(&quot;黑人可以说话，一般人听不懂&quot;);
-
-        }
+        System.out.println(&quot;黑人可以说话，一般人听不懂&quot;);
 
     }
+
+}
 </code></pre></li>
 </ul>
 <pre><code>public abstract class AbstractWhiteHuman implements HumanInterface{
