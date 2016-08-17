@@ -290,9 +290,7 @@
     public final void run(){//final
 
         this.start();
-
         this.alarm();
-
         this.stop();
 
     }
@@ -302,21 +300,15 @@
 public class ModelA extends Model{
 
     protected void start() {
-
         System.out.println(&quot;车辆A启动&quot;);
-
     }
 
     protected void alarm() {
-
         System.out.println(&quot;车辆A鸣笛&quot;);
-
     }
 
     protected void stop() {
-
         System.out.println(&quot;车辆A刹车&quot;);
-
     }
 
 }
@@ -324,21 +316,15 @@ public class ModelA extends Model{
 public class ModelB extends Model{
 
     protected void start() {
-
         System.out.println(&quot;车辆B启动&quot;);
-
     }
 
     protected void alarm() {
-
         System.out.println(&quot;车辆B鸣笛&quot;);
-
     }
 
     protected void stop() {
-
         System.out.println(&quot;车辆B刹车&quot;);
-
     }
 
 }
@@ -346,16 +332,12 @@ public class ModelB extends Model{
 public class Client {
 
     public static void main(String[] args){
-
         Model modelA = new ModelA();
-
         modelA.run();
 </code></pre></li>
 </ul>
 <pre><code>        Model modelB = new ModelB();
-
         modelB.run();
-
     }
 
 }
@@ -382,17 +364,11 @@ public class Client {
             String nowOrperate = sequence.get(i);
 
             if(nowOrperate.equals(&quot;start&quot;)){
-
                 this.start();
-
             }else if(nowOrperate.equals(&quot;alarm&quot;)){
-
                 this.alarm();
-
             }else if(nowOrperate.equals(&quot;stop&quot;)){
-
                 this.stop();
-
             }
 
         }
@@ -410,21 +386,15 @@ public class Client {
 public class ModelA extends Model{
 
     protected void start() {
-
         System.out.println(&quot;车辆A启动&quot;);
-
     }
 
     protected void alarm() {
-
         System.out.println(&quot;车辆A鸣笛&quot;);
-
     }
 
     protected void stop() {
-
         System.out.println(&quot;车辆A刹车&quot;);
-
     }
 
 }
@@ -432,21 +402,15 @@ public class ModelA extends Model{
 public class ModelB extends Model{
 
     protected void start() {
-
         System.out.println(&quot;车辆B启动&quot;);
-
     }
 
     protected void alarm() {
-
         System.out.println(&quot;车辆B鸣笛&quot;);
-
     }
 
     protected void stop() {
-
         System.out.println(&quot;车辆B刹车&quot;);
-
     }
 
 }
@@ -462,18 +426,13 @@ public abstract class Builder {
 public class BuilderA extends Builder{
 
     private ModelA modelA = new ModelA();
-</code></pre></li>
-</ul>
-<pre><code>    public void setSequence(ArrayList&lt;String&gt; sequence) {
 
+    public void setSequence(ArrayList&lt;String&gt; sequence) {
         modelA.setSequence(sequence);
-
     }
 
     public Model getModel() {
-
         return modelA;
-
     }
 
 }
@@ -482,17 +441,12 @@ public class BuilderB extends Builder{
 
     private ModelB modelB = new ModelB();
 
-
     public void setSequence(ArrayList&lt;String&gt; sequence) {
-
         modelB.setSequence(sequence);
-
     }
 
     public Model getModel() {
-
         return modelB;
-
     }
 
 }
@@ -504,40 +458,27 @@ public class Client {
         ArrayList&lt;String&gt; sequence1 = new ArrayList&lt;String&gt;();
 
         sequence1.add(&quot;alarm&quot;);
-
         sequence1.add(&quot;start&quot;);
-
         sequence1.add(&quot;stop&quot;);
 
-
         Builder builderA = new BuilderA();
-
         builderA.setSequence(sequence1);
-
         builderA.getModel().run();
 
-
-
         ArrayList&lt;String&gt; sequence2 = new ArrayList&lt;String&gt;();
-
         sequence2.add(&quot;start&quot;);
-
         sequence2.add(&quot;alarm&quot;);
-
         sequence2.add(&quot;stop&quot;);
 
-
-
         Builder builderB = new BuilderB();
-
         builderB.setSequence(sequence2);
-
         builderB.getModel().run();
-
     }
 
 }
-</code></pre><hr>
+</code></pre></li>
+</ul>
+<hr>
 <h1 id="原型模式"><a href="#原型模式" class="headerlink" title="原型模式"></a><center>原型模式</center></h1><hr>
 <h1 id="门面模式"><a href="#门面模式" class="headerlink" title="门面模式"></a><center>门面模式</center></h1><hr>
 <h1 id="享元模式"><a href="#享元模式" class="headerlink" title="享元模式"></a><center>享元模式</center></h1><hr>
@@ -551,9 +492,7 @@ public class Client {
 <pre><code>public class Operater {
 
     public int getResult(int a,int b){
-
         return 0;
-
     }
 
 }
@@ -561,11 +500,8 @@ public class Client {
 public class OperaterAdd extends Operater{
 
     public int getResult(int addA,int addB){
-
         System.out.println(&quot;加法&quot;);
-
         return addA+addB;
-
     }
 
 }
@@ -574,11 +510,8 @@ public class OperaterAdd extends Operater{
 <pre><code>public class OperaterDiv extends Operater{
 
     public int getResult(int divA,int divB){
-
         System.out.println(&quot;除法&quot;);
-
         return divA/divB;
-
     }
 
 }
@@ -590,19 +523,12 @@ public class Factory {
     private static Operater operater;
 
     public static Operater createOperater(char choose){
-
         switch(choose){
-
             case &apos;+&apos;:
-
                 operater = new OperaterAdd();break;
-
             case &apos;/&apos;:
-
                 operater = new OperaterDiv();break;
-
         }
-
         return operater;
 
     }
@@ -611,15 +537,10 @@ public class Factory {
 
 
 public class Client {
-
     public static void main(String[] args){
-
         Operater operater = Factory.createOperater(&apos;+&apos;);
-
         int result = operater.getResult(15,25);
-
     }
-
 }
 </code></pre><hr>
 <h1 id="工厂模式"><a href="#工厂模式" class="headerlink" title="工厂模式"></a><center>工厂模式</center></h1><ul>
@@ -637,21 +558,15 @@ public class Client {
 public class BlackHuman implements HumanInterface{
 
     public void laugh() {
-
         System.out.println(&quot;黑人会笑&quot;);
-
     }
 
     public void cry() {
-
         System.out.println(&quot;黑人会哭&quot;);
-
     }
 
     public void talk() {
-
         System.out.println(&quot;黑人可以说话，一般人听不懂&quot;);
-
     }
 
 }
@@ -660,21 +575,15 @@ public class BlackHuman implements HumanInterface{
 <pre><code>public class WhiteHuman implements HumanInterface{
 
     public void laugh() {
-
         System.out.println(&quot;白色人类会大笑，侵略的笑声&quot;);
-
     }
 
     public void cry() {
-
         System.out.println(&quot;白色人类会哭&quot;);
-
     }
 
     public void talk() {
-
         System.out.println(&quot;白色人类会说话，一般都是但是单字节！&quot;);
-
     }
 
 }
@@ -683,21 +592,15 @@ public class BlackHuman implements HumanInterface{
 public class YellowHuman implements HumanInterface{
 
     public void laugh() {
-
         System.out.println(&quot;黄色人类会大笑，幸福呀！&quot;);
-
     }
 
     public void cry() {
-
         System.out.println(&quot;黄色人类会哭&quot;);
-
     }
 
     public void talk() {
-
         System.out.println(&quot;黄色人类会说话，一般说的都是双字节&quot;);
-
     }
 
 }
@@ -716,74 +619,43 @@ public class ClassUtils {
         if(c.isInterface()){
 
             String packageName = c.getPackage().getName(); //获得当前的包名
-
             try {
-
                 List&lt;Class&gt; allClass = getClasses(packageName);//获得当前包下以及子包下的所有类
-
                 //判断是否是同一个接口
-
                 for(int i=0;i&lt;allClass.size();i++){
-
                     if(c.isAssignableFrom(allClass.get(i))){//判断是不是一个接口
-
                         if(!c.equals(allClass.get(i))){//本身不加进去
-
                             returnClassList.add(allClass.get(i));
-
                         }
-
                     }
-
                 }
-
             } catch (ClassNotFoundException e) {
-
                 e.printStackTrace();
-
             } catch (IOException e) {
-
                 e.printStackTrace();
-
             }
-
         }
-
         return returnClassList;
-
     }
-
 
     //从一个包中查找出所有的类，在jar包中不能查找
 
     private static List&lt;Class&gt; getClasses(String packageName)throws ClassNotFoundException, IOException {
 
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-
         String path = packageName.replace(&apos;.&apos;, &apos;/&apos;);
-
         Enumeration&lt;URL&gt; resources = classLoader.getResources(path);
-
         List&lt;File&gt; dirs = new ArrayList&lt;File&gt;();
-
         while (resources.hasMoreElements()) {
-
             URL resource = resources.nextElement();
-
             dirs.add(new File(resource.getFile()));
-
         }
 
         ArrayList&lt;Class&gt; classes = new ArrayList&lt;Class&gt;();
-
         for (File directory : dirs) {
-
             classes.addAll(findClasses(directory, packageName));
-
         }
-
         return classes;
-
     }
 
 
@@ -792,33 +664,20 @@ public class ClassUtils {
         List&lt;Class&gt; classes = new ArrayList&lt;Class&gt;();
 
         if (!directory.exists()) {
-
             return classes;
-
         }
 
         File[] files = directory.listFiles();
-
         for (File file : files) {
-
             if (file.isDirectory()) {
-
                 assert !file.getName().contains(&quot;.&quot;);
-
                 classes.addAll(findClasses(file, packageName + &quot;.&quot; + file.getName()));
-
             } else if (file.getName().endsWith(&quot;.class&quot;)) {
-
                 classes.add(Class.forName(packageName + &apos;.&apos; + file.getName().substring(0, file.getName().length() - 6)));
-
             }
-
         }
-
         return classes;
-
     }
-
 }
 
 
@@ -833,9 +692,7 @@ public class Client {
         HumanInterface whiteHuman = HumanFactory.createHuman(WhiteHuman.class);
 
         whiteHuman.cry();
-
         whiteHuman.laugh();
-
         whiteHuman.talk();
 
         //女娲第二次造人，火候加足点，然后又出了个次品，黑人
@@ -845,9 +702,7 @@ public class Client {
         HumanInterface blackHuman = HumanFactory.createHuman(BlackHuman.class);
 
         blackHuman.cry();
-
         blackHuman.laugh();
-
         blackHuman.talk();
 
         //第三批人了，这次火候掌握的正好，黄色人类（不写黄人，免得引起歧义），备注：RB人不属于此列
@@ -857,9 +712,7 @@ public class Client {
         HumanInterface yellowHuman = HumanFactory.createHuman(YellowHuman.class);
 
         yellowHuman.cry();
-
         yellowHuman.laugh();
-
         yellowHuman.talk();
 
         //女娲烦躁了，爱是啥人类就是啥人类，烧吧
@@ -871,9 +724,7 @@ public class Client {
             HumanInterface human = HumanFactory.createHuman();
 
             human.cry();
-
             human.laugh();
-
             human.talk();
 
         }
@@ -899,21 +750,15 @@ public class Client {
 public abstract class AbstractBlackHuman implements HumanInterface{
 
     public void laugh() {
-
         System.out.println(&quot;黑人会笑&quot;);
-
     }
 
     public void cry() {
-
         System.out.println(&quot;黑人会哭&quot;);
-
     }
 
     public void talk() {
-
         System.out.println(&quot;黑人可以说话，一般人听不懂&quot;);
-
     }
 
 }
@@ -922,21 +767,15 @@ public abstract class AbstractBlackHuman implements HumanInterface{
 <pre><code>public abstract class AbstractWhiteHuman implements HumanInterface{
 
     public void laugh() {
-
         System.out.println(&quot;白色人类会大笑，侵略的笑声&quot;);
-
     }
 
     public void cry() {
-
         System.out.println(&quot;白色人类会哭&quot;);
-
     }
 
     public void talk() {
-
         System.out.println(&quot;白色人类会说话，一般都是但是单字节！&quot;);
-
     }
 
 }
@@ -945,21 +784,15 @@ public abstract class AbstractBlackHuman implements HumanInterface{
 public abstract class AbstractYellowHuman implements HumanInterface{
 
     public void laugh() {
-
         System.out.println(&quot;黄色人类会大笑，幸福呀！&quot;);
-
     }
 
     public void cry() {
-
         System.out.println(&quot;黄色人类会哭&quot;);
-
     }
 
     public void talk() {
-
         System.out.println(&quot;黄色人类会说话，一般说的都是双字节&quot;);
-
     }
 
 }
@@ -968,9 +801,7 @@ public abstract class AbstractYellowHuman implements HumanInterface{
 public class BlackHuman_Female extends AbstractBlackHuman{
 
     public void sex(){
-
         System.out.println(&quot;该黑种人的性别为女...&quot;);
-
     }
 
 }
@@ -979,9 +810,7 @@ public class BlackHuman_Female extends AbstractBlackHuman{
 public class BlackHuman_Male extends AbstractBlackHuman{
 
     public void sex(){
-
         System.out.println(&quot;该黑种人的性别为男...&quot;);
-
     }
 
 }
@@ -990,9 +819,7 @@ public class BlackHuman_Male extends AbstractBlackHuman{
 public class WhiteHuman_Female extends AbstractWhiteHuman{
 
     public void sex(){
-
         System.out.println(&quot;该白种人的性别为女...&quot;);
-
     }
 
 }
@@ -1001,9 +828,7 @@ public class WhiteHuman_Female extends AbstractWhiteHuman{
 public class WhiteHuman_Male extends AbstractWhiteHuman{
 
     public void sex(){
-
         System.out.println(&quot;该白种人的性别为男...&quot;);
-
     }
 
 }
@@ -1013,9 +838,7 @@ public class WhiteHuman_Male extends AbstractWhiteHuman{
 public class YellowHuman_Female extends AbstractYellowHuman{
 
     public void sex(){
-
         System.out.println(&quot;该黄种人的性别为女...&quot;);
-
     }
 
 }
@@ -1025,9 +848,7 @@ public class YellowHuman_Female extends AbstractYellowHuman{
 public class YellowHuman_Male extends AbstractYellowHuman{
 
     public void sex(){
-
         System.out.println(&quot;该黄种人的性别为男...&quot;);
-
     }
 
 }
@@ -1055,17 +876,13 @@ public enum HumanEnum {
     //定义构造函数，目的是Data(value)类型的相匹配
 
     private HumanEnum(String value){
-
         this.value = value;
-
     }
 
     private String value = &quot;&quot;;
 
     public String getValue(){
-
         return this.value;
-
     }
 
 }
@@ -1091,29 +908,18 @@ public abstract class AbstractHumanFactory implements HumanFactoryInterface{
         HumanInterface human = null;
 
         //如果传递进来不是一个Enum中具体的一个Element的话，则不处理
-
         if (!humanEnum.getValue().equals(&quot;&quot;)) {
-
             try {
-
                 //直接产生一个实例
-
                 human = (HumanInterface) Class.forName(humanEnum.getValue()).newInstance();
 
             } catch (Exception e) {
-
                 //因为使用了enum，这个种异常情况不会产生了，除非你的enum有问题；
-
                 e.printStackTrace();
-
             }
-
         }
-
         return human;
-
     }
-
 }
 
 
@@ -1121,21 +927,15 @@ public abstract class AbstractHumanFactory implements HumanFactoryInterface{
 public class HumanFactory_Female extends AbstractHumanFactory{
 
     public HumanInterface createBlackHuman() {//创建一个女性黑种人
-
         return super.createHuman(HumanEnum.BlackFemaleHuman);
-
     }
 
     public HumanInterface createWhiteHuman() {//创建一个女性白种人
-
         return super.createHuman(HumanEnum.WhiteFemaleHuman);
-
     }
 
     public HumanInterface createYellowHuman() {//创建一个女性黄种人
-
         return super.createHuman(HumanEnum.YelloFemaleHuman);
-
     }
 
 }
@@ -1145,21 +945,15 @@ public class HumanFactory_Female extends AbstractHumanFactory{
 public class HumanFactory_Male extends AbstractHumanFactory{
 
     public HumanInterface createBlackHuman() {//创建一个男性黑种人
-
         return super.createHuman(HumanEnum.BlackMaleHuman);
-
     }
 
     public HumanInterface createWhiteHuman() {//创建一个男性白种人
-
         return super.createHuman(HumanEnum.WhiteMaleHuman);
-
     }
 
     public HumanInterface createYellowHuman() {//创建一个男性黄种人
-
         return super.createHuman(HumanEnum.YelloMaleHuman);
-
     }
 
 }
@@ -1185,11 +979,8 @@ public class Client {
         HumanInterface maleYellowHuman = maleHumanFactory.createYellowHuman();
 
         HumanInterface femaleYellowHuman = femaleHumanFactory.createYellowHuman();
-
         maleYellowHuman.cry();
-
         maleYellowHuman.laugh();
-
         femaleYellowHuman.sex();
 
 
