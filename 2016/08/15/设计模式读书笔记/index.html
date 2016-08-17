@@ -483,7 +483,6 @@ public class BuilderB extends Builder{
     private ModelB modelB = new ModelB();
 
 
-
     public void setSequence(ArrayList&lt;String&gt; sequence) {
 
         modelB.setSequence(sequence);
@@ -516,7 +515,6 @@ public class Client {
         builderA.setSequence(sequence1);
 
         builderA.getModel().run();
-
 
 
 
@@ -612,7 +610,6 @@ public class Factory {
 }
 
 
-
 public class Client {
 
     public static void main(String[] args){
@@ -683,7 +680,6 @@ public class BlackHuman implements HumanInterface{
 }
 
 
-
 public class YellowHuman implements HumanInterface{
 
     public void laugh() {
@@ -705,7 +701,6 @@ public class YellowHuman implements HumanInterface{
     }
 
 }
-
 
 
 public class ClassUtils {
@@ -759,7 +754,6 @@ public class ClassUtils {
     }
 
 
-
     //从一个包中查找出所有的类，在jar包中不能查找
 
     private static List&lt;Class&gt; getClasses(String packageName)throws ClassNotFoundException, IOException {
@@ -791,7 +785,6 @@ public class ClassUtils {
         return classes;
 
     }
-
 
 
     private static List&lt;Class&gt; findClasses(File directory, String packageName) throws ClassNotFoundException {
@@ -827,7 +820,6 @@ public class ClassUtils {
     }
 
 }
-
 
 
 public class Client {
@@ -950,7 +942,6 @@ public abstract class AbstractBlackHuman implements HumanInterface{
 }
 
 
-
 public abstract class AbstractYellowHuman implements HumanInterface{
 
     public void laugh() {
@@ -974,7 +965,6 @@ public abstract class AbstractYellowHuman implements HumanInterface{
 }
 
 
-
 public class BlackHuman_Female extends AbstractBlackHuman{
 
     public void sex(){
@@ -984,7 +974,6 @@ public class BlackHuman_Female extends AbstractBlackHuman{
     }
 
 }
-
 
 
 public class BlackHuman_Male extends AbstractBlackHuman{
@@ -998,7 +987,6 @@ public class BlackHuman_Male extends AbstractBlackHuman{
 }
 
 
-
 public class WhiteHuman_Female extends AbstractWhiteHuman{
 
     public void sex(){
@@ -1008,7 +996,6 @@ public class WhiteHuman_Female extends AbstractWhiteHuman{
     }
 
 }
-
 
 
 public class WhiteHuman_Male extends AbstractWhiteHuman{
