@@ -269,7 +269,106 @@
 <h1 id="观察者模式"><a href="#观察者模式" class="headerlink" title="观察者模式"></a><center>观察者模式</center></h1><hr>
 <h1 id="命令模式"><a href="#命令模式" class="headerlink" title="命令模式"></a><center>命令模式</center></h1><hr>
 <h1 id="中介者模式"><a href="#中介者模式" class="headerlink" title="中介者模式"></a><center>中介者模式</center></h1><hr>
-<h1 id="代理模式"><a href="#代理模式" class="headerlink" title="代理模式"></a><center>代理模式</center></h1><hr>
+<h1 id="代理模式"><a href="#代理模式" class="headerlink" title="代理模式"></a><center>代理模式</center></h1><ul>
+<li>为其他对象提供一种代理以控制对这个对象的访问。</li>
+<li>代理模式也叫做委托模式，许多其他的模式如状态模式、策略模式、访问者模式本质上是在更特殊的场合采用了委托模式。</li>
+<li>struts2的form元素映射就采用了动态代理模式。spring aop是非常典型的动态代理。</li>
+<li>GG请Proxy代替他去追MM,GG包含一个MM,Proxy包含一个GG</li>
+<li>Proxy的方法中执行的是GG的同名方法Proxy</li>
+<li>Proxy与GG具有相同的方法，抽取其共性为Same_ProxyAndGG</li>
+<li>代码</li>
+</ul>
+<pre><code>public class Same_ProxyAndGG {
+
+    public void giveGiftA(){
+    }
+
+    public void giveGiftB(){
+    }
+
+    public void giveGiftC(){
+    }
+
+}
+
+
+public class MM {
+
+    private String name;//set  get
+
+    public MM(String name) {
+        this.name = name;
+    }
+
+}
+
+
+public class GG extends Same_ProxyAndGG{
+
+    private MM mm;
+
+    public GG(MM mm){
+        this.mm = mm;
+    }
+
+    public void giveGiftA(){
+        System.out.println(&quot;GG送给&quot;+mm.getName()+&quot; GiftA&quot;);
+    }
+
+    public void giveGiftB(){
+        System.out.println(&quot;GG送给&quot;+mm.getName()+&quot; GiftB&quot;);
+    }
+
+    public void giveGiftC(){
+        System.out.println(&quot;GG送给&quot;+mm.getName()+&quot; GiftC&quot;);
+    }
+
+}
+
+
+public class Proxy extends Same_ProxyAndGG{
+
+    private GG gg;
+
+    public Proxy(GG gg) {
+        this.gg = gg;
+    }
+
+    public void giveGiftA(){
+        gg.giveGiftA();
+    }
+
+    public void giveGiftB(){
+        gg.giveGiftB();
+    }
+
+    public void giveGiftC(){
+        gg.giveGiftC();
+    }
+
+}
+
+
+public class Client {
+    public static void main(String[] args){
+
+        MM mm = new MM(&quot;漂亮妹纸&quot;);
+        GG gg = new GG(mm);
+
+        Proxy proxy = new Proxy(gg);
+
+
+
+        proxy.giveGiftA();
+        proxy.giveGiftB();
+        proxy.giveGiftC();
+    }
+}
+</code></pre><h3 id="动态代理（spring-aop）"><a href="#动态代理（spring-aop）" class="headerlink" title="动态代理（spring aop）"></a>动态代理（spring aop）</h3><ul>
+<li>动态代理是在实现阶段不用关心代理谁，在运行阶段才指定代理哪一个对象。</li>
+<li>aop：切面(Aspect)、切入点(JoinPoint)、通知(Advice)、织入(Weave)</li>
+</ul>
+<hr>
 <h1 id="策略模式"><a href="#策略模式" class="headerlink" title="策略模式"></a><center>策略模式</center></h1><hr>
 <h1 id="备忘录模式"><a href="#备忘录模式" class="headerlink" title="备忘录模式"></a><center>备忘录模式</center></h1><hr>
 <h1 id="模板模式"><a href="#模板模式" class="headerlink" title="模板模式"></a><center>模板模式</center></h1><ul>
@@ -343,9 +442,12 @@ public class Client {
 }
 </code></pre><hr>
 <h1 id="建造者模式"><a href="#建造者模式" class="headerlink" title="建造者模式"></a><center>建造者模式</center></h1><ul>
+<li>定义：将一个复杂对象的构建与它的表示分离，使得同样的构建过程可以创建不同的表示。</li>
 <li>与模板模式类似，建造者模式增加建造者且模板父类中增加了方法执行顺序变量sequence</li>
 <li>建造者实现两个方法：一个返回要建造的对象，另一个设置要建造的对象中的通用方法中调用自身方法的顺序</li>
 <li>Client中实例sequence和具体Builder，并执行Builder中的model的某方法。</li>
+<li>具体建建类封装了构建细节，并返回构建好的对象。</li>
+<li>与工厂模式的区别：建造者模块关注方法执行的顺序（方法本身已实现），即零件的组装顺序不同产生的对象也不同；工厂模式关注零件本身的创建，不关注组装顺序。</li>
 <li>代码</li>
 </ul>
 <pre><code>public abstract class Model {
