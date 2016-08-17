@@ -278,7 +278,8 @@
 <li>基本方法：由子类实现的方法，并且在模板方法中被调用。</li>
 <li>模板方法：一个框架，实现对基本方法的调度，完成固定的逻辑。为防止恶意操作，一般模板方法会加final关键字，不允许覆盖。</li>
 <li>父类模板中用一个方法规定了其所有子类要执行的一系列方法的顺序，即定义中所说的算法的框架。在高层的执行步骤是确定的（即每一步要实现什么功能），但具体执行的操作，每个子类均有自己的实现（即每一步具体如何实现，各子类均不同）。</li>
-<li><p>代码</p>
+<li>代码</li>
+</ul>
 <pre><code>public abstract class Model {
 
     protected abstract void start();//protected
@@ -340,14 +341,13 @@ public class Client {
     }
 
 }
-</code></pre></li>
-</ul>
-<hr>
+</code></pre><hr>
 <h1 id="建造者模式"><a href="#建造者模式" class="headerlink" title="建造者模式"></a><center>建造者模式</center></h1><ul>
 <li>与模板模式类似，建造者模式增加建造者且模板父类中增加了方法执行顺序变量sequence</li>
 <li>建造者实现两个方法：一个返回要建造的对象，另一个设置要建造的对象中的通用方法中调用自身方法的顺序</li>
 <li>Client中实例sequence和具体Builder，并执行Builder中的model的某方法。</li>
-<li><p>代码</p>
+<li>代码</li>
+</ul>
 <pre><code>public abstract class Model {
 
     private ArrayList&lt;String&gt; sequence = new ArrayList&lt;String&gt;();
@@ -477,9 +477,7 @@ public class Client {
     }
 
 }
-</code></pre></li>
-</ul>
-<hr>
+</code></pre><hr>
 <h1 id="原型模式"><a href="#原型模式" class="headerlink" title="原型模式"></a><center>原型模式</center></h1><hr>
 <h1 id="门面模式"><a href="#门面模式" class="headerlink" title="门面模式"></a><center>门面模式</center></h1><hr>
 <h1 id="享元模式"><a href="#享元模式" class="headerlink" title="享元模式"></a><center>享元模式</center></h1><hr>
@@ -489,7 +487,8 @@ public class Client {
 <h1 id="装饰模式"><a href="#装饰模式" class="headerlink" title="装饰模式"></a><center>装饰模式</center></h1><hr>
 <h1 id="简单工厂模式"><a href="#简单工厂模式" class="headerlink" title="简单工厂模式"></a><center>简单工厂模式</center></h1><ul>
 <li>Client中将参数传递给Factory，Factory根据参数决定生产哪个具体的实例类。</li>
-<li><p>代码</p>
+<li>代码</li>
+</ul>
 <pre><code>public class Operater {
 
     public int getResult(int a,int b){
@@ -506,9 +505,9 @@ public class OperaterAdd extends Operater{
     }
 
 }
-</code></pre></li>
-</ul>
-<pre><code>public class OperaterDiv extends Operater{
+
+
+public class OperaterDiv extends Operater{
 
     public int getResult(int divA,int divB){
         System.out.println(&quot;除法&quot;);
@@ -545,7 +544,8 @@ public class Client {
 }
 </code></pre><hr>
 <h1 id="工厂模式"><a href="#工厂模式" class="headerlink" title="工厂模式"></a><center>工厂模式</center></h1><ul>
-<li><p>代码</p>
+<li>代码</li>
+</ul>
 <pre><code>public interface HumanInterface {
 
     public void laugh();
@@ -571,9 +571,9 @@ public class BlackHuman implements HumanInterface{
     }
 
 }
-</code></pre></li>
-</ul>
-<pre><code>public class WhiteHuman implements HumanInterface{
+
+
+public class WhiteHuman implements HumanInterface{
 
     public void laugh() {
         System.out.println(&quot;白色人类会大笑，侵略的笑声&quot;);
