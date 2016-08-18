@@ -365,8 +365,37 @@ public class Client {
     }
 }
 </code></pre><h3 id="动态代理（spring-aop）"><a href="#动态代理（spring-aop）" class="headerlink" title="动态代理（spring aop）"></a>动态代理（spring aop）</h3><ul>
+<li>静态代理：由程序员创建或特定工具自动生成源代码，再对其编译。在程序运行前，代理类的.class文件就已经存在了。 </li>
+<li>动态代理<ul>
+<li>在程序运行时，运用反射机制动态创建而成。</li>
 <li>动态代理是在实现阶段不用关心代理谁，在运行阶段才指定代理哪一个对象。</li>
+</ul>
+</li>
 <li>aop：切面(Aspect)、切入点(JoinPoint)、通知(Advice)、织入(Weave)</li>
+<li><p>java.lang.reflect包中的Proxy类和InvocationHandler接口提供了生成动态代理类的能力。</p>
+<ul>
+<li><p>InvocationHandler接口</p>
+<pre><code>public interface InvocationHandler { 
+    public Object invoke(Object proxy,Method method,Object[] args) throws Throwable; 
+}
+
+参数说明： 
+Object proxy：指被代理的对象。 
+Method method：要调用的方法 
+Object[] args：方法调用时所需要的参数 
+</code></pre></li>
+<li><p>Proxy类：专门完成代理的操作类，可通过此类为一个或多个接口动态地生成实现类，此类提供了如下的操作方法： </p>
+</li>
+</ul>
+</li>
+</ul>
+<pre><code>public static Object newProxyInstance(ClassLoader loader, Class&lt;?&gt;[] interfaces, InvocationHandler h) throws IllegalArgumentException 
+参数说明： 
+ClassLoader loader：类加载器 
+Class&lt;?&gt;[] interfaces：得到全部的接口 
+InvocationHandler h：得到InvocationHandler接口的子类实例
+</code></pre><ul>
+<li>代码</li>
 </ul>
 <hr>
 <h1 id="策略模式"><a href="#策略模式" class="headerlink" title="策略模式"></a><center>策略模式</center></h1><hr>
