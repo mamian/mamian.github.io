@@ -267,7 +267,231 @@
 <h1 id="状态模式"><a href="#状态模式" class="headerlink" title="状态模式"></a><center>状态模式</center></h1><hr>
 <h1 id="责任链模式"><a href="#责任链模式" class="headerlink" title="责任链模式"></a><center>责任链模式</center></h1><hr>
 <h1 id="观察者模式"><a href="#观察者模式" class="headerlink" title="观察者模式"></a><center>观察者模式</center></h1><hr>
-<h1 id="命令模式"><a href="#命令模式" class="headerlink" title="命令模式"></a><center>命令模式</center></h1><hr>
+<h1 id="命令模式"><a href="#命令模式" class="headerlink" title="命令模式"></a><center>命令模式</center></h1><ul>
+<li>定义：将一个请求封装成一个对象，从而让你使用不同的请求把客户端参数化，对请求排队或记录请求日志，可以提供命令的撤销和恢复功能。</li>
+<li>抽象分组类及三个实现类（需求组、页面组、代码组）</li>
+<li>抽象命令类及多个实现类（增加需求命令、减少页面命令等）</li>
+<li>命令接收者类，此类中有一个私有的命令成员和一个触发方法（此方法会执行私有命令成员的某个方法）</li>
+<li>代码：</li>
+</ul>
+<pre><code>public abstract class Group {
+
+    protected abstract void find();
+
+    protected abstract void add();
+
+    protected abstract void delete();
+
+    protected abstract void change();
+
+    protected abstract void exe();
+
+}
+
+
+
+public class PageGroup extends Group{
+
+    protected void find() {
+
+        System.out.println(&quot;页面组：找到页面组！&quot;);
+
+    }
+
+    protected void add() {
+
+        System.out.println(&quot;页面组：增加一个页面！&quot;);
+
+    }
+
+    protected void delete() {
+
+        System.out.println(&quot;页面组：减少一个页面！&quot;);
+
+    }
+
+    protected void change() {
+
+        System.out.println(&quot;页面组：修改一个页面！&quot;);
+
+    }
+
+    protected void exe() {
+
+        System.out.println(&quot;页面组：执行对页面的更改！&quot;);
+
+    }
+
+}
+
+
+
+public class RequirementGroup extends Group{
+
+    protected void find() {
+
+        System.out.println(&quot;需求组：找到需求组！&quot;);
+
+    }
+
+    protected void add() {
+
+        System.out.println(&quot;需求组：增加一条需求！&quot;);
+
+    }
+
+    protected void delete() {
+
+        System.out.println(&quot;需求组：减少一条需求！&quot;);
+
+    }
+
+    protected void change() {
+
+        System.out.println(&quot;需求组：修改一条需求！&quot;);
+
+    }
+
+    protected void exe() {
+
+        System.out.println(&quot;需求组：执行对需求的更改！&quot;);
+
+    }
+
+}
+
+
+
+public class CodeGroup extends Group{
+
+    protected void find() {
+
+        System.out.println(&quot;代码组：找到代码组！&quot;);
+
+    }
+
+    protected void add() {
+
+        System.out.println(&quot;代码组：增加一段代码！&quot;);
+
+    }
+
+    protected void delete() {
+
+        System.out.println(&quot;代码组：减少一段代码！&quot;);
+
+    }
+
+    protected void change() {
+
+        System.out.println(&quot;代码组：修改一段代码！&quot;);
+
+    }
+
+    protected void exe() {
+
+        System.out.println(&quot;代码组：执行对代码的更改！&quot;);
+
+    }
+
+}
+
+
+
+public abstract class Command {
+
+    protected RequirementGroup requirementGroup = new RequirementGroup();
+
+    protected PageGroup pageGroup = new PageGroup();
+
+    protected CodeGroup codeGroup = new CodeGroup();
+
+
+
+    public abstract void runCommand();
+
+}
+
+
+
+public class AddRequirementCommand extends Command{
+
+    public void runCommand() {
+
+        super.requirementGroup.find();
+
+        super.requirementGroup.add();
+
+        super.requirementGroup.exe();
+
+    }
+
+}
+
+
+
+public class DeletePageCommand extends Command{
+
+    public void runCommand() {
+
+        super.pageGroup.find();
+
+        super.pageGroup.delete();
+
+        super.pageGroup.exe();
+
+    }
+
+}
+
+
+
+public class Invoker {
+
+    private Command command;
+
+    public void setCommand(Command command){
+
+        this.command = command;
+
+    }
+
+    public void action(){
+
+        this.command.runCommand();
+
+    }
+
+}
+
+
+
+public class Client {
+
+    public static void main(String[] args){
+
+        Invoker invoker = new Invoker();
+
+
+
+        Command addRequirementCommand = new AddRequirementCommand();
+
+        invoker.setCommand(addRequirementCommand);
+
+        invoker.action();
+
+
+
+        Command deletePageCommand = new DeletePageCommand();
+
+        invoker.setCommand(deletePageCommand);
+
+        invoker.action();
+
+    }
+
+}
+</code></pre><hr>
 <h1 id="中介者模式"><a href="#中介者模式" class="headerlink" title="中介者模式"></a><center>中介者模式</center></h1><ul>
 <li>定义：将多对多关系转化为多对一的关系。Buy、Sell、Store对象均继承自AbstractColleague（AbstractColleague中包含一个中介者对象，其所有的实现类均可执行此中介者的某方法）。</li>
 <li>抽象中介者AbstractMediator包含所有原多对多的具体类。Mediator实现了所有具体的业务逻辑，具体业务类如Buy通过调用自己的成员media的方法来实现业务逻辑。</li>
