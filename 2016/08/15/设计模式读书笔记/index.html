@@ -609,7 +609,142 @@ public class Client {
 
 }
 </code></pre><hr>
-<h1 id="原型模式"><a href="#原型模式" class="headerlink" title="原型模式"></a><center>原型模式</center></h1><hr>
+<h1 id="原型模式"><a href="#原型模式" class="headerlink" title="原型模式"></a><center>原型模式</center></h1><ul>
+<li>定义：不通过new产生新对象而是通过clone来实现的模式即为原型模式。</li>
+<li>优点：clone方法直接拷贝内存二进制流，比new对象性能好很多。</li>
+<li>缺点：直接在内存中拷贝，则构造函数不会执行。</li>
+<li>浅拷贝：clone后的新对象与原对象使用的成员变化（数组类型、引用类型，但不包括String）为同一个对象，并未copy一个新变量给新对象。</li>
+<li>clone()浅拷贝：Object类提供clone方法只是拷贝本对象(本对象的int、long、String等成员)，其对象内部的数组、引用对象等都不拷贝，还是指向原生对象的内部元素地址.</li>
+<li>clone()深拷贝：thing.arrayList = (ArrayList<string>)this.arrayList.clone();</string></li>
+<li>不可对final成员执行clone方法</li>
+<li><p>代码：</p>
+<pre><code>public class AdvTemplate {
+
+    private String advSubject =&quot;XX银行国庆信用卡抽奖活动&quot;;//广告信名称
+
+    private String advContext = &quot;国庆抽奖通知：只要刷卡就送1百万！&quot;;//广告信内容
+</code></pre></li>
+</ul>
+<pre><code>    public String getAdvSubject() {
+
+        return advSubject;
+
+    }
+
+    public String getAdvContext() {
+
+        return advContext;
+
+    }
+
+}
+
+
+public class Mail implements Cloneable{
+
+    private String receiver;//收件人   get  set
+
+    private String subject;//邮件主题   get  set
+
+    private String appellation;//称谓   get  set
+
+    private String contxt;//邮件内容   get  set
+
+    private String tail;//邮件的尾部，一般都是加上“XXX版权所有”等信息   get  set
+
+
+    public Mail(AdvTemplate advTemplate) {
+
+        this.subject = advTemplate.getAdvSubject();
+
+        this.contxt = advTemplate.getAdvContext();
+
+    }
+
+    public Mail clone(){
+
+        Mail mail = null;
+
+        try{
+
+            mail = (Mail)super.clone();
+
+        }catch(CloneNotSupportedException e){
+
+            e.printStackTrace();
+
+        }
+
+        return mail;
+
+    }
+
+}
+
+
+public class Client {
+
+    private static int MAX_COUNT = 6;//发送账单的数量，这个值是从数据库中获得
+
+    public static void main(String[] args){//模拟发送邮件
+
+        int i=0;
+
+        //把模板定义出来，这个是从数据库中获得
+
+        Mail mail = new Mail(new AdvTemplate());
+
+        mail.setTail(&quot;XX银行版权所有&quot;);
+
+        while(i&lt;MAX_COUNT){
+
+            //以下是每封邮件不同的地方
+
+            Mail cloneMail = mail.clone();
+
+            cloneMail.setAppellation(getRandString(5)+&quot; 先生（女士）&quot;);
+
+            cloneMail.setReceiver(getRandString(5) + &quot;@&quot; + getRandString(8)+&quot;.com&quot;);
+
+            //然后发送邮件
+
+            sendMail(cloneMail);
+
+            i++;
+
+        }
+
+    }
+
+    //发送邮件
+    public static void sendMail(Mail mail){
+
+        System.out.println(&quot;标题：&quot;+mail.getSubject() + &quot;\t收件人：&quot;+mail.getReceiver()+&quot;\t....发送成功！&quot;);
+
+    }
+
+    //获得指定长度的随机字符串
+
+    public static String getRandString(int maxLength){
+
+        String source =&quot;abcdefghijklmnopqrskuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ&quot;;
+
+        StringBuffer sb = new StringBuffer();
+
+        Random rand = new Random();
+
+        for(int i=0;i&lt;maxLength;i++){
+
+            sb.append(source.charAt(rand.nextInt(source.length())));
+
+        }
+
+        return sb.toString();
+
+    }
+
+}
+</code></pre><hr>
 <h1 id="门面模式"><a href="#门面模式" class="headerlink" title="门面模式"></a><center>门面模式</center></h1><hr>
 <h1 id="享元模式"><a href="#享元模式" class="headerlink" title="享元模式"></a><center>享元模式</center></h1><hr>
 <h1 id="桥接模式"><a href="#桥接模式" class="headerlink" title="桥接模式"></a><center>桥接模式</center></h1><hr>
