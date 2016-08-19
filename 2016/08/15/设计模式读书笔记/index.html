@@ -952,7 +952,78 @@ InvocationHandler h：得到InvocationHandler接口的子类实例
 <li>代码</li>
 </ul>
 <hr>
-<h1 id="策略模式"><a href="#策略模式" class="headerlink" title="策略模式"></a><center>策略模式</center></h1><hr>
+<h1 id="策略模式"><a href="#策略模式" class="headerlink" title="策略模式"></a><center>策略模式</center></h1><ul>
+<li>定义：定义一组算法，将每个算法封装起来，并且使它们之间可互换。</li>
+<li>容器类Context包含一个抽象策略Strategy类，和一个方法（此方法中再执行Strategy某方法）。Client类实例一个容器类（同时通过构造方法将此容器实例所包含的具体策略实例化）</li>
+<li>代码：</li>
+</ul>
+<pre><code>public abstract class Strategy{
+    public Strategy(){
+        System.out.println(&quot;Strategy的构造方法执行！&quot;);
+    }
+
+    public abstract void operate();
+}
+
+
+
+public class StrategyA extends Strategy{
+
+    public StrategyA(){
+        System.out.println(&quot;StrategyA的构造方法执行！&quot;);
+    }
+
+    public void operate(){
+        System.out.println(&quot;策略A的方法开始执行！&quot;);
+    }
+
+}
+
+
+
+public class StrategyB extends Strategy{
+
+    public StrategyB(){
+        System.out.println(&quot;StrategyB的构造方法执行！&quot;);
+    }
+
+    public void operate(){
+        System.out.println(&quot;策略B的方法开始执行！&quot;);
+    }
+
+}
+
+
+
+/* 存储策略的容器类
+ * 容器类要实现一个方法，在此方法中调用其所包含的具体策略的方法*/
+public class Context {
+
+    Strategy myStrategy;
+
+    public Context(Strategy strategy) {
+        System.out.println(&quot;Context的构造方法执行！&quot;);
+        myStrategy = strategy;
+    }
+
+    public void myOperate(){
+        myStrategy.operate();
+    }
+}
+
+
+
+public class Client {
+
+    public static void main(String[] args){
+        Context ctx1 = new Context(new StrategyA());
+        ctx1.myOperate();
+
+        Context ctx2 = new Context(new StrategyB());
+        ctx2.myOperate();
+    }
+}
+</code></pre><hr>
 <h1 id="备忘录模式"><a href="#备忘录模式" class="headerlink" title="备忘录模式"></a><center>备忘录模式</center></h1><hr>
 <h1 id="模板模式"><a href="#模板模式" class="headerlink" title="模板模式"></a><center>模板模式</center></h1><ul>
 <li>当我们写一个文档时（如需求文档）通常首先要找一个模板，模板里会清楚的写着要写几大模块且说明这些模块的先后顺序。我们再照着模板填充每一模块的具体内容。</li>
@@ -1303,9 +1374,284 @@ public class Client {
 <h1 id="门面模式"><a href="#门面模式" class="headerlink" title="门面模式"></a><center>门面模式</center></h1><hr>
 <h1 id="享元模式"><a href="#享元模式" class="headerlink" title="享元模式"></a><center>享元模式</center></h1><hr>
 <h1 id="桥接模式"><a href="#桥接模式" class="headerlink" title="桥接模式"></a><center>桥接模式</center></h1><hr>
-<h1 id="适配器模式"><a href="#适配器模式" class="headerlink" title="适配器模式"></a><center>适配器模式</center></h1><hr>
+<h1 id="适配器模式"><a href="#适配器模式" class="headerlink" title="适配器模式"></a><center>适配器模式</center></h1><ul>
+<li>定义：将一个类的接口变换成客户端期待的另一种接口，从而使原本因接口不匹配而无法在一起工作的2个类能够在一起工作。</li>
+<li>Adapter继承待转换类，实现目的接口</li>
+<li>代码：</li>
+</ul>
+<pre><code>public interface IUserInfo {
+
+    public String getUserName();
+
+    public String getUserAddress();
+
+    public String getUserTel();
+
+    public String getPosition();
+
+}
+
+
+
+public class UserInfo implements IUserInfo{
+
+    public String getUserName() {
+
+        System.out.println(&quot;获取最终格式的用户名称&quot;);
+
+        return null;
+
+    }
+
+    public String getUserAddress() {
+
+        System.out.println(&quot;获取最终格式的用户地址&quot;);
+
+        return null;
+
+    }
+
+    public String getUserTel() {
+
+        System.out.println(&quot;获取最终格式的用户电话&quot;);
+
+        return null;
+
+    }
+
+    public String getPosition() {
+
+        System.out.println(&quot;获取最终格式的用户职位&quot;);
+
+        return null;
+
+    }
+
+}
+
+
+
+public interface IOuterUserInfo {
+
+    public Map getUserBaseInfo();
+
+    public Map getUserWorkInfo();
+
+}
+
+
+
+public class OuterUserInfo implements IOuterUserInfo{
+
+    public Map getUserBaseInfo() {
+
+        Map baseInfoMap = new HashMap();
+
+        baseInfoMap.put(&quot;outUserName&quot;, &quot;待转换的用户名称&quot;);
+
+        baseInfoMap.put(&quot;outUserAddress&quot;, &quot;待转换的用户地址&quot;);
+
+        baseInfoMap.put(&quot;outUserTel&quot;, &quot;待转换的用户电话&quot;);
+
+        return baseInfoMap;
+
+    }
+
+    public Map getUserWorkInfo() {
+
+        Map workInfoMap = new HashMap();
+
+        workInfoMap.put(&quot;outUserPosition&quot;, &quot;待转换的用户职位&quot;);
+
+        return workInfoMap;
+
+    }
+
+}
+
+
+
+public class Adapter extends OuterUserInfo implements IUserInfo{
+
+    private Map outUserBaseInfo = super.getUserBaseInfo();
+
+    private Map outUserWorkInfo = super.getUserWorkInfo();
+
+
+
+    public String getUserName() {
+
+        String userName = (String)outUserBaseInfo.get(&quot;outUserName&quot;);
+
+        System.out.println(userName);
+
+        return null;
+
+    }
+
+    public String getUserAddress() {
+
+        String userAddress = (String)outUserBaseInfo.get(&quot;outUserAddress&quot;);
+
+        System.out.println(userAddress);
+
+        return null;
+
+    }
+
+    public String getUserTel() {
+
+        String userTel = (String)outUserBaseInfo.get(&quot;outUserTel&quot;);
+
+        System.out.println(userTel);
+
+        return null;
+
+    }
+
+    public String getPosition() {
+
+        String userPosition = (String)outUserWorkInfo.get(&quot;outUserPosition&quot;);
+
+        System.out.println(userPosition);
+
+        return null;
+
+    }
+
+}
+
+
+
+public class Client {//适配器要继承待转换类，实现目的接口
+
+    public static void main(String[] args){
+
+        IUserInfo convertedUser = new Adapter();
+
+        convertedUser.getUserName();
+
+        convertedUser.getUserAddress();
+
+        convertedUser.getUserTel();
+
+        convertedUser.getPosition();
+
+    }
+
+}
+</code></pre><hr>
 <h1 id="访问者模式"><a href="#访问者模式" class="headerlink" title="访问者模式"></a><center>访问者模式</center></h1><hr>
-<h1 id="装饰模式"><a href="#装饰模式" class="headerlink" title="装饰模式"></a><center>装饰模式</center></h1><hr>
+<h1 id="装饰模式"><a href="#装饰模式" class="headerlink" title="装饰模式"></a><center>装饰模式</center></h1><ul>
+<li>定义：为旧有的类添加新的功能，如小菜穿衣。若旧类为A，要为A添加新功能。装饰模式比生成子类更为灵活。</li>
+<li>抽象装饰类Decorator继承A的父类且包含一个A父类属性。</li>
+<li>具体的装饰类Decorator1继承抽象装饰类Decorator，且覆盖旧类A的某个要修改的方法（在super.method()前或后增加要增加的功能）</li>
+<li>具体的装饰类Decorator2继承抽象装饰类Decorator，且覆盖旧类A同一个要修改的方法（在super.method()前或后增加要增加的功能）</li>
+<li>客户端类中new旧类A的父类对象，并依次赋值为new A(),new Decorator1(),new Decorator2()</li>
+<li>再执行A对象的被装饰的方法即可</li>
+<li>代码：</li>
+</ul>
+<pre><code>//成绩单父类，包含获取成绩信息、家长签字功能
+public abstract class SchoolReport {
+    public abstract void getReportInfo();
+    public abstract void parentSign(String parentName);
+}
+
+
+
+public class ForthGradeSchoolReport extends SchoolReport{
+
+    public void getReportInfo() {
+        System.out.println(&quot;尊敬的XXX家长，您儿子的成绩为:&quot;);
+        System.out.println(&quot;语文 62 数学65 体育 98 自然 63&quot;);
+    }
+
+    public void parentSign(String parentName) {
+        System.out.println(&quot;家长签字为：&quot;+parentName);
+    }
+}
+
+
+
+public abstract class Decorator extends SchoolReport{
+
+    private SchoolReport schoolReport;
+
+
+    public Decorator(SchoolReport schoolReport) {
+        this.schoolReport = schoolReport;
+    }
+
+    public void getReportInfo() {
+        schoolReport.getReportInfo();
+    }
+
+    public void parentSign(String parentName) {
+        schoolReport.parentSign(parentName);
+    }
+
+}
+
+
+
+public class ScoreDecorator extends Decorator{
+
+    public ScoreDecorator(SchoolReport schoolReport) {
+        super(schoolReport);
+    }
+
+    private void sugarScore(){
+        System.out.println(&quot;这次考试语文最高是75，数学是78，自然是80&quot;);
+    }
+
+    public void getReportInfo() {
+        System.out.println(&quot;装饰器1开始11111111111111&quot;);
+        sugarScore();//此为要装饰的方法1
+        super.getReportInfo();
+        System.out.println(&quot;装饰器1结束11111111111111&quot;);
+    }
+}
+
+
+
+public class SortDecorator extends Decorator{
+
+    public SortDecorator(SchoolReport schoolReport) {
+        super(schoolReport);
+    }
+
+    private void sugarSort(){
+        System.out.println(&quot;我是排名第38名...&quot;);
+    }
+
+    public void getReportInfo() {
+        System.out.println(&quot;装饰器2开始222222222222222222222&quot;);
+        sugarSort();//此为要装饰的方法2
+        super.getReportInfo();
+        System.out.println(&quot;装饰器2结束222222222222222222222&quot;);
+    }
+
+}
+
+
+
+public class Client {
+
+    public static void main(String[] args){
+
+        SchoolReport schoolReport;
+
+        schoolReport = new ForthGradeSchoolReport();
+        schoolReport = new ScoreDecorator(schoolReport);//此为要装饰到原类中的新功能1
+        schoolReport = new SortDecorator(schoolReport);//此为要装饰到原类中的新功能2
+
+        schoolReport.getReportInfo();
+        schoolReport.parentSign(&quot;家长的名字&quot;);
+
+    }
+
+}
+</code></pre><hr>
 <h1 id="简单工厂模式"><a href="#简单工厂模式" class="headerlink" title="简单工厂模式"></a><center>简单工厂模式</center></h1><ul>
 <li>Client中将参数传递给Factory，Factory根据参数决定生产哪个具体的实例类。</li>
 <li>代码</li>
@@ -1784,11 +2130,9 @@ public class Client {
     public static void main(String[] args){
 
         //第一条生产线，男性生产线
-
         HumanFactoryInterface maleHumanFactory = new HumanFactory_Male();
 
         //第二条生产线，女性生产线
-
         HumanFactoryInterface femaleHumanFactory = new HumanFactory_Female();
 
 
@@ -1805,13 +2149,9 @@ public class Client {
 
 
         /*
-
         * 后面可以续了.....
-
         */
-
     }
-
 }
 </code></pre><hr>
 <h1 id="解释器模式"><a href="#解释器模式" class="headerlink" title="解释器模式"></a><center>解释器模式</center></h1><hr>
