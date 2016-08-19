@@ -265,7 +265,147 @@
 <hr>
 <h1 id="多例模式"><a href="#多例模式" class="headerlink" title="多例模式"></a><center>多例模式</center></h1><hr>
 <h1 id="状态模式"><a href="#状态模式" class="headerlink" title="状态模式"></a><center>状态模式</center></h1><hr>
-<h1 id="责任链模式"><a href="#责任链模式" class="headerlink" title="责任链模式"></a><center>责任链模式</center></h1><hr>
+<h1 id="责任链模式"><a href="#责任链模式" class="headerlink" title="责任链模式"></a><center>责任链模式</center></h1><ul>
+<li>定义：一个请求，依次交给多个对象去处理，若对象A无法处理，则交给下一下对象B处理，若B无法处理，则交给下一个对象C处理。</li>
+<li>在父夫子的父类中定义方法：如果本对象无法处理某项请求，则交给下一个对象处理。</li>
+<li>而处理请求的对象的顺序在client中实时定义。</li>
+<li>代码：</li>
+</ul>
+<pre><code>public interface WomenInterface {
+    public int getType();//获得个人状况
+    public String getRequest();//获得个人请示，要干什么？逛街？约会?还是看电影
+}
+
+public class Women implements WomenInterface{
+
+    private int type=0;//1未出嫁        2出嫁        3夫死
+    private String request = &quot;&quot;;
+
+    public Women(int type,String request){
+        this.type = type;
+        switch(type){//为了显示好看点，我在这里做了点处理
+            case 1:
+                this.request = &quot;女儿的请求是：&quot; + request;
+                break;
+            case 2:
+                this.request = &quot;妻子的请求是：&quot; + request;
+                break;
+            case 3:
+                this.request = &quot;母亲的请求是：&quot; + request;
+        }
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public String getRequest() {
+        return request;
+    }
+}
+
+
+
+public abstract class Handler {//是father、husband、son的父类
+
+    private int level =0; //能处理的级别
+    private Handler nextHanlder;//责任传递，下一个人责任人是谁
+
+
+    public Handler(int level){//每个类都要说明一下自己能处理哪些请求
+        this.level = level;
+    }
+
+    public final void HandleMessage(WomenInterface women){
+        if(women.getType() == this.level){
+            this.response(women);
+        }else{
+            if(this.nextHanlder != null){ //有后续环节，才把请求往后递送
+                this.nextHanlder.HandleMessage(women);
+            }else{ //已经没有后续处理人了，不用处理了
+                System.out.println(&quot;-----------没地方请示了，不做处理！\n&quot;);
+            }
+        }
+    }
+
+    public void setNext(Handler handler){
+        this.nextHanlder = handler;
+    }
+
+    public abstract void response(WomenInterface women);//有请示那当然要回应
+
+}
+
+
+
+public class Father extends Handler{
+
+    public Father(){//父亲只处理女儿的请求
+        super(1);
+    }
+
+    public void response(WomenInterface women) {//父亲的答复
+        System.out.println(&quot;--------女儿向父亲请示-------&quot;);
+        System.out.println(women.getRequest());
+        System.out.println(&quot;父亲的答复是:同意\n&quot;);
+    }
+}
+
+
+
+public class Husband extends Handler{
+    public Husband(){//丈夫只处理妻子的请求
+        super(2);
+    }
+
+    public void response(WomenInterface women) {//丈夫请示的答复
+        System.out.println(&quot;--------妻子向丈夫请示-------&quot;);
+        System.out.println(women.getRequest());
+        System.out.println(&quot;丈夫的答复是：同意\n&quot;);
+    }
+}
+
+
+
+public class Son extends Handler{
+    public Son(){//儿子只处理母亲的请求
+        super(3);
+    }
+
+    public void response(WomenInterface women) {//儿子的答复
+        System.out.println(&quot;--------母亲向儿子请示-------&quot;);
+        System.out.println(women.getRequest());
+        System.out.println(&quot;儿子的答复是：同意\n&quot;);
+    }
+}
+
+
+
+public class Client {
+
+    public static void main(String[] args) {
+        //随机挑选几个女性
+        Random rand = new Random();
+        List&lt;WomenInterface&gt; arrayList = new ArrayList&lt;WomenInterface&gt;();
+        for(int i=0;i&lt;5;i++){
+            arrayList.add(new Women(rand.nextInt(4),&quot;我要出去逛街&quot;));
+        }
+
+        //定义三个请示对象
+        Handler father = new Father();
+        Handler husband = new Husband();
+        Handler son = new Son();
+
+
+        //设置请示顺序
+        father.setNext(husband);
+        husband.setNext(son);
+        for(WomenInterface women:arrayList){
+            father.HandleMessage(women);
+        }
+    }
+}
+</code></pre><hr>
 <h1 id="观察者模式"><a href="#观察者模式" class="headerlink" title="观察者模式"></a><center>观察者模式</center></h1><hr>
 <h1 id="命令模式"><a href="#命令模式" class="headerlink" title="命令模式"></a><center>命令模式</center></h1><ul>
 <li>定义：将一个请求封装成一个对象，从而让你使用不同的请求把客户端参数化，对请求排队或记录请求日志，可以提供命令的撤销和恢复功能。</li>
