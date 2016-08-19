@@ -569,13 +569,9 @@ public class Client {
 <pre><code>public abstract class Group {
 
     protected abstract void find();
-
     protected abstract void add();
-
     protected abstract void delete();
-
     protected abstract void change();
-
     protected abstract void exe();
 
 }
@@ -585,33 +581,23 @@ public class Client {
 public class PageGroup extends Group{
 
     protected void find() {
-
         System.out.println(&quot;页面组：找到页面组！&quot;);
-
     }
 
     protected void add() {
-
         System.out.println(&quot;页面组：增加一个页面！&quot;);
-
     }
 
     protected void delete() {
-
         System.out.println(&quot;页面组：减少一个页面！&quot;);
-
     }
 
     protected void change() {
-
         System.out.println(&quot;页面组：修改一个页面！&quot;);
-
     }
 
     protected void exe() {
-
         System.out.println(&quot;页面组：执行对页面的更改！&quot;);
-
     }
 
 }
@@ -621,33 +607,23 @@ public class PageGroup extends Group{
 public class RequirementGroup extends Group{
 
     protected void find() {
-
         System.out.println(&quot;需求组：找到需求组！&quot;);
-
     }
 
     protected void add() {
-
         System.out.println(&quot;需求组：增加一条需求！&quot;);
-
     }
 
     protected void delete() {
-
         System.out.println(&quot;需求组：减少一条需求！&quot;);
-
     }
 
     protected void change() {
-
         System.out.println(&quot;需求组：修改一条需求！&quot;);
-
     }
 
     protected void exe() {
-
         System.out.println(&quot;需求组：执行对需求的更改！&quot;);
-
     }
 
 }
@@ -657,33 +633,23 @@ public class RequirementGroup extends Group{
 public class CodeGroup extends Group{
 
     protected void find() {
-
         System.out.println(&quot;代码组：找到代码组！&quot;);
-
     }
 
     protected void add() {
-
         System.out.println(&quot;代码组：增加一段代码！&quot;);
-
     }
 
     protected void delete() {
-
         System.out.println(&quot;代码组：减少一段代码！&quot;);
-
     }
 
     protected void change() {
-
         System.out.println(&quot;代码组：修改一段代码！&quot;);
-
     }
 
     protected void exe() {
-
         System.out.println(&quot;代码组：执行对代码的更改！&quot;);
-
     }
 
 }
@@ -693,12 +659,8 @@ public class CodeGroup extends Group{
 public abstract class Command {
 
     protected RequirementGroup requirementGroup = new RequirementGroup();
-
     protected PageGroup pageGroup = new PageGroup();
-
     protected CodeGroup codeGroup = new CodeGroup();
-
-
 
     public abstract void runCommand();
 
@@ -709,13 +671,9 @@ public abstract class Command {
 public class AddRequirementCommand extends Command{
 
     public void runCommand() {
-
         super.requirementGroup.find();
-
         super.requirementGroup.add();
-
         super.requirementGroup.exe();
-
     }
 
 }
@@ -725,13 +683,9 @@ public class AddRequirementCommand extends Command{
 public class DeletePageCommand extends Command{
 
     public void runCommand() {
-
         super.pageGroup.find();
-
         super.pageGroup.delete();
-
         super.pageGroup.exe();
-
     }
 
 }
@@ -743,15 +697,11 @@ public class Invoker {
     private Command command;
 
     public void setCommand(Command command){
-
         this.command = command;
-
     }
 
     public void action(){
-
         this.command.runCommand();
-
     }
 
 }
@@ -761,27 +711,16 @@ public class Invoker {
 public class Client {
 
     public static void main(String[] args){
-
         Invoker invoker = new Invoker();
 
-
-
         Command addRequirementCommand = new AddRequirementCommand();
-
         invoker.setCommand(addRequirementCommand);
-
         invoker.action();
-
-
 
         Command deletePageCommand = new DeletePageCommand();
-
         invoker.setCommand(deletePageCommand);
-
         invoker.action();
-
     }
-
 }
 </code></pre><hr>
 <h1 id="中介者模式"><a href="#中介者模式" class="headerlink" title="中介者模式"></a><center>中介者模式</center></h1><ul>
@@ -1523,7 +1462,56 @@ public class Client {
 
 }
 </code></pre><hr>
-<h1 id="门面模式"><a href="#门面模式" class="headerlink" title="门面模式"></a><center>门面模式</center></h1><hr>
+<h1 id="门面模式"><a href="#门面模式" class="headerlink" title="门面模式"></a><center>门面模式</center></h1><ul>
+<li>定义：也叫外观模式，要求一个子系统的外部与其内部的通信必须通过一个统一的对象进行。</li>
+<li><p>将复杂的业务封装在一个方法中对外提供服务，外部人员不用看到内部太复杂的具体实现。</p>
+<pre><code>public interface WriteLetterInterface{
+    public void setTitle(String title);
+    public void setContent(String content);
+    public void setAddress(String address);
+    public void sendLetter();
+}
+
+public class WriteLetterImpl implements WriteLetterInterface{
+
+    public void setTitle(String title) {
+        System.out.println(&quot;写信的标题:&quot;+title);
+    }
+
+    public void setContent(String content) {
+        System.out.println(&quot;写信的内容:&quot;+content);
+    }
+
+    public void setAddress(String address) {
+        System.out.println(&quot;写收信人地址:&quot;+address);
+    }
+
+    public void sendLetter() {
+        System.out.println(&quot;开始发送信件&quot;);
+    }
+}
+
+public class PostOffice {
+
+    private WriteLetterInterface writeLetter = new WriteLetterImpl();
+
+    public void mySend(String title,String content,String address) {
+        writeLetter.setTitle(title);
+        writeLetter.setContent(content);
+        writeLetter.setAddress(address);
+        writeLetter.sendLetter();
+    }
+}
+
+public class Client {
+    public static void main(String[] args){
+        PostOffice postOffice = new PostOffice();
+        postOffice.mySend(&quot;myTitle&quot;, &quot;myContent&quot;, &quot;myAddress&quot;);
+    }
+}
+</code></pre></li>
+</ul>
+<hr>
 <h1 id="享元模式"><a href="#享元模式" class="headerlink" title="享元模式"></a><center>享元模式</center></h1><hr>
 <h1 id="桥接模式"><a href="#桥接模式" class="headerlink" title="桥接模式"></a><center>桥接模式</center></h1><hr>
 <h1 id="适配器模式"><a href="#适配器模式" class="headerlink" title="适配器模式"></a><center>适配器模式</center></h1><ul>
@@ -1534,11 +1522,8 @@ public class Client {
 <pre><code>public interface IUserInfo {
 
     public String getUserName();
-
     public String getUserAddress();
-
     public String getUserTel();
-
     public String getPosition();
 
 }
@@ -1548,47 +1533,31 @@ public class Client {
 public class UserInfo implements IUserInfo{
 
     public String getUserName() {
-
         System.out.println(&quot;获取最终格式的用户名称&quot;);
-
         return null;
-
     }
 
     public String getUserAddress() {
-
         System.out.println(&quot;获取最终格式的用户地址&quot;);
-
         return null;
-
     }
 
     public String getUserTel() {
-
         System.out.println(&quot;获取最终格式的用户电话&quot;);
-
         return null;
-
     }
 
     public String getPosition() {
-
         System.out.println(&quot;获取最终格式的用户职位&quot;);
-
         return null;
-
     }
-
 }
 
 
 
 public interface IOuterUserInfo {
-
     public Map getUserBaseInfo();
-
     public Map getUserWorkInfo();
-
 }
 
 
@@ -1596,29 +1565,18 @@ public interface IOuterUserInfo {
 public class OuterUserInfo implements IOuterUserInfo{
 
     public Map getUserBaseInfo() {
-
         Map baseInfoMap = new HashMap();
-
         baseInfoMap.put(&quot;outUserName&quot;, &quot;待转换的用户名称&quot;);
-
         baseInfoMap.put(&quot;outUserAddress&quot;, &quot;待转换的用户地址&quot;);
-
         baseInfoMap.put(&quot;outUserTel&quot;, &quot;待转换的用户电话&quot;);
-
         return baseInfoMap;
-
     }
 
     public Map getUserWorkInfo() {
-
         Map workInfoMap = new HashMap();
-
         workInfoMap.put(&quot;outUserPosition&quot;, &quot;待转换的用户职位&quot;);
-
         return workInfoMap;
-
     }
-
 }
 
 
@@ -1626,51 +1584,33 @@ public class OuterUserInfo implements IOuterUserInfo{
 public class Adapter extends OuterUserInfo implements IUserInfo{
 
     private Map outUserBaseInfo = super.getUserBaseInfo();
-
     private Map outUserWorkInfo = super.getUserWorkInfo();
 
 
 
     public String getUserName() {
-
         String userName = (String)outUserBaseInfo.get(&quot;outUserName&quot;);
-
         System.out.println(userName);
-
         return null;
-
     }
 
     public String getUserAddress() {
-
         String userAddress = (String)outUserBaseInfo.get(&quot;outUserAddress&quot;);
-
         System.out.println(userAddress);
-
         return null;
-
     }
 
     public String getUserTel() {
-
         String userTel = (String)outUserBaseInfo.get(&quot;outUserTel&quot;);
-
         System.out.println(userTel);
-
         return null;
-
     }
 
     public String getPosition() {
-
         String userPosition = (String)outUserWorkInfo.get(&quot;outUserPosition&quot;);
-
         System.out.println(userPosition);
-
         return null;
-
     }
-
 }
 
 
@@ -1678,17 +1618,11 @@ public class Adapter extends OuterUserInfo implements IUserInfo{
 public class Client {//适配器要继承待转换类，实现目的接口
 
     public static void main(String[] args){
-
         IUserInfo convertedUser = new Adapter();
-
         convertedUser.getUserName();
-
         convertedUser.getUserAddress();
-
         convertedUser.getUserTel();
-
         convertedUser.getPosition();
-
     }
 
 }
