@@ -268,7 +268,197 @@
 <h1 id="责任链模式"><a href="#责任链模式" class="headerlink" title="责任链模式"></a><center>责任链模式</center></h1><hr>
 <h1 id="观察者模式"><a href="#观察者模式" class="headerlink" title="观察者模式"></a><center>观察者模式</center></h1><hr>
 <h1 id="命令模式"><a href="#命令模式" class="headerlink" title="命令模式"></a><center>命令模式</center></h1><hr>
-<h1 id="中介者模式"><a href="#中介者模式" class="headerlink" title="中介者模式"></a><center>中介者模式</center></h1><hr>
+<h1 id="中介者模式"><a href="#中介者模式" class="headerlink" title="中介者模式"></a><center>中介者模式</center></h1><ul>
+<li>定义：将多对多关系转化为多对一的关系。Buy、Sell、Store对象均继承自AbstractColleague（AbstractColleague中包含一个中介者对象，其所有的实现类均可执行此中介者的某方法）。</li>
+<li>抽象中介者AbstractMediator包含所有原多对多的具体类。Mediator实现了所有具体的业务逻辑，具体业务类如Buy通过调用自己的成员media的方法来实现业务逻辑。</li>
+<li>优点：减少类间依赖</li>
+<li>缺点：中介者本身会膨胀的很大且逻辑复杂。</li>
+<li>代码：</li>
+</ul>
+<pre><code>public class AbstractColleague {//包含一个protected修饰的抽象中介者对象mediator，其所有的对象可共享此中介者并调用此中介者的方法
+
+    protected AbstractMediator mediator;
+
+
+
+    public AbstractColleague(AbstractMediator mediator) {
+
+        this.mediator = mediator;
+
+    }
+
+}
+
+
+
+public class Buy extends AbstractColleague{
+
+    public Buy(AbstractMediator mediator){
+
+        super(mediator);
+
+    }
+
+    public void startBuy(int num){
+
+        super.mediator.execute(&quot;购买&quot;, num);
+
+        System.out.println(&quot;Buy对象执行startBuy方法&quot;);
+
+    }
+
+    public void NotBuy(){
+
+        System.out.println(&quot;Buy对象执行NotBuy方法&quot;);
+
+    }
+
+}
+
+
+
+public class Sell extends AbstractColleague{
+
+    public Sell(AbstractMediator mediator){
+
+        super(mediator);
+
+    }
+
+    public void startSell(int num){
+
+        super.mediator.execute(&quot;销售&quot;, num);
+
+        System.out.println(&quot;Sell对象执行startSell方法&quot;);
+
+    }
+
+}
+
+
+
+public class Store extends AbstractColleague{
+
+    public Store(AbstractMediator mediator){
+
+        super(mediator);
+
+    }
+
+    public void startStore(int num){
+
+        super.mediator.execute(&quot;存储&quot;, num);
+
+        System.out.println(&quot;Store对象执行startStore方法&quot;);
+
+    }
+
+}
+
+
+
+public abstract class AbstractMediator {//抽象中介者：包含所有需将其作为中介者来互相交互信息的子系统或对象
+
+    protected Buy buy;
+
+    protected Sell sell;
+
+    protected Store store;
+
+
+
+    public AbstractMediator(){
+
+        buy = new Buy(this);
+
+        sell = new Sell(this);
+
+        store = new Store(this);
+
+    }
+
+    public abstract void execute(String message,Object obj1);
+
+}
+
+
+
+public class Mediator extends AbstractMediator{
+
+    public void execute(String message, Object obj1) {//参数为判断执行哪个对象方法的条件和参数
+
+        if(message.equals(&quot;购买&quot;)){
+
+            buyComputer((Integer) obj1);
+
+            System.out.println(&quot;具体中介者mediator的execute方法&quot;+message);
+
+        }else if(message.equals(&quot;销售&quot;)){
+
+            sellComputer((Integer) obj1);
+
+            System.out.println(&quot;具体中介者mediator的execute方法&quot;+message);
+
+        }else if(message.equals(&quot;存储&quot;)){
+
+            storeComputer((Integer) obj1);
+
+            System.out.println(&quot;具体中介者mediator的execute方法&quot;+message);
+
+        }
+
+    }
+
+    private void buyComputer(int num){
+
+        System.out.println(&quot;具体中介者执行buyComputer方法，购&quot;+num+&quot;台电脑&quot;);
+
+    }
+
+    private void sellComputer(int num){
+
+        System.out.println(&quot;具体中介者执行sellComputer方法，售&quot;+num+&quot;台电脑&quot;);
+
+    }
+
+    private void storeComputer(int num){
+
+        System.out.println(&quot;具体中介者执行storeComputer方法，存&quot;+num+&quot;台电脑&quot;);
+
+    }
+
+}
+
+
+
+public class Client {
+
+    public static void main(String[] args){
+
+        AbstractMediator mediator = new Mediator();
+
+
+
+        Buy buy = new Buy(mediator);
+
+        buy.startBuy(100);
+
+
+
+        Sell sell = new Sell(mediator);
+
+        sell.startSell(200);
+
+
+
+        Store store = new Store(mediator);
+
+        store.startStore(300);
+
+    }
+
+}
+</code></pre><hr>
 <h1 id="代理模式"><a href="#代理模式" class="headerlink" title="代理模式"></a><center>代理模式</center></h1><ul>
 <li>为其他对象提供一种代理以控制对这个对象的访问。</li>
 <li>代理模式也叫做委托模式，许多其他的模式如状态模式、策略模式、访问者模式本质上是在更特殊的场合采用了委托模式。</li>
@@ -617,15 +807,16 @@ public class Client {
 <li>clone()浅拷贝：Object类提供clone方法只是拷贝本对象(本对象的int、long、String等成员)，其对象内部的数组、引用对象等都不拷贝，还是指向原生对象的内部元素地址.</li>
 <li>clone()深拷贝：thing.arrayList = (ArrayList<string>)this.arrayList.clone();</string></li>
 <li>不可对final成员执行clone方法</li>
-<li><p>代码：</p>
+<li>代码：</li>
+</ul>
 <pre><code>public class AdvTemplate {
 
     private String advSubject =&quot;XX银行国庆信用卡抽奖活动&quot;;//广告信名称
 
     private String advContext = &quot;国庆抽奖通知：只要刷卡就送1百万！&quot;;//广告信内容
-</code></pre></li>
-</ul>
-<pre><code>    public String getAdvSubject() {
+
+
+    public String getAdvSubject() {
 
         return advSubject;
 
