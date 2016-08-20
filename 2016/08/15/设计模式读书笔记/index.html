@@ -372,8 +372,127 @@ public class Client {
 </li>
 </ul>
 <hr>
-<h1 id="多例模式"><a href="#多例模式" class="headerlink" title="多例模式"></a><center>多例模式</center></h1><hr>
-<h1 id="状态模式"><a href="#状态模式" class="headerlink" title="状态模式"></a><center>状态模式</center></h1><hr>
+<h1 id="多例模式"><a href="#多例模式" class="headerlink" title="多例模式"></a><center>多例模式</center></h1><ul>
+<li>定义：三个static变量：最大实例数量maxInstanceNum，当前实例编号nowInstanceNum，实例列表instanceList。构造方法为private</li>
+<li>一个static代码块：此代码块中生成所有实例，并将其添加到实例列表instanceList中。</li>
+<li>一个static方法getInstance：获取0-maxInstanceNum间的一个随机整数random.nextInt(maxInstanceNum)，从实例列表instanceList中获取索引为此值的实例。</li>
+<li>考虑到多线程环境，可以用Vector代替ArrayList</li>
+<li><p>代码：</p>
+<pre><code>public class Multiton {
+
+    private static int maxInstanceNum=10;//最大实例数量
+    private static int nowInstanceNum=0;//当前实便编号
+    private static List&lt;Multiton&gt; instanceList = new ArrayList&lt;Multiton&gt;();
+    private static List&lt;String&gt; instanceNameList = new ArrayList&lt;String&gt;();
+
+    static{//把所有的皇帝都产生出来
+        for(int i=0;i&lt;maxInstanceNum;i++){
+            instanceList.add(new Multiton(&quot;皇&quot;+(i+1)+&quot;帝&quot;));
+        }
+    }
+
+    private Multiton(String name) {
+        instanceNameList.add(name);
+    }
+
+    public static Multiton getInstance(){
+        Random random = new Random();
+        nowInstanceNum = random.nextInt(maxInstanceNum);//随机拉出一个皇帝
+        return (Multiton)instanceList.get(nowInstanceNum);
+    }
+
+    public static void emperorInfo(){
+        System.out.println(instanceNameList.get(nowInstanceNum));
+    }
+}
+
+public class Client {
+    public static void main(String[] args) {
+        for(int i=0;i&lt;100;i++){
+            Multiton.getInstance();
+            System.out.print(&quot;第&quot;+(i+1)+&quot;个大臣参拜的是：&quot;);
+            Multiton.emperorInfo();
+        }
+    }
+}
+</code></pre></li>
+</ul>
+<hr>
+<h1 id="状态模式"><a href="#状态模式" class="headerlink" title="状态模式"></a><center>状态模式</center></h1><ul>
+<li>定义：当一个对象内在状态改变时允许其改变行为，这个对象看起来像改变了其类。状态模式与责任链模式：责任链责任转移由client控制，状态模式状态转移由各状态类控制，work类中包含一个状态类实例。</li>
+<li>状态模式与观察者模式：观察者模式是被观察者执行了自己的某个方法（此方法中要添加super.setChanged()和super.notifyObservers(“传递的消息”);）后，所有观察者会执行自己的update方法（client中被观察者实例被观察者.addObserver（观察者））。状态模式是当一个对象的某一个内在状态改变时，会执行自己的某个方法。</li>
+<li>代码：</li>
+</ul>
+<pre><code>public abstract class State {
+    public abstract void Coding(Work work);
+}
+
+public class MorningState extends State{
+
+    public void Coding(Work work) {
+        if(work.getHour()&lt;12){
+            System.out.println(&quot;早上时间，努力编码！&quot;);
+        }else{
+            work.setCurrentState(new AfternoonState());
+            work.workCode();
+        }
+    }
+}
+
+public class AfternoonState extends State{
+    public void Coding(Work work) {
+        if(work.getHour()&lt;18){
+            System.out.println(&quot;下午时间，努力编码！&quot;);
+        }else{
+            work.setCurrentState(new NightState());
+            work.workCode();
+        }
+    }
+}
+
+public class NightState extends State{
+    public void Coding(Work work) {
+        if(work.getHour()&lt;21){
+            System.out.println(&quot;晚上时间，努力编码！&quot;);
+        }else{
+            System.out.println(&quot;该下班了！&quot;);
+        }
+    }
+}
+
+public class Work {
+
+    private int hour; //get set
+    private State currentState; //get set
+
+    public Work(){
+        this.currentState = new MorningState();
+    }
+
+    public void workCode(){
+        this.currentState.Coding(this);
+    }
+}
+
+public class Client {
+    public static void main(String[] args){
+
+        Work work = new Work();
+
+        work.setHour(9);
+        work.workCode();
+
+        work.setHour(14);
+        work.workCode();
+
+        work.setHour(20);
+        work.workCode();
+
+        work.setHour(23);
+        work.workCode();
+    }
+}
+</code></pre><hr>
 <h1 id="责任链模式"><a href="#责任链模式" class="headerlink" title="责任链模式"></a><center>责任链模式</center></h1><ul>
 <li>定义：一个请求，依次交给多个对象去处理，若对象A无法处理，则交给下一下对象B处理，若B无法处理，则交给下一个对象C处理。</li>
 <li>在父夫子的父类中定义方法：如果本对象无法处理某项请求，则交给下一个对象处理。</li>
@@ -734,12 +853,8 @@ public class Client {
 
     protected AbstractMediator mediator;
 
-
-
     public AbstractColleague(AbstractMediator mediator) {
-
         this.mediator = mediator;
-
     }
 
 }
@@ -749,25 +864,17 @@ public class Client {
 public class Buy extends AbstractColleague{
 
     public Buy(AbstractMediator mediator){
-
         super(mediator);
-
     }
 
     public void startBuy(int num){
-
         super.mediator.execute(&quot;购买&quot;, num);
-
         System.out.println(&quot;Buy对象执行startBuy方法&quot;);
-
     }
 
     public void NotBuy(){
-
         System.out.println(&quot;Buy对象执行NotBuy方法&quot;);
-
     }
-
 }
 
 
@@ -775,17 +882,12 @@ public class Buy extends AbstractColleague{
 public class Sell extends AbstractColleague{
 
     public Sell(AbstractMediator mediator){
-
         super(mediator);
-
     }
 
     public void startSell(int num){
-
         super.mediator.execute(&quot;销售&quot;, num);
-
         System.out.println(&quot;Sell对象执行startSell方法&quot;);
-
     }
 
 }
@@ -795,17 +897,12 @@ public class Sell extends AbstractColleague{
 public class Store extends AbstractColleague{
 
     public Store(AbstractMediator mediator){
-
         super(mediator);
-
     }
 
     public void startStore(int num){
-
         super.mediator.execute(&quot;存储&quot;, num);
-
         System.out.println(&quot;Store对象执行startStore方法&quot;);
-
     }
 
 }
@@ -815,21 +912,13 @@ public class Store extends AbstractColleague{
 public abstract class AbstractMediator {//抽象中介者：包含所有需将其作为中介者来互相交互信息的子系统或对象
 
     protected Buy buy;
-
     protected Sell sell;
-
     protected Store store;
 
-
-
     public AbstractMediator(){
-
         buy = new Buy(this);
-
         sell = new Sell(this);
-
         store = new Store(this);
-
     }
 
     public abstract void execute(String message,Object obj1);
@@ -841,47 +930,30 @@ public abstract class AbstractMediator {//抽象中介者：包含所有需将�
 public class Mediator extends AbstractMediator{
 
     public void execute(String message, Object obj1) {//参数为判断执行哪个对象方法的条件和参数
-
         if(message.equals(&quot;购买&quot;)){
-
             buyComputer((Integer) obj1);
-
             System.out.println(&quot;具体中介者mediator的execute方法&quot;+message);
-
         }else if(message.equals(&quot;销售&quot;)){
-
             sellComputer((Integer) obj1);
-
             System.out.println(&quot;具体中介者mediator的execute方法&quot;+message);
-
         }else if(message.equals(&quot;存储&quot;)){
-
             storeComputer((Integer) obj1);
-
             System.out.println(&quot;具体中介者mediator的execute方法&quot;+message);
-
         }
 
     }
 
     private void buyComputer(int num){
-
         System.out.println(&quot;具体中介者执行buyComputer方法，购&quot;+num+&quot;台电脑&quot;);
-
     }
 
     private void sellComputer(int num){
-
         System.out.println(&quot;具体中介者执行sellComputer方法，售&quot;+num+&quot;台电脑&quot;);
-
     }
 
     private void storeComputer(int num){
-
         System.out.println(&quot;具体中介者执行storeComputer方法，存&quot;+num+&quot;台电脑&quot;);
-
     }
-
 }
 
 
@@ -889,29 +961,17 @@ public class Mediator extends AbstractMediator{
 public class Client {
 
     public static void main(String[] args){
-
         AbstractMediator mediator = new Mediator();
 
-
-
         Buy buy = new Buy(mediator);
-
         buy.startBuy(100);
 
-
-
         Sell sell = new Sell(mediator);
-
         sell.startSell(200);
 
-
-
         Store store = new Store(mediator);
-
         store.startStore(300);
-
     }
-
 }
 </code></pre><hr>
 <h1 id="代理模式"><a href="#代理模式" class="headerlink" title="代理模式"></a><center>代理模式</center></h1><ul>
@@ -1001,8 +1061,6 @@ public class Client {
         GG gg = new GG(mm);
 
         Proxy proxy = new Proxy(gg);
-
-
 
         proxy.giveGiftA();
         proxy.giveGiftB();
@@ -1115,7 +1173,78 @@ public class Client {
     }
 }
 </code></pre><hr>
-<h1 id="备忘录模式"><a href="#备忘录模式" class="headerlink" title="备忘录模式"></a><center>备忘录模式</center></h1><hr>
+<h1 id="备忘录模式"><a href="#备忘录模式" class="headerlink" title="备忘录模式"></a><center>备忘录模式</center></h1><ul>
+<li>定义：在不破坏封装性的前提下，捕获一个对象的内部状态，并在该对象之外保存这个状态。这样以后就可将该对象恢复到原先保存的状态。</li>
+<li>并不是在类A中增加一个A对象的实例a，而是将要备忘的具体属性单独抽出来，存放到一个新类B中</li>
+<li>A不需要包含备忘对象B，只需在A中增加一个新建备忘B对象和由备忘B对象恢复当前属性信息的方法</li>
+<li>本例中最后sex未恢复是因为未将此属性加入到Memento类中，sex为不需要恢复的属性</li>
+<li>代码：</li>
+</ul>
+<pre><code>public class Boy {
+
+    private String name;//get  set
+    private String age;//get  set
+    private String sex;//get  set
+
+    public Memento createMemento(){
+        return new Memento(name,age);
+    }
+
+    public void backMemento(Memento memento){
+        this.name = memento.getMementoName();
+        this.age = memento.getMementoAge();
+    }
+
+    public void getBoyInfo(){
+        System.out.println(&quot;姓名：&quot;+name+&quot;，年龄：&quot;+age+&quot;，性别：&quot;+sex);
+    }
+}
+
+//此处的memento存储本类中那些需要备忘的属性信息
+public class Memento {
+
+    private String mementoName;//get  set
+    private String mementoAge;//get  set
+
+    public Memento(String mementoName,String mementoAge){
+        this.mementoName = mementoName;
+        this.mementoAge = mementoAge;
+    }
+}
+
+
+
+public class MementoManager {
+    private Memento memento;//get  set
+}
+
+
+
+public class Client {
+
+    public static void main(String[] args){
+        Boy boy = new Boy();
+        MementoManager mementoManager = new MementoManager();
+
+        boy.setName(&quot;马面&quot;);
+        boy.setAge(&quot;20&quot;);
+        boy.setSex(&quot;男&quot;);
+
+        Memento boyBack = boy.createMemento();
+        mementoManager.setMemento(boyBack);//设置备忘管理类中的备忘类实例
+        boy.getBoyInfo();//获取原始属性信息
+
+        boy.setName(&quot;牛头&quot;);
+        boy.setAge(&quot;25&quot;);
+        boy.setSex(&quot;女&quot;);
+        boy.getBoyInfo();//获取修改后的属性信息
+
+        boy.backMemento(mementoManager.getMemento());
+        boy.getBoyInfo();//获取恢复后的属性信息
+    }
+
+}
+</code></pre><hr>
 <h1 id="模板模式"><a href="#模板模式" class="headerlink" title="模板模式"></a><center>模板模式</center></h1><ul>
 <li>当我们写一个文档时（如需求文档）通常首先要找一个模板，模板里会清楚的写着要写几大模块且说明这些模块的先后顺序。我们再照着模板填充每一模块的具体内容。</li>
 <li>定义一个操作中的算法的框架，而将一些步骤延迟到子类中。使得子类可以不改变一个算法的结构即可重定义该算法的某些特定步骤。</li>
@@ -1512,8 +1641,129 @@ public class Client {
 </code></pre></li>
 </ul>
 <hr>
-<h1 id="享元模式"><a href="#享元模式" class="headerlink" title="享元模式"></a><center>享元模式</center></h1><hr>
-<h1 id="桥接模式"><a href="#桥接模式" class="headerlink" title="桥接模式"></a><center>桥接模式</center></h1><hr>
+<h1 id="享元模式"><a href="#享元模式" class="headerlink" title="享元模式"></a><center>享元模式</center></h1><ul>
+<li>定义：使用共享对象可有效地支持大量的细粒度对象。是池技术的重要实现方式。</li>
+<li>享元模式：将实例存放到内存中。内存中存在大量实例对象，但并不是所有的实例均有效，可能GC还未到回收时机，采用享元模式可节省内存。如对象池机制可以节省大量实例占用的内存空间。</li>
+<li><p>代码：</p>
+<pre><code>public class SignInfo {
+
+    private String id;//考试人员ID
+    private String location;//考点
+    private String address;
+    private String phone;
+
+    public void printSignInfo(){
+        System.out.println(&quot;考试人员ID：&quot;+id+&quot;，考点：&quot;+location+&quot;，地址：&quot;+address+&quot;，电话：&quot;+phone);
+    }
+}
+
+public class SignInfo4Pool extends SignInfo{//给SignInfo对象增加key属性
+
+    private String key;//get  set
+
+    public SignInfo4Pool(String key){
+        this.key = key;
+    }
+}
+
+public class SignInfoFactory {
+
+    private static HashMap&lt;String,SignInfo&gt; pool = new HashMap&lt;String,SignInfo&gt;();
+
+    public static SignInfo getSignInfo(String key){
+        SignInfo result = null;
+        if(!pool.containsKey(key)){
+            result = new SignInfo4Pool(key);
+            pool.put(key, result);
+            System.out.println(&quot;建立对象--&quot;+key+&quot;--，并放置到对象池中&quot;);
+        }else{
+            result = pool.get(key);
+            System.out.println(&quot;直接从对象池中取对象：&quot;+key);
+        }
+        return result;
+    }
+}
+
+public class Client {
+
+    public static void main(String[] args) {
+        for(int i=0;i&lt;4;i++){
+            String location = &quot;考点&quot;+i;
+            for(int j=0;j&lt;10;j++){
+                String key = location+&quot;，人员&quot;+j;
+            }
+        }
+
+        SignInfo signInfo = SignInfoFactory.getSignInfo(&quot;考点3，人员5&quot;);
+        signInfo.printSignInfo();
+    }
+}
+</code></pre></li>
+</ul>
+<hr>
+<h1 id="桥接模式"><a href="#桥接模式" class="headerlink" title="桥接模式"></a><center>桥接模式</center></h1><ul>
+<li>定义：将抽象和实现解耦，使得两者可以独立地变化。</li>
+<li>手机品牌（品牌A、品牌B）与手机软件（游戏、通讯录）是聚合关系</li>
+<li>手机品牌包含手机软件：品牌&lt;&gt;——-软件</li>
+<li><p>代码：</p>
+<pre><code>public interface Soft {
+    public void softRun();
+}
+
+public class SoftAddressList implements Soft{
+    public void softRun() {
+        System.out.println(&quot;手机通讯录运行&quot;);
+    }
+}
+
+public class SoftGame implements Soft{
+    public void softRun() {
+        System.out.println(&quot;手机游戏开始运行&quot;);
+    }
+}
+
+public abstract class Brand {
+    protected Soft soft;//或通过带参构造方法设置soft
+
+    public void setSoft(Soft soft){
+        this.soft = soft;
+    }
+    public abstract void brandRun();
+}
+
+public class BrandA extends Brand{
+    public void brandRun() {
+        soft.softRun();
+    }
+}
+
+public class BrandB extends Brand{
+    public void brandRun() {
+        soft.softRun();
+    }
+}
+
+public class Client {
+
+    public static void main(String[] args){
+
+        Brand brandA = new BrandA();
+        brandA.setSoft(new SoftGame());
+        brandA.brandRun();
+
+        brandA.setSoft(new SoftAddressList());
+        brandA.brandRun();
+</code></pre></li>
+</ul>
+<pre><code>        Brand brandB = new BrandB();
+        brandB.setSoft(new SoftGame());
+        brandB.brandRun();
+
+        brandB.setSoft(new SoftAddressList());
+        brandB.brandRun();
+    }
+}
+</code></pre><hr>
 <h1 id="适配器模式"><a href="#适配器模式" class="headerlink" title="适配器模式"></a><center>适配器模式</center></h1><ul>
 <li>定义：将一个类的接口变换成客户端期待的另一种接口，从而使原本因接口不匹配而无法在一起工作的2个类能够在一起工作。</li>
 <li>Adapter继承待转换类，实现目的接口</li>
@@ -1627,7 +1877,119 @@ public class Client {//适配器要继承待转换类，实现目的接口
 
 }
 </code></pre><hr>
-<h1 id="访问者模式"><a href="#访问者模式" class="headerlink" title="访问者模式"></a><center>访问者模式</center></h1><hr>
+<h1 id="访问者模式"><a href="#访问者模式" class="headerlink" title="访问者模式"></a><center>访问者模式</center></h1><ul>
+<li>定义：封装一些作用于某种数据结构中的各元素的操作，它可以在不改变数据结构的前提下定义作用于这些元素的新的操作。</li>
+<li>业务类A为类B、C的公共属性的方法，B、C均继承A，但又有各自的属性和方法</li>
+<li>业务类A中包含一个公共方法accept(Visitor)，其参数为一个观察者对象，B、C具体实现visitor.visit(this);</li>
+<li>访问者类D会针对B、C各自实例一个具体方法，参数分别为B、C</li>
+<li>代码：</li>
+</ul>
+<pre><code>public abstract class Employee {
+
+    public final static int MALE = 0; //0代表是男性
+    public final static int FEMALE = 1; //1代表是女性
+
+    private String name;//甭管是谁，都有工资   get set
+    private int salary;//只要是员工那就有薪水   get set
+    private int sex;//性别很重要   get set
+
+    public abstract void accept(VisitorInterface visitor);//允许一个访问者访问
+
+}
+
+public class CommonEmployee extends Employee{
+    private String job;//get set
+
+    public void accept(VisitorInterface visitor) {
+        visitor.visit(this);
+    }
+}
+
+public class Manager extends Employee{
+    private String performance;//get set
+
+    public void accept(VisitorInterface visitor) {
+        visitor.visit(this);
+    }
+}
+
+public interface VisitorInterface {
+    public void visit(CommonEmployee commonEmployee);//首先定义可访问普通员工
+    public void visit(Manager manager);//其次定义，我还可以访问部门经理
+}
+
+public class Visitor implements VisitorInterface{
+    public void visit(CommonEmployee commonEmployee) {
+        String commonEmployeeInfo = getCommonEmployee(commonEmployee);
+        System.out.println(commonEmployeeInfo);
+    }
+
+    public void visit(Manager manager) {
+        String managerInfo = getManagerInfo(manager);
+        System.out.println(managerInfo);
+    }
+
+    //组装出基本信息
+    private String getBasicInfo(Employee employee){
+        String info = &quot;姓名：&quot; + employee.getName() + &quot;\t&quot;;
+        info = info + &quot;性别：&quot; + (employee.getSex() == Employee.FEMALE?&quot;女&quot;:&quot;男&quot;) + &quot;\t&quot;;
+        info = info + &quot;薪水：&quot; + employee.getSalary() + &quot;\t&quot;;
+        return info;
+    }
+
+    private String getCommonEmployee(CommonEmployee commonEmployee){
+        String basicInfo = this.getBasicInfo(commonEmployee);
+        String otherInfo = &quot;工作：&quot;+commonEmployee.getJob()+&quot;\t&quot;;
+        return basicInfo + otherInfo;
+    }
+
+    private String getManagerInfo(Manager manager){
+        String basicInfo = this.getBasicInfo(manager);
+        String otherInfo = &quot;业绩：&quot;+manager.getPerformance() + &quot;\t&quot;;
+        return basicInfo + otherInfo;
+    }
+}
+
+public class Client {
+    public static void main(String[] args){
+        for(Employee emp:mockEmployee()){
+            emp.accept(new Visitor());
+        }
+    }
+
+    //模拟出公司的人员情况，我们可以想象这个数据室通过持久层传递过来的
+    public static List&lt;Employee&gt; mockEmployee(){
+
+        List&lt;Employee&gt; empList = new ArrayList&lt;Employee&gt;();
+
+        //产生张三这个员工
+        CommonEmployee zhangSan = new CommonEmployee();
+        zhangSan.setJob(&quot;编写Java程序，绝对的蓝领、苦工加搬运工&quot;);
+        zhangSan.setName(&quot;张三&quot;);
+        zhangSan.setSalary(1800);
+        zhangSan.setSex(Employee.MALE);
+        empList.add(zhangSan);
+
+        //产生李四这个员工
+        CommonEmployee liSi = new CommonEmployee();
+        liSi.setJob(&quot;页面美工，审美素质太不流行了！&quot;);
+        liSi.setName(&quot;李四&quot;);
+        liSi.setSalary(1900);
+        liSi.setSex(Employee.FEMALE);
+        empList.add(liSi);
+
+        //再产生一个经理
+        Manager wangWu = new Manager();
+        wangWu.setName(&quot;王五&quot;);
+        wangWu.setPerformance(&quot;基本上是负值，但是我会拍马屁呀&quot;);
+        wangWu.setSalary(18750);
+        wangWu.setSex(Employee.MALE);
+        empList.add(wangWu);
+
+        return empList;
+    }
+}
+</code></pre><hr>
 <h1 id="装饰模式"><a href="#装饰模式" class="headerlink" title="装饰模式"></a><center>装饰模式</center></h1><ul>
 <li>定义：为旧有的类添加新的功能，如小菜穿衣。若旧类为A，要为A添加新功能。装饰模式比生成子类更为灵活。</li>
 <li>抽象装饰类Decorator继承A的父类且包含一个A父类属性。</li>
@@ -2240,7 +2602,144 @@ public class Client {
     }
 }
 </code></pre><hr>
-<h1 id="解释器模式"><a href="#解释器模式" class="headerlink" title="解释器模式"></a><center>解释器模式</center></h1><hr>
+<h1 id="解释器模式"><a href="#解释器模式" class="headerlink" title="解释器模式"></a><center>解释器模式</center></h1><ul>
+<li>定义：给定一门语言，定义它的文法的一种表示，并定义一个解释器，该解释器使用该表示来解释语言中的句子。不常用。</li>
+<li><p>代码：</p>
+<pre><code>public abstract class Expression {
+    //解析公式和数值,其中var中的key值是是公式中的参数，value值是具体的数字
+    public abstract int interpreter(HashMap&lt;String,Integer&gt; map);
+
+}
+
+public class VarExpression extends Expression{
+
+    private String key;
+
+    public VarExpression(String key){
+        this.key = key;
+    }
+
+    public int interpreter(HashMap&lt;String, Integer&gt; map) {
+        return map.get(key);
+    }
+}
+
+public abstract class SymbolExpression extends Expression{
+
+    protected Expression left;
+    protected Expression right;
+
+    public SymbolExpression(Expression left,Expression right){
+        this.left = left;
+        this.right = right;
+    }
+}
+
+public class AddExpression extends SymbolExpression{
+
+    public AddExpression(Expression left, Expression right) {
+        super(left, right);
+    }
+
+    public int interpreter(HashMap&lt;String, Integer&gt; map) {
+        return super.left.interpreter(map) + super.right.interpreter(map);
+    }
+}
+
+public class SubExpression extends SymbolExpression{
+
+    public SubExpression(Expression left, Expression right) {
+        super(left, right);
+    }
+
+    public int interpreter(HashMap&lt;String, Integer&gt; map) {
+        return super.left.interpreter(map) - super.right.interpreter(map);
+    }
+
+}
+
+public class Calculator {
+
+    //定义的表达式
+    private Expression expression;
+
+    //构造函数传参,并解析
+    public Calculator(String expStr){
+
+        //定义一个堆栈，安排运算的先后顺序
+        Stack&lt;Expression&gt; stack = new Stack&lt;Expression&gt;();
+
+        //表达式拆分为字符数组
+        char[] charArray = expStr.toCharArray();
+
+        //运算
+        Expression left = null;
+        Expression right = null;
+
+        for(int i=0;i&lt;charArray.length;i++){
+            switch(charArray[i]) {
+                case &apos;+&apos;: //加法
+                    //加法结果放到堆栈中
+                    left = stack.pop();
+                    right = new VarExpression(String.valueOf(charArray[++i]));
+                    stack.push(new AddExpression(left,right));
+                    break;
+                case &apos;-&apos;:
+                    left = stack.pop();
+                    right = new VarExpression(String.valueOf(charArray[++i]));
+                    stack.push(new SubExpression(left,right));
+                    break;
+                default: //公式中的变量
+                    stack.push(new VarExpression(String.valueOf(charArray[i])));
+            }
+        }
+
+        //把运算结果抛出来
+        this.expression = stack.pop();
+    }
+
+    //开始运算
+    public int run(HashMap&lt;String,Integer&gt; var){
+        return this.expression.interpreter(var);
+    }
+}
+
+public class Client {
+
+    public static void main(String[] args) throws IOException{
+        String expStr = getExpStr();
+
+        //赋值
+        HashMap&lt;String,Integer&gt; var = getValue(expStr);
+        Calculator cal = new Calculator(expStr);
+        System.out.println(&quot;运算结果为：&quot;+expStr +&quot;=&quot;+cal.run(var));
+    }
+
+    //获得表达式
+    public static String getExpStr() throws IOException{
+        System.out.print(&quot;请输入表达式：&quot;);
+        return (new BufferedReader(new InputStreamReader(System.in))).readLine();
+    }
+
+    //获得值映射
+    public static HashMap&lt;String,Integer&gt; getValue(String exprStr) throws IOException{
+        HashMap&lt;String,Integer&gt; map = new HashMap&lt;String,Integer&gt;();
+        //解析有几个参数要传递
+        for(char ch:exprStr.toCharArray()){
+            if(ch != &apos;+&apos; &amp;&amp; ch != &apos;-&apos;){
+                if(!map.containsKey(String.valueOf(ch))){ //解决重复参数的问题
+                    System.out.print(&quot;请输入&quot;+ch+&quot;的值:&quot;);
+                    String in = (new BufferedReader(new InputStreamReader(System.in))).readLine();
+                    map.put(String.valueOf(ch),Integer.valueOf(in));
+                }
+            }
+        }
+        return map;
+    }
+}
+</code></pre></li>
+</ul>
+<hr>
 <h1 id="迭代器模式"><a href="#迭代器模式" class="headerlink" title="迭代器模式"></a><center>迭代器模式</center></h1><ul>
 <li>定义：提供一种方法访问一个容器对象中的各个元素，而又不需要暴露该对象的内部细节。目前是一个没落的模式。</li>
 </ul>
