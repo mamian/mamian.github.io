@@ -10,11 +10,15 @@
 
     <!--Description-->
     
-        <meta name="description" content="分页查询
-创建索引
-分库
-分表
-读写分离">
+        <meta name="description" content="字段设计
+适当冗余
+分离不必要字段
+
+
+索引
+尽量选择区分度高的列作为索引
+最左前缀匹配原则，mysql会一直向右匹配直到遇到范围查询(&amp;gt;、&amp;lt;、between、like)就停止匹配
+比如a = 1 and b = 2 and c &amp;gt; 3 and d = 4 如果建立(a,b,c,d">
     
 
     <!--Author-->
@@ -188,11 +192,115 @@
             <!-- Post Main Content -->
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                 <ul>
+<li>字段设计<ul>
+<li>适当冗余</li>
+<li>分离不必要字段</li>
+</ul>
+</li>
+<li>索引<ul>
+<li>尽量选择区分度高的列作为索引</li>
+<li>最左前缀匹配原则，mysql会一直向右匹配直到遇到范围查询(&gt;、&lt;、between、like)就停止匹配<ul>
+<li>比如a = 1 and b = 2 and c &gt; 3 and d = 4 如果建立(a,b,c,d)顺序的索引，d是用不到索引的。</li>
+</ul>
+</li>
+<li>尽量的扩展索引，不要新建索引。比如表中已经有a的索引，现在要加(a,b)的索引，那么只需要修改原来的索引即可</li>
+</ul>
+</li>
 <li>分页查询</li>
-<li>创建索引</li>
+<li>分表（水平UNION、垂直JOIN）</li>
 <li>分库</li>
-<li>分表</li>
-<li>读写分离</li>
+<li>读写分离<ul>
+<li>一般的应用系统，读写比例在10:1左右，而且插入操作和一般的更新操作很少出现性能问题，遇到最多的，也是最容易出问题的，还是一些复杂的查询操作，所以查询语句的优化显然是重中之重。</li>
+</ul>
+</li>
+<li>添加缓存</li>
+<li>存储过程</li>
+</ul>
+<h1 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h1><h3 id="索引类型"><a href="#索引类型" class="headerlink" title="索引类型"></a>索引类型</h3><ul>
+<li>普通索引</li>
+<li>唯一性索引<ul>
+<li>主键为一种特殊的唯一性索引。</li>
+</ul>
+</li>
+<li>单列索引<ul>
+<li>单列索引可以是普通索引，也可以是唯一性索引，还可以是全文索引。只要保证该索引只对应一个字段即可。</li>
+</ul>
+</li>
+<li>多列索引<ul>
+<li>只有查询条件中使用了这些字段中<code>第一个字段</code>时，索引才会被使用。</li>
+</ul>
+</li>
+<li>全文索引（仅myISAM存储引擎支持）<ul>
+<li>使用FULLTEXT参数可以设置索引为全文索引。</li>
+<li>使用FULLTEXT参数可以设置索引为全文索引。全文索引只能创建在CHAR、VARCHAR或TEXT类型的字段上。查询数据量较大的字符串类型的字段时，使用全文索引可以提高查询速度。</li>
+<li>如查询文章表的文章内容。</li>
+</ul>
+</li>
+<li>空间索引（仅myISAM存储引擎支持）<ul>
+<li>使用SPATIAL参数可以设置索引为空间索引。空间索引只能建立在空间数据类型上，这样可以提高系统获取空间数据的效率。</li>
+<li>MySQL中的空间数据类型包括GEOMETRY和POINT、LINESTRING和POLYGON等。索引的字段不能为空值。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="索引操作"><a href="#索引操作" class="headerlink" title="索引操作"></a>索引操作</h3><ul>
+<li>主键索引<code>PRIMARY KEY</code><ul>
+<li>ALTER TABLE <code>table_name</code> ADD PRIMARY KEY (<code>column</code>)</li>
+</ul>
+</li>
+<li>唯一索引<code>UNIQUE</code><ul>
+<li>ALTER TABLE <code>table_name</code> ADD UNIQUE (<code>column</code>)</li>
+</ul>
+</li>
+<li>普通索引<code>INDEX</code><ul>
+<li>ALTER TABLE <code>table_name</code> ADD INDEX index_name (<code>column</code>)</li>
+</ul>
+</li>
+<li>多列索引<ul>
+<li>ALTER TABLE <code>table_name</code> ADD INDEX index_name (<code>column1</code>, <code>column2</code>, <code>column3</code>)</li>
+</ul>
+</li>
+<li>全文索引<code>FULLTEXT</code><ul>
+<li>ALTER TABLE <code>table_name</code> ADD FULLTEXT (<code>column</code>)</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="创建索引"><a href="#创建索引" class="headerlink" title="创建索引"></a>创建索引</h3><ul>
+<li>CREATE TABLE</li>
+<li>ALTER TABLE<ul>
+<li>可创建普通索引、UNIQUE索引或PRIMARY KEY索引</li>
+<li>ALTER TABLE table_name ADD INDEX index_name (column_list)   </li>
+<li>ALTER TABLE table_name ADD UNIQUE (column_list)   </li>
+<li>ALTER TABLE table_name ADD PRIMARY KEY (column_list)</li>
+</ul>
+</li>
+<li>CREATE INDEX<ul>
+<li>可对表增加普通索引或UNIQUE索引</li>
+<li>CREATE INDEX index_name ON table_name (column_list)   </li>
+<li>CREATE UNIQUE INDEX index_name ON table_name (column_list)</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="删除索引"><a href="#删除索引" class="headerlink" title="删除索引"></a>删除索引</h3><ul>
+<li>删除普通索引<ul>
+<li>DROP INDEX index_name ON talbe_name   </li>
+<li>ALTER TABLE table_name DROP INDEX index_name   </li>
+</ul>
+</li>
+<li>删除主键索引<ul>
+<li>ALTER TABLE table_name DROP PRIMARY KEY</li>
+</ul>
+</li>
+<li>对于多列组合的索引，如果删除其中的某列，则该列也会从索引中删除。如果删除组成索引的所有列，则整个索引将被删除。</li>
+</ul>
+<hr>
+<h1 id="读写分离"><a href="#读写分离" class="headerlink" title="读写分离"></a>读写分离</h1><p>Master-Slave1-Slave2-Slave3<br>主库master用来写入，slave1—slave3都用来做select，每个数据库分担的压力小了很多。<br>要实现这种方式，需要程序特别设计，写都操作master，读都操作slave，给程序开发带来了额外负担。当然目前已经有中间件来实现这个代理，对程 序来读写哪些数据库是透明的。官方有个mysql-proxy，但是还是alpha版本的。</p>
+<ul>
+<li>数据量比较大时使用分页查询，简单的limit offset即可。</li>
+<li>若页面偏移量offset较大（如 limit 100000,10），查询会变慢，此时分表。</li>
+<li>分表还比较慢，则分库。</li>
 </ul>
 
 
