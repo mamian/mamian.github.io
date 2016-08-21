@@ -10,6 +10,11 @@
 
     <!--Description-->
     
+        <meta name="description" content="为其他对象提供一种代理以控制对这个对象的访问。
+代理模式也叫做委托模式，许多其他的模式如状态模式、策略模式、访问者模式本质上是在更特殊的场合采用了委托模式。
+struts2的form元素映射就采用了动态代理模式。spring aop是非常典型的动态代理。
+GG请Proxy代替他去追MM,GG包含一个">
+    
 
     <!--Author-->
     
@@ -18,7 +23,7 @@
 
     <!--Open Graph Title-->
     
-        <meta property="og:title" content="马面"/>
+        <meta property="og:title" content="设计模式读书笔记-代理模式"/>
     
 
     <!--Open Graph Description-->
@@ -29,7 +34,7 @@
 
     <!--Type page-->
     
-        <meta property="og:type" content="website" />
+        <meta property="og:type" content="article" />
     
 
     <!--Page Cover-->
@@ -40,7 +45,7 @@
 
     <!-- Title -->
     
-    <title>Archives: 2016/8 - 马面</title>
+    <title>设计模式读书笔记-代理模式 - 马面</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
@@ -147,169 +152,201 @@
 </nav>
 
     <!-- Main Content -->
-    
+    <!-- Page Header -->
+<!-- Set your background image for this header in your post front-matter: cover -->
 
-<!-- Page Header -->
-<!-- Set your background image for this header in the theme's configuration: index_cover -->
 <header class="intro-header" style="background-image: url('http://www.codeblocq.com/assets/projects/hexo-theme-clean-blog/img/home-bg.jpg')">
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <div class="site-heading">
-                    <h1>2016/8</h1>
+                <div class="post-heading">
+                    <h1>设计模式读书笔记-代理模式</h1>
+                    
+                    <span class="meta">
+                        <!-- Date and Author -->
+                        
+                        2016-08-21
+                    </span>
                 </div>
             </div>
         </div>
     </div>
 </header>
 
-<!-- Main Content -->
-<div class="container">
-    <div class="row">
-        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Tags and categories -->
+           
+                <div class="col-lg-4 col-lg-offset-2 col-md-5 col-md-offset-1 post-tags">
+                    
+                        
+
+
+<a href="/tags/设计模式/">#设计模式</a>
+
+
+                    
+                </div>
+                <div class="col-lg-4 col-md-5 post-categories">
+                    
+                        
+
+<a href="/categories/读书笔记/">读书笔记</a>
+
+                    
+                </div>
             
-                <div class="post-preview">
-    <a href="/2016/08/21/设计模式读书笔记-迭代器模式/">
-        <h1 class="post-title archive">
-            设计模式读书笔记-迭代器模式
-        </h1>
-    </a>
-    <p class="post-meta archive">
-        <!-- Date and Author -->
-        
-        2016-08-21
-    </p>
-</div>
+
+            <!-- Gallery -->
             
-                <div class="post-preview">
-    <a href="/2016/08/21/设计模式读书笔记-解释器模式/">
-        <h1 class="post-title archive">
-            设计模式读书笔记-解释器模式
-        </h1>
-    </a>
-    <p class="post-meta archive">
-        <!-- Date and Author -->
-        
-        2016-08-21
-    </p>
-</div>
-            
-                <div class="post-preview">
-    <a href="/2016/08/21/设计模式读书笔记-抽象工厂模式/">
-        <h1 class="post-title archive">
-            设计模式读书笔记-抽象工厂模式
-        </h1>
-    </a>
-    <p class="post-meta archive">
-        <!-- Date and Author -->
-        
-        2016-08-21
-    </p>
-</div>
-            
-                <div class="post-preview">
-    <a href="/2016/08/21/设计模式读书笔记-工厂模式/">
-        <h1 class="post-title archive">
-            设计模式读书笔记-工厂模式
-        </h1>
-    </a>
-    <p class="post-meta archive">
-        <!-- Date and Author -->
-        
-        2016-08-21
-    </p>
-</div>
-            
-                <div class="post-preview">
-    <a href="/2016/08/21/设计模式读书笔记-简单工厂模式/">
-        <h1 class="post-title archive">
-            设计模式读书笔记-简单工厂模式
-        </h1>
-    </a>
-    <p class="post-meta archive">
-        <!-- Date and Author -->
-        
-        2016-08-21
-    </p>
-</div>
-            
-                <div class="post-preview">
-    <a href="/2016/08/21/设计模式读书笔记-装饰模式/">
-        <h1 class="post-title archive">
-            设计模式读书笔记-装饰模式
-        </h1>
-    </a>
-    <p class="post-meta archive">
-        <!-- Date and Author -->
-        
-        2016-08-21
-    </p>
-</div>
-            
-                <div class="post-preview">
-    <a href="/2016/08/21/设计模式读书笔记-访问者模式/">
-        <h1 class="post-title archive">
-            设计模式读书笔记-访问者模式
-        </h1>
-    </a>
-    <p class="post-meta archive">
-        <!-- Date and Author -->
-        
-        2016-08-21
-    </p>
-</div>
-            
-                <div class="post-preview">
-    <a href="/2016/08/21/设计模式读书笔记-适配器模式/">
-        <h1 class="post-title archive">
-            设计模式读书笔记-适配器模式
-        </h1>
-    </a>
-    <p class="post-meta archive">
-        <!-- Date and Author -->
-        
-        2016-08-21
-    </p>
-</div>
-            
-                <div class="post-preview">
-    <a href="/2016/08/21/设计模式读书笔记-桥接模式/">
-        <h1 class="post-title archive">
-            设计模式读书笔记-桥接模式
-        </h1>
-    </a>
-    <p class="post-meta archive">
-        <!-- Date and Author -->
-        
-        2016-08-21
-    </p>
-</div>
-            
-                <div class="post-preview">
-    <a href="/2016/08/21/设计模式读书笔记-享元模式/">
-        <h1 class="post-title archive">
-            设计模式读书笔记-享元模式
-        </h1>
-    </a>
-    <p class="post-meta archive">
-        <!-- Date and Author -->
-        
-        2016-08-21
-    </p>
-</div>
-            
-            <div class="archive-before-pagination"></div>
-            <ul class="pager">
-    
-    
-        <li class="next"><a href="/archives/2016/08/page/2/">Older Posts  &rarr;</a></li>
-    
+
+            <!-- Post Main Content -->
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul>
+<li>为其他对象提供一种代理以控制对这个对象的访问。</li>
+<li>代理模式也叫做委托模式，许多其他的模式如状态模式、策略模式、访问者模式本质上是在更特殊的场合采用了委托模式。</li>
+<li>struts2的form元素映射就采用了动态代理模式。spring aop是非常典型的动态代理。</li>
+<li>GG请Proxy代替他去追MM,GG包含一个MM,Proxy包含一个GG</li>
+<li>Proxy的方法中执行的是GG的同名方法Proxy</li>
+<li>Proxy与GG具有相同的方法，抽取其共性为Same_ProxyAndGG</li>
+<li>代码</li>
 </ul>
+<pre><code>public class Same_ProxyAndGG {
+
+    public void giveGiftA(){
+    }
+
+    public void giveGiftB(){
+    }
+
+    public void giveGiftC(){
+    }
+
+}
+
+
+public class MM {
+
+    private String name;//set  get
+
+    public MM(String name) {
+        this.name = name;
+    }
+
+}
+
+
+public class GG extends Same_ProxyAndGG{
+
+    private MM mm;
+
+    public GG(MM mm){
+        this.mm = mm;
+    }
+
+    public void giveGiftA(){
+        System.out.println(&quot;GG送给&quot;+mm.getName()+&quot; GiftA&quot;);
+    }
+
+    public void giveGiftB(){
+        System.out.println(&quot;GG送给&quot;+mm.getName()+&quot; GiftB&quot;);
+    }
+
+    public void giveGiftC(){
+        System.out.println(&quot;GG送给&quot;+mm.getName()+&quot; GiftC&quot;);
+    }
+
+}
+
+
+public class Proxy extends Same_ProxyAndGG{
+
+    private GG gg;
+
+    public Proxy(GG gg) {
+        this.gg = gg;
+    }
+
+    public void giveGiftA(){
+        gg.giveGiftA();
+    }
+
+    public void giveGiftB(){
+        gg.giveGiftB();
+    }
+
+    public void giveGiftC(){
+        gg.giveGiftC();
+    }
+
+}
+
+
+public class Client {
+    public static void main(String[] args){
+
+        MM mm = new MM(&quot;漂亮妹纸&quot;);
+        GG gg = new GG(mm);
+
+        Proxy proxy = new Proxy(gg);
+
+        proxy.giveGiftA();
+        proxy.giveGiftB();
+        proxy.giveGiftC();
+    }
+}
+</code></pre><h3 id="动态代理（spring-aop）"><a href="#动态代理（spring-aop）" class="headerlink" title="动态代理（spring aop）"></a>动态代理（spring aop）</h3><ul>
+<li>静态代理：由程序员创建或特定工具自动生成源代码，再对其编译。在程序运行前，代理类的.class文件就已经存在了。 </li>
+<li>动态代理<ul>
+<li>在程序运行时，运用反射机制动态创建而成。</li>
+<li>动态代理是在实现阶段不用关心代理谁，在运行阶段才指定代理哪一个对象。</li>
+</ul>
+</li>
+<li>aop：切面(Aspect)、切入点(JoinPoint)、通知(Advice)、织入(Weave)</li>
+<li><p>java.lang.reflect包中的Proxy类和InvocationHandler接口提供了生成动态代理类的能力。</p>
+<ul>
+<li><p>InvocationHandler接口</p>
+<pre><code>public interface InvocationHandler { 
+    public Object invoke(Object proxy,Method method,Object[] args) throws Throwable; 
+}
+
+参数说明： 
+Object proxy：指被代理的对象。 
+Method method：要调用的方法 
+Object[] args：方法调用时所需要的参数 
+</code></pre></li>
+<li><p>Proxy类：专门完成代理的操作类，可通过此类为一个或多个接口动态地生成实现类，此类提供了如下的操作方法： </p>
+</li>
+</ul>
+</li>
+</ul>
+<pre><code>public static Object newProxyInstance(ClassLoader loader, Class&lt;?&gt;[] interfaces, InvocationHandler h) throws IllegalArgumentException 
+参数说明： 
+ClassLoader loader：类加载器 
+Class&lt;?&gt;[] interfaces：得到全部的接口 
+InvocationHandler h：得到InvocationHandler接口的子类实例
+</code></pre><ul>
+<li>代码</li>
+</ul>
+
+
+                
+            </div>
+
+            <!-- Comments -->
+            
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    
+
+
+                </div>
+            
         </div>
     </div>
-</div>
-
-
+</article>
 
     <!-- Footer -->
     <hr />

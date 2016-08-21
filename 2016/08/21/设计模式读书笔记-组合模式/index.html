@@ -10,6 +10,16 @@
 
     <!--Description-->
     
+        <meta name="description" content="定义：将对象组合成树形结构以表示“部分-整体”的层次结构，使得用户对单个对象和组合对象的使用具有一致性。
+代码：
+
+public abstract class Node {
+
+    private String nodeName;
+    private String nodeId;
+
+    p">
+    
 
     <!--Author-->
     
@@ -18,7 +28,7 @@
 
     <!--Open Graph Title-->
     
-        <meta property="og:title" content="马面"/>
+        <meta property="og:title" content="设计模式读书笔记-组合模式"/>
     
 
     <!--Open Graph Description-->
@@ -29,7 +39,7 @@
 
     <!--Type page-->
     
-        <meta property="og:type" content="website" />
+        <meta property="og:type" content="article" />
     
 
     <!--Page Cover-->
@@ -40,7 +50,7 @@
 
     <!-- Title -->
     
-    <title>Archives: 2016/8 - 马面</title>
+    <title>设计模式读书笔记-组合模式 - 马面</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
@@ -147,169 +157,180 @@
 </nav>
 
     <!-- Main Content -->
-    
+    <!-- Page Header -->
+<!-- Set your background image for this header in your post front-matter: cover -->
 
-<!-- Page Header -->
-<!-- Set your background image for this header in the theme's configuration: index_cover -->
 <header class="intro-header" style="background-image: url('http://www.codeblocq.com/assets/projects/hexo-theme-clean-blog/img/home-bg.jpg')">
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <div class="site-heading">
-                    <h1>2016/8</h1>
+                <div class="post-heading">
+                    <h1>设计模式读书笔记-组合模式</h1>
+                    
+                    <span class="meta">
+                        <!-- Date and Author -->
+                        
+                        2016-08-21
+                    </span>
                 </div>
             </div>
         </div>
     </div>
 </header>
 
-<!-- Main Content -->
-<div class="container">
-    <div class="row">
-        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Tags and categories -->
+           
+                <div class="col-lg-4 col-lg-offset-2 col-md-5 col-md-offset-1 post-tags">
+                    
+                        
+
+
+<a href="/tags/设计模式/">#设计模式</a>
+
+
+                    
+                </div>
+                <div class="col-lg-4 col-md-5 post-categories">
+                    
+                        
+
+<a href="/categories/读书笔记/">读书笔记</a>
+
+                    
+                </div>
             
-                <div class="post-preview">
-    <a href="/2016/08/21/设计模式读书笔记-迭代器模式/">
-        <h1 class="post-title archive">
-            设计模式读书笔记-迭代器模式
-        </h1>
-    </a>
-    <p class="post-meta archive">
-        <!-- Date and Author -->
-        
-        2016-08-21
-    </p>
-</div>
+
+            <!-- Gallery -->
             
-                <div class="post-preview">
-    <a href="/2016/08/21/设计模式读书笔记-解释器模式/">
-        <h1 class="post-title archive">
-            设计模式读书笔记-解释器模式
-        </h1>
-    </a>
-    <p class="post-meta archive">
-        <!-- Date and Author -->
-        
-        2016-08-21
-    </p>
-</div>
-            
-                <div class="post-preview">
-    <a href="/2016/08/21/设计模式读书笔记-抽象工厂模式/">
-        <h1 class="post-title archive">
-            设计模式读书笔记-抽象工厂模式
-        </h1>
-    </a>
-    <p class="post-meta archive">
-        <!-- Date and Author -->
-        
-        2016-08-21
-    </p>
-</div>
-            
-                <div class="post-preview">
-    <a href="/2016/08/21/设计模式读书笔记-工厂模式/">
-        <h1 class="post-title archive">
-            设计模式读书笔记-工厂模式
-        </h1>
-    </a>
-    <p class="post-meta archive">
-        <!-- Date and Author -->
-        
-        2016-08-21
-    </p>
-</div>
-            
-                <div class="post-preview">
-    <a href="/2016/08/21/设计模式读书笔记-简单工厂模式/">
-        <h1 class="post-title archive">
-            设计模式读书笔记-简单工厂模式
-        </h1>
-    </a>
-    <p class="post-meta archive">
-        <!-- Date and Author -->
-        
-        2016-08-21
-    </p>
-</div>
-            
-                <div class="post-preview">
-    <a href="/2016/08/21/设计模式读书笔记-装饰模式/">
-        <h1 class="post-title archive">
-            设计模式读书笔记-装饰模式
-        </h1>
-    </a>
-    <p class="post-meta archive">
-        <!-- Date and Author -->
-        
-        2016-08-21
-    </p>
-</div>
-            
-                <div class="post-preview">
-    <a href="/2016/08/21/设计模式读书笔记-访问者模式/">
-        <h1 class="post-title archive">
-            设计模式读书笔记-访问者模式
-        </h1>
-    </a>
-    <p class="post-meta archive">
-        <!-- Date and Author -->
-        
-        2016-08-21
-    </p>
-</div>
-            
-                <div class="post-preview">
-    <a href="/2016/08/21/设计模式读书笔记-适配器模式/">
-        <h1 class="post-title archive">
-            设计模式读书笔记-适配器模式
-        </h1>
-    </a>
-    <p class="post-meta archive">
-        <!-- Date and Author -->
-        
-        2016-08-21
-    </p>
-</div>
-            
-                <div class="post-preview">
-    <a href="/2016/08/21/设计模式读书笔记-桥接模式/">
-        <h1 class="post-title archive">
-            设计模式读书笔记-桥接模式
-        </h1>
-    </a>
-    <p class="post-meta archive">
-        <!-- Date and Author -->
-        
-        2016-08-21
-    </p>
-</div>
-            
-                <div class="post-preview">
-    <a href="/2016/08/21/设计模式读书笔记-享元模式/">
-        <h1 class="post-title archive">
-            设计模式读书笔记-享元模式
-        </h1>
-    </a>
-    <p class="post-meta archive">
-        <!-- Date and Author -->
-        
-        2016-08-21
-    </p>
-</div>
-            
-            <div class="archive-before-pagination"></div>
-            <ul class="pager">
-    
-    
-        <li class="next"><a href="/archives/2016/08/page/2/">Older Posts  &rarr;</a></li>
-    
+
+            <!-- Post Main Content -->
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul>
+<li>定义：将对象组合成树形结构以表示“部分-整体”的层次结构，使得用户对单个对象和组合对象的使用具有一致性。</li>
+<li>代码：</li>
 </ul>
+<pre><code>public abstract class Node {
+
+    private String nodeName;
+    private String nodeId;
+
+    public Node(String nodeName,String nodeId) {
+        this.nodeId = nodeId;
+        this.nodeName = nodeName;
+    }
+
+    public String getNodeInfo(){
+        String nodeInfo = &quot;节点名称：&quot;+nodeName+&quot;  节点Id：&quot;+nodeId;
+        return nodeInfo;
+    }
+
+}
+
+
+
+public class BranchNode extends Node{
+
+    private List&lt;Node&gt; subNodeList = new ArrayList&lt;Node&gt;();
+
+
+    public BranchNode(String branchNodeName,String branchNodeId) {
+        super(branchNodeName,branchNodeId);
+    }
+
+    public void addSubNode(Node subNode){
+        subNodeList.add(subNode);
+    }
+
+    public List&lt;Node&gt; getSubNodeList(){
+        return subNodeList;
+    }
+}
+
+
+
+public class LeafNode extends Node{
+    public LeafNode(String leafNodeName,String leafNodeId) {
+        super(leafNodeName,leafNodeId);
+    }
+}
+
+
+
+public class Client {
+
+    public static void main(String[] args){
+        BranchNode root = buildTree();
+        System.out.println(getTreeInfo(root));
+    }
+
+    public static BranchNode buildTree(){
+        //将根节点对象生产出来---------------------------------------------
+        BranchNode root = new BranchNode(&quot;机构人员树&quot;,&quot;-1&quot;);
+
+        //将一级机构生产出来----------------------------------------------
+        BranchNode firstOrg1 = new BranchNode(&quot;北京市&quot;,&quot;1&quot;);
+
+        //将二级机构生产出来-----------------------------------------------
+        BranchNode secondOrg1 = new BranchNode(&quot;海淀区&quot;,&quot;101&quot;);
+        BranchNode secondOrg2 = new BranchNode(&quot;大兴区&quot;,&quot;102&quot;);
+        BranchNode secondOrg3 = new BranchNode(&quot;丰台区&quot;,&quot;103&quot;);
+
+        //将三级人员生产出来------------------------------------------------
+        LeafNode person1 = new LeafNode(&quot;北京海淀人1&quot;,&quot;10101&quot;);
+        LeafNode person2 = new LeafNode(&quot;北京海淀人2&quot;,&quot;10102&quot;);
+        LeafNode person3 = new LeafNode(&quot;北京大兴人1&quot;,&quot;10201&quot;);
+        LeafNode person4 = new LeafNode(&quot;北京丰台人1&quot;,&quot;10301&quot;);
+
+        //组装---------------------------------------------------------
+        secondOrg1.addSubNode(person1);
+        secondOrg1.addSubNode(person2);
+        secondOrg2.addSubNode(person3);
+        secondOrg3.addSubNode(person4);
+
+        firstOrg1.addSubNode(secondOrg1);
+        firstOrg1.addSubNode(secondOrg2);
+        firstOrg1.addSubNode(secondOrg3);
+
+        root.addSubNode(firstOrg1);
+
+        return root;
+    }
+
+    public static String getTreeInfo(BranchNode branchNode){
+        String result = branchNode.getNodeInfo()+&quot;\n&quot;;
+        List&lt;Node&gt; subList = branchNode.getSubNodeList();
+
+        for(int i=0;i&lt;subList.size();i++){
+            Node node = subList.get(i);
+            result += node.getNodeInfo()+&quot;\n&quot;;
+            if(node instanceof BranchNode){
+                result += getTreeInfo((BranchNode)node)+&quot;\n&quot;;
+            }
+        }
+        return result;
+    }
+}
+</code></pre>
+
+                
+            </div>
+
+            <!-- Comments -->
+            
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    
+
+
+                </div>
+            
         </div>
     </div>
-</div>
-
-
+</article>
 
     <!-- Footer -->
     <hr />

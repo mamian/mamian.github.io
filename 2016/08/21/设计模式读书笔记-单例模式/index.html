@@ -10,6 +10,10 @@
 
     <!--Description-->
     
+        <meta name="description" content="只能产生一个实例对象。实例为静态成员，构造方法为private，静态方法返回惟一实例。
+单例类一般不要实现Cloneable接口，若一个类实现了Cloneable接口且实现了clone()方法，那么这个类可以被复制，类复制时不需要调用构造方法。单例将被破坏。
+一个单例对象在内存中长久不使用，JVM会">
+    
 
     <!--Author-->
     
@@ -18,7 +22,7 @@
 
     <!--Open Graph Title-->
     
-        <meta property="og:title" content="马面"/>
+        <meta property="og:title" content="设计模式读书笔记-单例模式"/>
     
 
     <!--Open Graph Description-->
@@ -29,7 +33,7 @@
 
     <!--Type page-->
     
-        <meta property="og:type" content="website" />
+        <meta property="og:type" content="article" />
     
 
     <!--Page Cover-->
@@ -40,7 +44,7 @@
 
     <!-- Title -->
     
-    <title>Archives: 2016/8 - 马面</title>
+    <title>设计模式读书笔记-单例模式 - 马面</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
@@ -147,169 +151,175 @@
 </nav>
 
     <!-- Main Content -->
-    
+    <!-- Page Header -->
+<!-- Set your background image for this header in your post front-matter: cover -->
 
-<!-- Page Header -->
-<!-- Set your background image for this header in the theme's configuration: index_cover -->
 <header class="intro-header" style="background-image: url('http://www.codeblocq.com/assets/projects/hexo-theme-clean-blog/img/home-bg.jpg')">
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <div class="site-heading">
-                    <h1>2016/8</h1>
+                <div class="post-heading">
+                    <h1>设计模式读书笔记-单例模式</h1>
+                    
+                    <span class="meta">
+                        <!-- Date and Author -->
+                        
+                        2016-08-21
+                    </span>
                 </div>
             </div>
         </div>
     </div>
 </header>
 
-<!-- Main Content -->
-<div class="container">
-    <div class="row">
-        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Tags and categories -->
+           
+                <div class="col-lg-4 col-lg-offset-2 col-md-5 col-md-offset-1 post-tags">
+                    
+                        
+
+
+<a href="/tags/设计模式/">#设计模式</a>
+
+
+                    
+                </div>
+                <div class="col-lg-4 col-md-5 post-categories">
+                    
+                        
+
+<a href="/categories/读书笔记/">读书笔记</a>
+
+                    
+                </div>
             
-                <div class="post-preview">
-    <a href="/2016/08/21/设计模式读书笔记-迭代器模式/">
-        <h1 class="post-title archive">
-            设计模式读书笔记-迭代器模式
-        </h1>
-    </a>
-    <p class="post-meta archive">
-        <!-- Date and Author -->
-        
-        2016-08-21
-    </p>
-</div>
+
+            <!-- Gallery -->
             
-                <div class="post-preview">
-    <a href="/2016/08/21/设计模式读书笔记-解释器模式/">
-        <h1 class="post-title archive">
-            设计模式读书笔记-解释器模式
-        </h1>
-    </a>
-    <p class="post-meta archive">
-        <!-- Date and Author -->
-        
-        2016-08-21
-    </p>
-</div>
-            
-                <div class="post-preview">
-    <a href="/2016/08/21/设计模式读书笔记-抽象工厂模式/">
-        <h1 class="post-title archive">
-            设计模式读书笔记-抽象工厂模式
-        </h1>
-    </a>
-    <p class="post-meta archive">
-        <!-- Date and Author -->
-        
-        2016-08-21
-    </p>
-</div>
-            
-                <div class="post-preview">
-    <a href="/2016/08/21/设计模式读书笔记-工厂模式/">
-        <h1 class="post-title archive">
-            设计模式读书笔记-工厂模式
-        </h1>
-    </a>
-    <p class="post-meta archive">
-        <!-- Date and Author -->
-        
-        2016-08-21
-    </p>
-</div>
-            
-                <div class="post-preview">
-    <a href="/2016/08/21/设计模式读书笔记-简单工厂模式/">
-        <h1 class="post-title archive">
-            设计模式读书笔记-简单工厂模式
-        </h1>
-    </a>
-    <p class="post-meta archive">
-        <!-- Date and Author -->
-        
-        2016-08-21
-    </p>
-</div>
-            
-                <div class="post-preview">
-    <a href="/2016/08/21/设计模式读书笔记-装饰模式/">
-        <h1 class="post-title archive">
-            设计模式读书笔记-装饰模式
-        </h1>
-    </a>
-    <p class="post-meta archive">
-        <!-- Date and Author -->
-        
-        2016-08-21
-    </p>
-</div>
-            
-                <div class="post-preview">
-    <a href="/2016/08/21/设计模式读书笔记-访问者模式/">
-        <h1 class="post-title archive">
-            设计模式读书笔记-访问者模式
-        </h1>
-    </a>
-    <p class="post-meta archive">
-        <!-- Date and Author -->
-        
-        2016-08-21
-    </p>
-</div>
-            
-                <div class="post-preview">
-    <a href="/2016/08/21/设计模式读书笔记-适配器模式/">
-        <h1 class="post-title archive">
-            设计模式读书笔记-适配器模式
-        </h1>
-    </a>
-    <p class="post-meta archive">
-        <!-- Date and Author -->
-        
-        2016-08-21
-    </p>
-</div>
-            
-                <div class="post-preview">
-    <a href="/2016/08/21/设计模式读书笔记-桥接模式/">
-        <h1 class="post-title archive">
-            设计模式读书笔记-桥接模式
-        </h1>
-    </a>
-    <p class="post-meta archive">
-        <!-- Date and Author -->
-        
-        2016-08-21
-    </p>
-</div>
-            
-                <div class="post-preview">
-    <a href="/2016/08/21/设计模式读书笔记-享元模式/">
-        <h1 class="post-title archive">
-            设计模式读书笔记-享元模式
-        </h1>
-    </a>
-    <p class="post-meta archive">
-        <!-- Date and Author -->
-        
-        2016-08-21
-    </p>
-</div>
-            
-            <div class="archive-before-pagination"></div>
-            <ul class="pager">
-    
-    
-        <li class="next"><a href="/archives/2016/08/page/2/">Older Posts  &rarr;</a></li>
-    
+
+            <!-- Post Main Content -->
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul>
+<li>只能产生一个实例对象。实例为静态成员，构造方法为private，静态方法返回惟一实例。</li>
+<li>单例类一般不要实现Cloneable接口，若一个类实现了Cloneable接口且实现了clone()方法，那么这个类可以被复制，类复制时不需要调用构造方法。单例将被破坏。</li>
+<li>一个单例对象在内存中长久不使用，JVM会认为这个对象是一个垃圾，将会对其进行回收。但若采用J2EE容器或框架级容器（如Spring容器），可以让对象长久驻留内存。</li>
+<li>spring中每个bean默认均为单例，这样做spring容器可以管理bean的生命周期。若采用非单例模式（如prototype）,则bean初始化后的管理交由j2ee容器管理，spring容器不再管理。</li>
+<li><p>代码示例</p>
+<ul>
+<li><p>饱汉式：线程不安全，可通过synchronized来解决</p>
+<pre><code>public class Singleton {
+
+    private static Singleton item;
+
+    private Singleton(){}
+
+    public static Singleton getInstance() {
+        if(item==null)
+            item = new Singleton();
+        return item;
+    }
+}
+</code></pre></li>
+<li><p>线程安全：</p>
+<pre><code>public class Singleton {
+
+    private static Singleton item;
+
+    private Singleton(){}
+
+    public static Singleton getInstance() {
+        if(item==null){
+            synchronized (Singleton.class) {
+                if (item == null) {// Double checked
+                    item = new Singleton();
+                }
+            }
+        }
+        return item;
+    }
+}
+</code></pre></li>
+<li><p>饿汉式</p>
+<pre><code>public class Singleton {
+    private static Singleton item = new Singleton();
+
+    private Singleton(){}
+
+    public static Singleton getInstance() {
+        return item;
+    }
+}
+</code></pre></li>
 </ul>
+</li>
+</ul>
+<hr>
+<h1 id="多例模式"><a href="#多例模式" class="headerlink" title="多例模式"></a><center>多例模式</center></h1><ul>
+<li>定义：三个static变量：最大实例数量maxInstanceNum，当前实例编号nowInstanceNum，实例列表instanceList。构造方法为private</li>
+<li>一个static代码块：此代码块中生成所有实例，并将其添加到实例列表instanceList中。</li>
+<li>一个static方法getInstance：获取0-maxInstanceNum间的一个随机整数random.nextInt(maxInstanceNum)，从实例列表instanceList中获取索引为此值的实例。</li>
+<li>考虑到多线程环境，可以用Vector代替ArrayList</li>
+<li><p>代码：</p>
+<pre><code>public class Multiton {
+
+    private static int maxInstanceNum=10;//最大实例数量
+    private static int nowInstanceNum=0;//当前实便编号
+    private static List&lt;Multiton&gt; instanceList = new ArrayList&lt;Multiton&gt;();
+    private static List&lt;String&gt; instanceNameList = new ArrayList&lt;String&gt;();
+
+    static{//把所有的皇帝都产生出来
+        for(int i=0;i&lt;maxInstanceNum;i++){
+            instanceList.add(new Multiton(&quot;皇&quot;+(i+1)+&quot;帝&quot;));
+        }
+    }
+
+    private Multiton(String name) {
+        instanceNameList.add(name);
+    }
+
+    public static Multiton getInstance(){
+        Random random = new Random();
+        nowInstanceNum = random.nextInt(maxInstanceNum);//随机拉出一个皇帝
+        return (Multiton)instanceList.get(nowInstanceNum);
+    }
+
+    public static void emperorInfo(){
+        System.out.println(instanceNameList.get(nowInstanceNum));
+    }
+}
+
+public class Client {
+    public static void main(String[] args) {
+        for(int i=0;i&lt;100;i++){
+            Multiton.getInstance();
+            System.out.print(&quot;第&quot;+(i+1)+&quot;个大臣参拜的是：&quot;);
+            Multiton.emperorInfo();
+        }
+    }
+}
+</code></pre></li>
+</ul>
+
+
+                
+            </div>
+
+            <!-- Comments -->
+            
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    
+
+
+                </div>
+            
         </div>
     </div>
-</div>
-
-
+</article>
 
     <!-- Footer -->
     <hr />

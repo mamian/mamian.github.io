@@ -10,6 +10,9 @@
 
     <!--Description-->
     
+        <meta name="description" content="定义：将多对多关系转化为多对一的关系。Buy、Sell、Store对象均继承自AbstractColleague（AbstractColleague中包含一个中介者对象，其所有的实现类均可执行此中介者的某方法）。
+抽象中介者AbstractMediator包含所有原多对多的具体类。Mediator实">
+    
 
     <!--Author-->
     
@@ -18,7 +21,7 @@
 
     <!--Open Graph Title-->
     
-        <meta property="og:title" content="马面"/>
+        <meta property="og:title" content="设计模式读书笔记-中介者模式"/>
     
 
     <!--Open Graph Description-->
@@ -29,7 +32,7 @@
 
     <!--Type page-->
     
-        <meta property="og:type" content="website" />
+        <meta property="og:type" content="article" />
     
 
     <!--Page Cover-->
@@ -40,7 +43,7 @@
 
     <!-- Title -->
     
-    <title>Archives: 2016/8 - 马面</title>
+    <title>设计模式读书笔记-中介者模式 - 马面</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
@@ -147,169 +150,206 @@
 </nav>
 
     <!-- Main Content -->
-    
+    <!-- Page Header -->
+<!-- Set your background image for this header in your post front-matter: cover -->
 
-<!-- Page Header -->
-<!-- Set your background image for this header in the theme's configuration: index_cover -->
 <header class="intro-header" style="background-image: url('http://www.codeblocq.com/assets/projects/hexo-theme-clean-blog/img/home-bg.jpg')">
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <div class="site-heading">
-                    <h1>2016/8</h1>
+                <div class="post-heading">
+                    <h1>设计模式读书笔记-中介者模式</h1>
+                    
+                    <span class="meta">
+                        <!-- Date and Author -->
+                        
+                        2016-08-21
+                    </span>
                 </div>
             </div>
         </div>
     </div>
 </header>
 
-<!-- Main Content -->
-<div class="container">
-    <div class="row">
-        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Tags and categories -->
+           
+                <div class="col-lg-4 col-lg-offset-2 col-md-5 col-md-offset-1 post-tags">
+                    
+                        
+
+
+<a href="/tags/设计模式/">#设计模式</a>
+
+
+                    
+                </div>
+                <div class="col-lg-4 col-md-5 post-categories">
+                    
+                        
+
+<a href="/categories/读书笔记/">读书笔记</a>
+
+                    
+                </div>
             
-                <div class="post-preview">
-    <a href="/2016/08/21/设计模式读书笔记-迭代器模式/">
-        <h1 class="post-title archive">
-            设计模式读书笔记-迭代器模式
-        </h1>
-    </a>
-    <p class="post-meta archive">
-        <!-- Date and Author -->
-        
-        2016-08-21
-    </p>
-</div>
+
+            <!-- Gallery -->
             
-                <div class="post-preview">
-    <a href="/2016/08/21/设计模式读书笔记-解释器模式/">
-        <h1 class="post-title archive">
-            设计模式读书笔记-解释器模式
-        </h1>
-    </a>
-    <p class="post-meta archive">
-        <!-- Date and Author -->
-        
-        2016-08-21
-    </p>
-</div>
-            
-                <div class="post-preview">
-    <a href="/2016/08/21/设计模式读书笔记-抽象工厂模式/">
-        <h1 class="post-title archive">
-            设计模式读书笔记-抽象工厂模式
-        </h1>
-    </a>
-    <p class="post-meta archive">
-        <!-- Date and Author -->
-        
-        2016-08-21
-    </p>
-</div>
-            
-                <div class="post-preview">
-    <a href="/2016/08/21/设计模式读书笔记-工厂模式/">
-        <h1 class="post-title archive">
-            设计模式读书笔记-工厂模式
-        </h1>
-    </a>
-    <p class="post-meta archive">
-        <!-- Date and Author -->
-        
-        2016-08-21
-    </p>
-</div>
-            
-                <div class="post-preview">
-    <a href="/2016/08/21/设计模式读书笔记-简单工厂模式/">
-        <h1 class="post-title archive">
-            设计模式读书笔记-简单工厂模式
-        </h1>
-    </a>
-    <p class="post-meta archive">
-        <!-- Date and Author -->
-        
-        2016-08-21
-    </p>
-</div>
-            
-                <div class="post-preview">
-    <a href="/2016/08/21/设计模式读书笔记-装饰模式/">
-        <h1 class="post-title archive">
-            设计模式读书笔记-装饰模式
-        </h1>
-    </a>
-    <p class="post-meta archive">
-        <!-- Date and Author -->
-        
-        2016-08-21
-    </p>
-</div>
-            
-                <div class="post-preview">
-    <a href="/2016/08/21/设计模式读书笔记-访问者模式/">
-        <h1 class="post-title archive">
-            设计模式读书笔记-访问者模式
-        </h1>
-    </a>
-    <p class="post-meta archive">
-        <!-- Date and Author -->
-        
-        2016-08-21
-    </p>
-</div>
-            
-                <div class="post-preview">
-    <a href="/2016/08/21/设计模式读书笔记-适配器模式/">
-        <h1 class="post-title archive">
-            设计模式读书笔记-适配器模式
-        </h1>
-    </a>
-    <p class="post-meta archive">
-        <!-- Date and Author -->
-        
-        2016-08-21
-    </p>
-</div>
-            
-                <div class="post-preview">
-    <a href="/2016/08/21/设计模式读书笔记-桥接模式/">
-        <h1 class="post-title archive">
-            设计模式读书笔记-桥接模式
-        </h1>
-    </a>
-    <p class="post-meta archive">
-        <!-- Date and Author -->
-        
-        2016-08-21
-    </p>
-</div>
-            
-                <div class="post-preview">
-    <a href="/2016/08/21/设计模式读书笔记-享元模式/">
-        <h1 class="post-title archive">
-            设计模式读书笔记-享元模式
-        </h1>
-    </a>
-    <p class="post-meta archive">
-        <!-- Date and Author -->
-        
-        2016-08-21
-    </p>
-</div>
-            
-            <div class="archive-before-pagination"></div>
-            <ul class="pager">
-    
-    
-        <li class="next"><a href="/archives/2016/08/page/2/">Older Posts  &rarr;</a></li>
-    
+
+            <!-- Post Main Content -->
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul>
+<li>定义：将多对多关系转化为多对一的关系。Buy、Sell、Store对象均继承自AbstractColleague（AbstractColleague中包含一个中介者对象，其所有的实现类均可执行此中介者的某方法）。</li>
+<li>抽象中介者AbstractMediator包含所有原多对多的具体类。Mediator实现了所有具体的业务逻辑，具体业务类如Buy通过调用自己的成员media的方法来实现业务逻辑。</li>
+<li>优点：减少类间依赖</li>
+<li>缺点：中介者本身会膨胀的很大且逻辑复杂。</li>
+<li>代码：</li>
 </ul>
+<pre><code>public class AbstractColleague {//包含一个protected修饰的抽象中介者对象mediator，其所有的对象可共享此中介者并调用此中介者的方法
+
+    protected AbstractMediator mediator;
+
+    public AbstractColleague(AbstractMediator mediator) {
+        this.mediator = mediator;
+    }
+
+}
+
+
+
+public class Buy extends AbstractColleague{
+
+    public Buy(AbstractMediator mediator){
+        super(mediator);
+    }
+
+    public void startBuy(int num){
+        super.mediator.execute(&quot;购买&quot;, num);
+        System.out.println(&quot;Buy对象执行startBuy方法&quot;);
+    }
+
+    public void NotBuy(){
+        System.out.println(&quot;Buy对象执行NotBuy方法&quot;);
+    }
+}
+
+
+
+public class Sell extends AbstractColleague{
+
+    public Sell(AbstractMediator mediator){
+        super(mediator);
+    }
+
+    public void startSell(int num){
+        super.mediator.execute(&quot;销售&quot;, num);
+        System.out.println(&quot;Sell对象执行startSell方法&quot;);
+    }
+
+}
+
+
+
+public class Store extends AbstractColleague{
+
+    public Store(AbstractMediator mediator){
+        super(mediator);
+    }
+
+    public void startStore(int num){
+        super.mediator.execute(&quot;存储&quot;, num);
+        System.out.println(&quot;Store对象执行startStore方法&quot;);
+    }
+
+}
+
+
+
+public abstract class AbstractMediator {//抽象中介者：包含所有需将其作为中介者来互相交互信息的子系统或对象
+
+    protected Buy buy;
+    protected Sell sell;
+    protected Store store;
+
+    public AbstractMediator(){
+        buy = new Buy(this);
+        sell = new Sell(this);
+        store = new Store(this);
+    }
+
+    public abstract void execute(String message,Object obj1);
+
+}
+
+
+
+public class Mediator extends AbstractMediator{
+
+    public void execute(String message, Object obj1) {//参数为判断执行哪个对象方法的条件和参数
+        if(message.equals(&quot;购买&quot;)){
+            buyComputer((Integer) obj1);
+            System.out.println(&quot;具体中介者mediator的execute方法&quot;+message);
+        }else if(message.equals(&quot;销售&quot;)){
+            sellComputer((Integer) obj1);
+            System.out.println(&quot;具体中介者mediator的execute方法&quot;+message);
+        }else if(message.equals(&quot;存储&quot;)){
+            storeComputer((Integer) obj1);
+            System.out.println(&quot;具体中介者mediator的execute方法&quot;+message);
+        }
+
+    }
+
+    private void buyComputer(int num){
+        System.out.println(&quot;具体中介者执行buyComputer方法，购&quot;+num+&quot;台电脑&quot;);
+    }
+
+    private void sellComputer(int num){
+        System.out.println(&quot;具体中介者执行sellComputer方法，售&quot;+num+&quot;台电脑&quot;);
+    }
+
+    private void storeComputer(int num){
+        System.out.println(&quot;具体中介者执行storeComputer方法，存&quot;+num+&quot;台电脑&quot;);
+    }
+}
+
+
+
+public class Client {
+
+    public static void main(String[] args){
+        AbstractMediator mediator = new Mediator();
+
+        Buy buy = new Buy(mediator);
+        buy.startBuy(100);
+
+        Sell sell = new Sell(mediator);
+        sell.startSell(200);
+
+        Store store = new Store(mediator);
+        store.startStore(300);
+    }
+}
+</code></pre>
+
+                
+            </div>
+
+            <!-- Comments -->
+            
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    
+
+
+                </div>
+            
         </div>
     </div>
-</div>
-
-
+</article>
 
     <!-- Footer -->
     <hr />

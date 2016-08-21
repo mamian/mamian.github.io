@@ -10,6 +10,13 @@
 
     <!--Description-->
     
+        <meta name="description" content="定义：一个请求，依次交给多个对象去处理，若对象A无法处理，则交给下一下对象B处理，若B无法处理，则交给下一个对象C处理。
+在父夫子的父类中定义方法：如果本对象无法处理某项请求，则交给下一个对象处理。
+而处理请求的对象的顺序在client中实时定义。
+代码：
+
+public interface Wom">
+    
 
     <!--Author-->
     
@@ -18,7 +25,7 @@
 
     <!--Open Graph Title-->
     
-        <meta property="og:title" content="马面"/>
+        <meta property="og:title" content="设计模式读书笔记-责任链模式"/>
     
 
     <!--Open Graph Description-->
@@ -29,7 +36,7 @@
 
     <!--Type page-->
     
-        <meta property="og:type" content="website" />
+        <meta property="og:type" content="article" />
     
 
     <!--Page Cover-->
@@ -40,7 +47,7 @@
 
     <!-- Title -->
     
-    <title>Archives: 2016/8 - 马面</title>
+    <title>设计模式读书笔记-责任链模式 - 马面</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
@@ -147,169 +154,215 @@
 </nav>
 
     <!-- Main Content -->
-    
+    <!-- Page Header -->
+<!-- Set your background image for this header in your post front-matter: cover -->
 
-<!-- Page Header -->
-<!-- Set your background image for this header in the theme's configuration: index_cover -->
 <header class="intro-header" style="background-image: url('http://www.codeblocq.com/assets/projects/hexo-theme-clean-blog/img/home-bg.jpg')">
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <div class="site-heading">
-                    <h1>2016/8</h1>
+                <div class="post-heading">
+                    <h1>设计模式读书笔记-责任链模式</h1>
+                    
+                    <span class="meta">
+                        <!-- Date and Author -->
+                        
+                        2016-08-21
+                    </span>
                 </div>
             </div>
         </div>
     </div>
 </header>
 
-<!-- Main Content -->
-<div class="container">
-    <div class="row">
-        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Tags and categories -->
+           
+                <div class="col-lg-4 col-lg-offset-2 col-md-5 col-md-offset-1 post-tags">
+                    
+                        
+
+
+<a href="/tags/设计模式/">#设计模式</a>
+
+
+                    
+                </div>
+                <div class="col-lg-4 col-md-5 post-categories">
+                    
+                        
+
+<a href="/categories/读书笔记/">读书笔记</a>
+
+                    
+                </div>
             
-                <div class="post-preview">
-    <a href="/2016/08/21/设计模式读书笔记-迭代器模式/">
-        <h1 class="post-title archive">
-            设计模式读书笔记-迭代器模式
-        </h1>
-    </a>
-    <p class="post-meta archive">
-        <!-- Date and Author -->
-        
-        2016-08-21
-    </p>
-</div>
+
+            <!-- Gallery -->
             
-                <div class="post-preview">
-    <a href="/2016/08/21/设计模式读书笔记-解释器模式/">
-        <h1 class="post-title archive">
-            设计模式读书笔记-解释器模式
-        </h1>
-    </a>
-    <p class="post-meta archive">
-        <!-- Date and Author -->
-        
-        2016-08-21
-    </p>
-</div>
-            
-                <div class="post-preview">
-    <a href="/2016/08/21/设计模式读书笔记-抽象工厂模式/">
-        <h1 class="post-title archive">
-            设计模式读书笔记-抽象工厂模式
-        </h1>
-    </a>
-    <p class="post-meta archive">
-        <!-- Date and Author -->
-        
-        2016-08-21
-    </p>
-</div>
-            
-                <div class="post-preview">
-    <a href="/2016/08/21/设计模式读书笔记-工厂模式/">
-        <h1 class="post-title archive">
-            设计模式读书笔记-工厂模式
-        </h1>
-    </a>
-    <p class="post-meta archive">
-        <!-- Date and Author -->
-        
-        2016-08-21
-    </p>
-</div>
-            
-                <div class="post-preview">
-    <a href="/2016/08/21/设计模式读书笔记-简单工厂模式/">
-        <h1 class="post-title archive">
-            设计模式读书笔记-简单工厂模式
-        </h1>
-    </a>
-    <p class="post-meta archive">
-        <!-- Date and Author -->
-        
-        2016-08-21
-    </p>
-</div>
-            
-                <div class="post-preview">
-    <a href="/2016/08/21/设计模式读书笔记-装饰模式/">
-        <h1 class="post-title archive">
-            设计模式读书笔记-装饰模式
-        </h1>
-    </a>
-    <p class="post-meta archive">
-        <!-- Date and Author -->
-        
-        2016-08-21
-    </p>
-</div>
-            
-                <div class="post-preview">
-    <a href="/2016/08/21/设计模式读书笔记-访问者模式/">
-        <h1 class="post-title archive">
-            设计模式读书笔记-访问者模式
-        </h1>
-    </a>
-    <p class="post-meta archive">
-        <!-- Date and Author -->
-        
-        2016-08-21
-    </p>
-</div>
-            
-                <div class="post-preview">
-    <a href="/2016/08/21/设计模式读书笔记-适配器模式/">
-        <h1 class="post-title archive">
-            设计模式读书笔记-适配器模式
-        </h1>
-    </a>
-    <p class="post-meta archive">
-        <!-- Date and Author -->
-        
-        2016-08-21
-    </p>
-</div>
-            
-                <div class="post-preview">
-    <a href="/2016/08/21/设计模式读书笔记-桥接模式/">
-        <h1 class="post-title archive">
-            设计模式读书笔记-桥接模式
-        </h1>
-    </a>
-    <p class="post-meta archive">
-        <!-- Date and Author -->
-        
-        2016-08-21
-    </p>
-</div>
-            
-                <div class="post-preview">
-    <a href="/2016/08/21/设计模式读书笔记-享元模式/">
-        <h1 class="post-title archive">
-            设计模式读书笔记-享元模式
-        </h1>
-    </a>
-    <p class="post-meta archive">
-        <!-- Date and Author -->
-        
-        2016-08-21
-    </p>
-</div>
-            
-            <div class="archive-before-pagination"></div>
-            <ul class="pager">
-    
-    
-        <li class="next"><a href="/archives/2016/08/page/2/">Older Posts  &rarr;</a></li>
-    
+
+            <!-- Post Main Content -->
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul>
+<li>定义：一个请求，依次交给多个对象去处理，若对象A无法处理，则交给下一下对象B处理，若B无法处理，则交给下一个对象C处理。</li>
+<li>在父夫子的父类中定义方法：如果本对象无法处理某项请求，则交给下一个对象处理。</li>
+<li>而处理请求的对象的顺序在client中实时定义。</li>
+<li>代码：</li>
 </ul>
+<pre><code>public interface WomenInterface {
+    public int getType();//获得个人状况
+    public String getRequest();//获得个人请示，要干什么？逛街？约会?还是看电影
+}
+
+public class Women implements WomenInterface{
+
+    private int type=0;//1未出嫁        2出嫁        3夫死
+    private String request = &quot;&quot;;
+
+    public Women(int type,String request){
+        this.type = type;
+        switch(type){//为了显示好看点，我在这里做了点处理
+            case 1:
+                this.request = &quot;女儿的请求是：&quot; + request;
+                break;
+            case 2:
+                this.request = &quot;妻子的请求是：&quot; + request;
+                break;
+            case 3:
+                this.request = &quot;母亲的请求是：&quot; + request;
+        }
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public String getRequest() {
+        return request;
+    }
+}
+
+
+
+public abstract class Handler {//是father、husband、son的父类
+
+    private int level =0; //能处理的级别
+    private Handler nextHanlder;//责任传递，下一个人责任人是谁
+
+
+    public Handler(int level){//每个类都要说明一下自己能处理哪些请求
+        this.level = level;
+    }
+
+    public final void HandleMessage(WomenInterface women){
+        if(women.getType() == this.level){
+            this.response(women);
+        }else{
+            if(this.nextHanlder != null){ //有后续环节，才把请求往后递送
+                this.nextHanlder.HandleMessage(women);
+            }else{ //已经没有后续处理人了，不用处理了
+                System.out.println(&quot;-----------没地方请示了，不做处理！\n&quot;);
+            }
+        }
+    }
+
+    public void setNext(Handler handler){
+        this.nextHanlder = handler;
+    }
+
+    public abstract void response(WomenInterface women);//有请示那当然要回应
+
+}
+
+
+
+public class Father extends Handler{
+
+    public Father(){//父亲只处理女儿的请求
+        super(1);
+    }
+
+    public void response(WomenInterface women) {//父亲的答复
+        System.out.println(&quot;--------女儿向父亲请示-------&quot;);
+        System.out.println(women.getRequest());
+        System.out.println(&quot;父亲的答复是:同意\n&quot;);
+    }
+}
+
+
+
+public class Husband extends Handler{
+    public Husband(){//丈夫只处理妻子的请求
+        super(2);
+    }
+
+    public void response(WomenInterface women) {//丈夫请示的答复
+        System.out.println(&quot;--------妻子向丈夫请示-------&quot;);
+        System.out.println(women.getRequest());
+        System.out.println(&quot;丈夫的答复是：同意\n&quot;);
+    }
+}
+
+
+
+public class Son extends Handler{
+    public Son(){//儿子只处理母亲的请求
+        super(3);
+    }
+
+    public void response(WomenInterface women) {//儿子的答复
+        System.out.println(&quot;--------母亲向儿子请示-------&quot;);
+        System.out.println(women.getRequest());
+        System.out.println(&quot;儿子的答复是：同意\n&quot;);
+    }
+}
+
+
+
+public class Client {
+
+    public static void main(String[] args) {
+        //随机挑选几个女性
+        Random rand = new Random();
+        List&lt;WomenInterface&gt; arrayList = new ArrayList&lt;WomenInterface&gt;();
+        for(int i=0;i&lt;5;i++){
+            arrayList.add(new Women(rand.nextInt(4),&quot;我要出去逛街&quot;));
+        }
+
+        //定义三个请示对象
+        Handler father = new Father();
+        Handler husband = new Husband();
+        Handler son = new Son();
+
+
+        //设置请示顺序
+        father.setNext(husband);
+        husband.setNext(son);
+        for(WomenInterface women:arrayList){
+            father.HandleMessage(women);
+        }
+    }
+}
+</code></pre>
+
+                
+            </div>
+
+            <!-- Comments -->
+            
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    
+
+
+                </div>
+            
         </div>
     </div>
-</div>
-
-
+</article>
 
     <!-- Footer -->
     <hr />

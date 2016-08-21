@@ -10,6 +10,11 @@
 
     <!--Description-->
     
+        <meta name="description" content="定义：将一个复杂对象的构建与它的表示分离，使得同样的构建过程可以创建不同的表示。
+与模板模式类似，建造者模式增加建造者且模板父类中增加了方法执行顺序变量sequence
+建造者实现两个方法：一个返回要建造的对象，另一个设置要建造的对象中的通用方法中调用自身方法的顺序
+Client中实例sequenc">
+    
 
     <!--Author-->
     
@@ -18,7 +23,7 @@
 
     <!--Open Graph Title-->
     
-        <meta property="og:title" content="马面"/>
+        <meta property="og:title" content="设计模式读书笔记-建造者模式"/>
     
 
     <!--Open Graph Description-->
@@ -29,7 +34,7 @@
 
     <!--Type page-->
     
-        <meta property="og:type" content="website" />
+        <meta property="og:type" content="article" />
     
 
     <!--Page Cover-->
@@ -40,7 +45,7 @@
 
     <!-- Title -->
     
-    <title>Archives: 2016/8 - 马面</title>
+    <title>设计模式读书笔记-建造者模式 - 马面</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
@@ -147,169 +152,213 @@
 </nav>
 
     <!-- Main Content -->
-    
+    <!-- Page Header -->
+<!-- Set your background image for this header in your post front-matter: cover -->
 
-<!-- Page Header -->
-<!-- Set your background image for this header in the theme's configuration: index_cover -->
 <header class="intro-header" style="background-image: url('http://www.codeblocq.com/assets/projects/hexo-theme-clean-blog/img/home-bg.jpg')">
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <div class="site-heading">
-                    <h1>2016/8</h1>
+                <div class="post-heading">
+                    <h1>设计模式读书笔记-建造者模式</h1>
+                    
+                    <span class="meta">
+                        <!-- Date and Author -->
+                        
+                        2016-08-21
+                    </span>
                 </div>
             </div>
         </div>
     </div>
 </header>
 
-<!-- Main Content -->
-<div class="container">
-    <div class="row">
-        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Tags and categories -->
+           
+                <div class="col-lg-4 col-lg-offset-2 col-md-5 col-md-offset-1 post-tags">
+                    
+                        
+
+
+<a href="/tags/设计模式/">#设计模式</a>
+
+
+                    
+                </div>
+                <div class="col-lg-4 col-md-5 post-categories">
+                    
+                        
+
+<a href="/categories/读书笔记/">读书笔记</a>
+
+                    
+                </div>
             
-                <div class="post-preview">
-    <a href="/2016/08/21/设计模式读书笔记-迭代器模式/">
-        <h1 class="post-title archive">
-            设计模式读书笔记-迭代器模式
-        </h1>
-    </a>
-    <p class="post-meta archive">
-        <!-- Date and Author -->
-        
-        2016-08-21
-    </p>
-</div>
+
+            <!-- Gallery -->
             
-                <div class="post-preview">
-    <a href="/2016/08/21/设计模式读书笔记-解释器模式/">
-        <h1 class="post-title archive">
-            设计模式读书笔记-解释器模式
-        </h1>
-    </a>
-    <p class="post-meta archive">
-        <!-- Date and Author -->
-        
-        2016-08-21
-    </p>
-</div>
-            
-                <div class="post-preview">
-    <a href="/2016/08/21/设计模式读书笔记-抽象工厂模式/">
-        <h1 class="post-title archive">
-            设计模式读书笔记-抽象工厂模式
-        </h1>
-    </a>
-    <p class="post-meta archive">
-        <!-- Date and Author -->
-        
-        2016-08-21
-    </p>
-</div>
-            
-                <div class="post-preview">
-    <a href="/2016/08/21/设计模式读书笔记-工厂模式/">
-        <h1 class="post-title archive">
-            设计模式读书笔记-工厂模式
-        </h1>
-    </a>
-    <p class="post-meta archive">
-        <!-- Date and Author -->
-        
-        2016-08-21
-    </p>
-</div>
-            
-                <div class="post-preview">
-    <a href="/2016/08/21/设计模式读书笔记-简单工厂模式/">
-        <h1 class="post-title archive">
-            设计模式读书笔记-简单工厂模式
-        </h1>
-    </a>
-    <p class="post-meta archive">
-        <!-- Date and Author -->
-        
-        2016-08-21
-    </p>
-</div>
-            
-                <div class="post-preview">
-    <a href="/2016/08/21/设计模式读书笔记-装饰模式/">
-        <h1 class="post-title archive">
-            设计模式读书笔记-装饰模式
-        </h1>
-    </a>
-    <p class="post-meta archive">
-        <!-- Date and Author -->
-        
-        2016-08-21
-    </p>
-</div>
-            
-                <div class="post-preview">
-    <a href="/2016/08/21/设计模式读书笔记-访问者模式/">
-        <h1 class="post-title archive">
-            设计模式读书笔记-访问者模式
-        </h1>
-    </a>
-    <p class="post-meta archive">
-        <!-- Date and Author -->
-        
-        2016-08-21
-    </p>
-</div>
-            
-                <div class="post-preview">
-    <a href="/2016/08/21/设计模式读书笔记-适配器模式/">
-        <h1 class="post-title archive">
-            设计模式读书笔记-适配器模式
-        </h1>
-    </a>
-    <p class="post-meta archive">
-        <!-- Date and Author -->
-        
-        2016-08-21
-    </p>
-</div>
-            
-                <div class="post-preview">
-    <a href="/2016/08/21/设计模式读书笔记-桥接模式/">
-        <h1 class="post-title archive">
-            设计模式读书笔记-桥接模式
-        </h1>
-    </a>
-    <p class="post-meta archive">
-        <!-- Date and Author -->
-        
-        2016-08-21
-    </p>
-</div>
-            
-                <div class="post-preview">
-    <a href="/2016/08/21/设计模式读书笔记-享元模式/">
-        <h1 class="post-title archive">
-            设计模式读书笔记-享元模式
-        </h1>
-    </a>
-    <p class="post-meta archive">
-        <!-- Date and Author -->
-        
-        2016-08-21
-    </p>
-</div>
-            
-            <div class="archive-before-pagination"></div>
-            <ul class="pager">
-    
-    
-        <li class="next"><a href="/archives/2016/08/page/2/">Older Posts  &rarr;</a></li>
-    
+
+            <!-- Post Main Content -->
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul>
+<li>定义：将一个复杂对象的构建与它的表示分离，使得同样的构建过程可以创建不同的表示。</li>
+<li>与模板模式类似，建造者模式增加建造者且模板父类中增加了方法执行顺序变量sequence</li>
+<li>建造者实现两个方法：一个返回要建造的对象，另一个设置要建造的对象中的通用方法中调用自身方法的顺序</li>
+<li>Client中实例sequence和具体Builder，并执行Builder中的model的某方法。</li>
+<li>具体建建类封装了构建细节，并返回构建好的对象。</li>
+<li>与工厂模式的区别：建造者模块关注方法执行的顺序（方法本身已实现），即零件的组装顺序不同产生的对象也不同；工厂模式关注零件本身的创建，不关注组装顺序。</li>
+<li>代码</li>
 </ul>
+<pre><code>public abstract class Model {
+
+    private ArrayList&lt;String&gt; sequence = new ArrayList&lt;String&gt;();
+
+    public final void setSequence(ArrayList&lt;String&gt; sequence){
+
+        this.sequence = sequence;
+
+    }
+
+    final public void run(){
+
+        for(int i=0;i&lt;sequence.size();i++){
+
+            String nowOrperate = sequence.get(i);
+
+            if(nowOrperate.equals(&quot;start&quot;)){
+                this.start();
+            }else if(nowOrperate.equals(&quot;alarm&quot;)){
+                this.alarm();
+            }else if(nowOrperate.equals(&quot;stop&quot;)){
+                this.stop();
+            }
+
+        }
+
+    }
+
+    protected abstract void start();
+
+    protected abstract void alarm();
+
+    protected abstract void stop();
+
+}
+
+public class ModelA extends Model{
+
+    protected void start() {
+        System.out.println(&quot;车辆A启动&quot;);
+    }
+
+    protected void alarm() {
+        System.out.println(&quot;车辆A鸣笛&quot;);
+    }
+
+    protected void stop() {
+        System.out.println(&quot;车辆A刹车&quot;);
+    }
+
+}
+
+public class ModelB extends Model{
+
+    protected void start() {
+        System.out.println(&quot;车辆B启动&quot;);
+    }
+
+    protected void alarm() {
+        System.out.println(&quot;车辆B鸣笛&quot;);
+    }
+
+    protected void stop() {
+        System.out.println(&quot;车辆B刹车&quot;);
+    }
+
+}
+
+public abstract class Builder {
+
+    public abstract void setSequence(ArrayList&lt;String&gt; sequence);
+
+    public abstract Model getModel();
+
+}
+
+public class BuilderA extends Builder{
+
+    private ModelA modelA = new ModelA();
+
+    public void setSequence(ArrayList&lt;String&gt; sequence) {
+        modelA.setSequence(sequence);
+    }
+
+    public Model getModel() {
+        return modelA;
+    }
+
+}
+
+public class BuilderB extends Builder{
+
+    private ModelB modelB = new ModelB();
+
+    public void setSequence(ArrayList&lt;String&gt; sequence) {
+        modelB.setSequence(sequence);
+    }
+
+    public Model getModel() {
+        return modelB;
+    }
+
+}
+
+public class Client {
+
+    public static void main(String[] args){
+
+        ArrayList&lt;String&gt; sequence1 = new ArrayList&lt;String&gt;();
+
+        sequence1.add(&quot;alarm&quot;);
+        sequence1.add(&quot;start&quot;);
+        sequence1.add(&quot;stop&quot;);
+
+        Builder builderA = new BuilderA();
+        builderA.setSequence(sequence1);
+        builderA.getModel().run();
+
+        ArrayList&lt;String&gt; sequence2 = new ArrayList&lt;String&gt;();
+        sequence2.add(&quot;start&quot;);
+        sequence2.add(&quot;alarm&quot;);
+        sequence2.add(&quot;stop&quot;);
+
+        Builder builderB = new BuilderB();
+        builderB.setSequence(sequence2);
+        builderB.getModel().run();
+    }
+
+}
+</code></pre>
+
+                
+            </div>
+
+            <!-- Comments -->
+            
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    
+
+
+                </div>
+            
         </div>
     </div>
-</div>
-
-
+</article>
 
     <!-- Footer -->
     <hr />

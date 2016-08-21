@@ -10,6 +10,15 @@
 
     <!--Description-->
     
+        <meta name="description" content="定义：将一个类的接口变换成客户端期待的另一种接口，从而使原本因接口不匹配而无法在一起工作的2个类能够在一起工作。
+Adapter继承待转换类，实现目的接口
+代码：
+
+public interface IUserInfo {
+
+    public String getUserName();
+    ">
+    
 
     <!--Author-->
     
@@ -18,7 +27,7 @@
 
     <!--Open Graph Title-->
     
-        <meta property="og:title" content="马面"/>
+        <meta property="og:title" content="设计模式读书笔记-适配器模式"/>
     
 
     <!--Open Graph Description-->
@@ -29,7 +38,7 @@
 
     <!--Type page-->
     
-        <meta property="og:type" content="website" />
+        <meta property="og:type" content="article" />
     
 
     <!--Page Cover-->
@@ -40,7 +49,7 @@
 
     <!-- Title -->
     
-    <title>Archives: 2016/8 - 马面</title>
+    <title>设计模式读书笔记-适配器模式 - 马面</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
@@ -147,169 +156,187 @@
 </nav>
 
     <!-- Main Content -->
-    
+    <!-- Page Header -->
+<!-- Set your background image for this header in your post front-matter: cover -->
 
-<!-- Page Header -->
-<!-- Set your background image for this header in the theme's configuration: index_cover -->
 <header class="intro-header" style="background-image: url('http://www.codeblocq.com/assets/projects/hexo-theme-clean-blog/img/home-bg.jpg')">
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <div class="site-heading">
-                    <h1>2016/8</h1>
+                <div class="post-heading">
+                    <h1>设计模式读书笔记-适配器模式</h1>
+                    
+                    <span class="meta">
+                        <!-- Date and Author -->
+                        
+                        2016-08-21
+                    </span>
                 </div>
             </div>
         </div>
     </div>
 </header>
 
-<!-- Main Content -->
-<div class="container">
-    <div class="row">
-        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Tags and categories -->
+           
+                <div class="col-lg-4 col-lg-offset-2 col-md-5 col-md-offset-1 post-tags">
+                    
+                        
+
+
+<a href="/tags/设计模式/">#设计模式</a>
+
+
+                    
+                </div>
+                <div class="col-lg-4 col-md-5 post-categories">
+                    
+                        
+
+<a href="/categories/读书笔记/">读书笔记</a>
+
+                    
+                </div>
             
-                <div class="post-preview">
-    <a href="/2016/08/21/设计模式读书笔记-迭代器模式/">
-        <h1 class="post-title archive">
-            设计模式读书笔记-迭代器模式
-        </h1>
-    </a>
-    <p class="post-meta archive">
-        <!-- Date and Author -->
-        
-        2016-08-21
-    </p>
-</div>
+
+            <!-- Gallery -->
             
-                <div class="post-preview">
-    <a href="/2016/08/21/设计模式读书笔记-解释器模式/">
-        <h1 class="post-title archive">
-            设计模式读书笔记-解释器模式
-        </h1>
-    </a>
-    <p class="post-meta archive">
-        <!-- Date and Author -->
-        
-        2016-08-21
-    </p>
-</div>
-            
-                <div class="post-preview">
-    <a href="/2016/08/21/设计模式读书笔记-抽象工厂模式/">
-        <h1 class="post-title archive">
-            设计模式读书笔记-抽象工厂模式
-        </h1>
-    </a>
-    <p class="post-meta archive">
-        <!-- Date and Author -->
-        
-        2016-08-21
-    </p>
-</div>
-            
-                <div class="post-preview">
-    <a href="/2016/08/21/设计模式读书笔记-工厂模式/">
-        <h1 class="post-title archive">
-            设计模式读书笔记-工厂模式
-        </h1>
-    </a>
-    <p class="post-meta archive">
-        <!-- Date and Author -->
-        
-        2016-08-21
-    </p>
-</div>
-            
-                <div class="post-preview">
-    <a href="/2016/08/21/设计模式读书笔记-简单工厂模式/">
-        <h1 class="post-title archive">
-            设计模式读书笔记-简单工厂模式
-        </h1>
-    </a>
-    <p class="post-meta archive">
-        <!-- Date and Author -->
-        
-        2016-08-21
-    </p>
-</div>
-            
-                <div class="post-preview">
-    <a href="/2016/08/21/设计模式读书笔记-装饰模式/">
-        <h1 class="post-title archive">
-            设计模式读书笔记-装饰模式
-        </h1>
-    </a>
-    <p class="post-meta archive">
-        <!-- Date and Author -->
-        
-        2016-08-21
-    </p>
-</div>
-            
-                <div class="post-preview">
-    <a href="/2016/08/21/设计模式读书笔记-访问者模式/">
-        <h1 class="post-title archive">
-            设计模式读书笔记-访问者模式
-        </h1>
-    </a>
-    <p class="post-meta archive">
-        <!-- Date and Author -->
-        
-        2016-08-21
-    </p>
-</div>
-            
-                <div class="post-preview">
-    <a href="/2016/08/21/设计模式读书笔记-适配器模式/">
-        <h1 class="post-title archive">
-            设计模式读书笔记-适配器模式
-        </h1>
-    </a>
-    <p class="post-meta archive">
-        <!-- Date and Author -->
-        
-        2016-08-21
-    </p>
-</div>
-            
-                <div class="post-preview">
-    <a href="/2016/08/21/设计模式读书笔记-桥接模式/">
-        <h1 class="post-title archive">
-            设计模式读书笔记-桥接模式
-        </h1>
-    </a>
-    <p class="post-meta archive">
-        <!-- Date and Author -->
-        
-        2016-08-21
-    </p>
-</div>
-            
-                <div class="post-preview">
-    <a href="/2016/08/21/设计模式读书笔记-享元模式/">
-        <h1 class="post-title archive">
-            设计模式读书笔记-享元模式
-        </h1>
-    </a>
-    <p class="post-meta archive">
-        <!-- Date and Author -->
-        
-        2016-08-21
-    </p>
-</div>
-            
-            <div class="archive-before-pagination"></div>
-            <ul class="pager">
-    
-    
-        <li class="next"><a href="/archives/2016/08/page/2/">Older Posts  &rarr;</a></li>
-    
+
+            <!-- Post Main Content -->
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul>
+<li>定义：将一个类的接口变换成客户端期待的另一种接口，从而使原本因接口不匹配而无法在一起工作的2个类能够在一起工作。</li>
+<li>Adapter继承待转换类，实现目的接口</li>
+<li>代码：</li>
 </ul>
+<pre><code>public interface IUserInfo {
+
+    public String getUserName();
+    public String getUserAddress();
+    public String getUserTel();
+    public String getPosition();
+
+}
+
+
+
+public class UserInfo implements IUserInfo{
+
+    public String getUserName() {
+        System.out.println(&quot;获取最终格式的用户名称&quot;);
+        return null;
+    }
+
+    public String getUserAddress() {
+        System.out.println(&quot;获取最终格式的用户地址&quot;);
+        return null;
+    }
+
+    public String getUserTel() {
+        System.out.println(&quot;获取最终格式的用户电话&quot;);
+        return null;
+    }
+
+    public String getPosition() {
+        System.out.println(&quot;获取最终格式的用户职位&quot;);
+        return null;
+    }
+}
+
+
+
+public interface IOuterUserInfo {
+    public Map getUserBaseInfo();
+    public Map getUserWorkInfo();
+}
+
+
+
+public class OuterUserInfo implements IOuterUserInfo{
+
+    public Map getUserBaseInfo() {
+        Map baseInfoMap = new HashMap();
+        baseInfoMap.put(&quot;outUserName&quot;, &quot;待转换的用户名称&quot;);
+        baseInfoMap.put(&quot;outUserAddress&quot;, &quot;待转换的用户地址&quot;);
+        baseInfoMap.put(&quot;outUserTel&quot;, &quot;待转换的用户电话&quot;);
+        return baseInfoMap;
+    }
+
+    public Map getUserWorkInfo() {
+        Map workInfoMap = new HashMap();
+        workInfoMap.put(&quot;outUserPosition&quot;, &quot;待转换的用户职位&quot;);
+        return workInfoMap;
+    }
+}
+
+
+
+public class Adapter extends OuterUserInfo implements IUserInfo{
+
+    private Map outUserBaseInfo = super.getUserBaseInfo();
+    private Map outUserWorkInfo = super.getUserWorkInfo();
+
+
+
+    public String getUserName() {
+        String userName = (String)outUserBaseInfo.get(&quot;outUserName&quot;);
+        System.out.println(userName);
+        return null;
+    }
+
+    public String getUserAddress() {
+        String userAddress = (String)outUserBaseInfo.get(&quot;outUserAddress&quot;);
+        System.out.println(userAddress);
+        return null;
+    }
+
+    public String getUserTel() {
+        String userTel = (String)outUserBaseInfo.get(&quot;outUserTel&quot;);
+        System.out.println(userTel);
+        return null;
+    }
+
+    public String getPosition() {
+        String userPosition = (String)outUserWorkInfo.get(&quot;outUserPosition&quot;);
+        System.out.println(userPosition);
+        return null;
+    }
+}
+
+
+
+public class Client {//适配器要继承待转换类，实现目的接口
+
+    public static void main(String[] args){
+        IUserInfo convertedUser = new Adapter();
+        convertedUser.getUserName();
+        convertedUser.getUserAddress();
+        convertedUser.getUserTel();
+        convertedUser.getPosition();
+    }
+
+}
+</code></pre>
+
+                
+            </div>
+
+            <!-- Comments -->
+            
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    
+
+
+                </div>
+            
         </div>
     </div>
-</div>
-
-
+</article>
 
     <!-- Footer -->
     <hr />

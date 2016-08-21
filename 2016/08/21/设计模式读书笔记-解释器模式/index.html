@@ -10,6 +10,13 @@
 
     <!--Description-->
     
+        <meta name="description" content="定义：给定一门语言，定义它的文法的一种表示，并定义一个解释器，该解释器使用该表示来解释语言中的句子。不常用。
+代码：
+
+public abstract class Expression {
+    //解析公式和数值,其中var中的key值是是公式中的参数，value值是具体的数字
+    publ">
+    
 
     <!--Author-->
     
@@ -18,7 +25,7 @@
 
     <!--Open Graph Title-->
     
-        <meta property="og:title" content="马面"/>
+        <meta property="og:title" content="设计模式读书笔记-解释器模式"/>
     
 
     <!--Open Graph Description-->
@@ -29,7 +36,7 @@
 
     <!--Type page-->
     
-        <meta property="og:type" content="website" />
+        <meta property="og:type" content="article" />
     
 
     <!--Page Cover-->
@@ -40,7 +47,7 @@
 
     <!-- Title -->
     
-    <title>Archives: 2016/8 - 马面</title>
+    <title>设计模式读书笔记-解释器模式 - 马面</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
@@ -147,169 +154,211 @@
 </nav>
 
     <!-- Main Content -->
-    
+    <!-- Page Header -->
+<!-- Set your background image for this header in your post front-matter: cover -->
 
-<!-- Page Header -->
-<!-- Set your background image for this header in the theme's configuration: index_cover -->
 <header class="intro-header" style="background-image: url('http://www.codeblocq.com/assets/projects/hexo-theme-clean-blog/img/home-bg.jpg')">
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <div class="site-heading">
-                    <h1>2016/8</h1>
+                <div class="post-heading">
+                    <h1>设计模式读书笔记-解释器模式</h1>
+                    
+                    <span class="meta">
+                        <!-- Date and Author -->
+                        
+                        2016-08-21
+                    </span>
                 </div>
             </div>
         </div>
     </div>
 </header>
 
-<!-- Main Content -->
-<div class="container">
-    <div class="row">
-        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Tags and categories -->
+           
+                <div class="col-lg-4 col-lg-offset-2 col-md-5 col-md-offset-1 post-tags">
+                    
+                        
+
+
+<a href="/tags/设计模式/">#设计模式</a>
+
+
+                    
+                </div>
+                <div class="col-lg-4 col-md-5 post-categories">
+                    
+                        
+
+<a href="/categories/读书笔记/">读书笔记</a>
+
+                    
+                </div>
             
-                <div class="post-preview">
-    <a href="/2016/08/21/设计模式读书笔记-迭代器模式/">
-        <h1 class="post-title archive">
-            设计模式读书笔记-迭代器模式
-        </h1>
-    </a>
-    <p class="post-meta archive">
-        <!-- Date and Author -->
-        
-        2016-08-21
-    </p>
-</div>
+
+            <!-- Gallery -->
             
-                <div class="post-preview">
-    <a href="/2016/08/21/设计模式读书笔记-解释器模式/">
-        <h1 class="post-title archive">
-            设计模式读书笔记-解释器模式
-        </h1>
-    </a>
-    <p class="post-meta archive">
-        <!-- Date and Author -->
-        
-        2016-08-21
-    </p>
-</div>
-            
-                <div class="post-preview">
-    <a href="/2016/08/21/设计模式读书笔记-抽象工厂模式/">
-        <h1 class="post-title archive">
-            设计模式读书笔记-抽象工厂模式
-        </h1>
-    </a>
-    <p class="post-meta archive">
-        <!-- Date and Author -->
-        
-        2016-08-21
-    </p>
-</div>
-            
-                <div class="post-preview">
-    <a href="/2016/08/21/设计模式读书笔记-工厂模式/">
-        <h1 class="post-title archive">
-            设计模式读书笔记-工厂模式
-        </h1>
-    </a>
-    <p class="post-meta archive">
-        <!-- Date and Author -->
-        
-        2016-08-21
-    </p>
-</div>
-            
-                <div class="post-preview">
-    <a href="/2016/08/21/设计模式读书笔记-简单工厂模式/">
-        <h1 class="post-title archive">
-            设计模式读书笔记-简单工厂模式
-        </h1>
-    </a>
-    <p class="post-meta archive">
-        <!-- Date and Author -->
-        
-        2016-08-21
-    </p>
-</div>
-            
-                <div class="post-preview">
-    <a href="/2016/08/21/设计模式读书笔记-装饰模式/">
-        <h1 class="post-title archive">
-            设计模式读书笔记-装饰模式
-        </h1>
-    </a>
-    <p class="post-meta archive">
-        <!-- Date and Author -->
-        
-        2016-08-21
-    </p>
-</div>
-            
-                <div class="post-preview">
-    <a href="/2016/08/21/设计模式读书笔记-访问者模式/">
-        <h1 class="post-title archive">
-            设计模式读书笔记-访问者模式
-        </h1>
-    </a>
-    <p class="post-meta archive">
-        <!-- Date and Author -->
-        
-        2016-08-21
-    </p>
-</div>
-            
-                <div class="post-preview">
-    <a href="/2016/08/21/设计模式读书笔记-适配器模式/">
-        <h1 class="post-title archive">
-            设计模式读书笔记-适配器模式
-        </h1>
-    </a>
-    <p class="post-meta archive">
-        <!-- Date and Author -->
-        
-        2016-08-21
-    </p>
-</div>
-            
-                <div class="post-preview">
-    <a href="/2016/08/21/设计模式读书笔记-桥接模式/">
-        <h1 class="post-title archive">
-            设计模式读书笔记-桥接模式
-        </h1>
-    </a>
-    <p class="post-meta archive">
-        <!-- Date and Author -->
-        
-        2016-08-21
-    </p>
-</div>
-            
-                <div class="post-preview">
-    <a href="/2016/08/21/设计模式读书笔记-享元模式/">
-        <h1 class="post-title archive">
-            设计模式读书笔记-享元模式
-        </h1>
-    </a>
-    <p class="post-meta archive">
-        <!-- Date and Author -->
-        
-        2016-08-21
-    </p>
-</div>
-            
-            <div class="archive-before-pagination"></div>
-            <ul class="pager">
-    
-    
-        <li class="next"><a href="/archives/2016/08/page/2/">Older Posts  &rarr;</a></li>
-    
+
+            <!-- Post Main Content -->
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul>
+<li>定义：给定一门语言，定义它的文法的一种表示，并定义一个解释器，该解释器使用该表示来解释语言中的句子。不常用。</li>
+<li>代码：</li>
 </ul>
+<pre><code>public abstract class Expression {
+    //解析公式和数值,其中var中的key值是是公式中的参数，value值是具体的数字
+    public abstract int interpreter(HashMap&lt;String,Integer&gt; map);
+
+}
+
+public class VarExpression extends Expression{
+
+    private String key;
+
+    public VarExpression(String key){
+        this.key = key;
+    }
+
+    public int interpreter(HashMap&lt;String, Integer&gt; map) {
+        return map.get(key);
+    }
+}
+
+public abstract class SymbolExpression extends Expression{
+
+    protected Expression left;
+    protected Expression right;
+
+    public SymbolExpression(Expression left,Expression right){
+        this.left = left;
+        this.right = right;
+    }
+}
+
+public class AddExpression extends SymbolExpression{
+
+    public AddExpression(Expression left, Expression right) {
+        super(left, right);
+    }
+
+    public int interpreter(HashMap&lt;String, Integer&gt; map) {
+        return super.left.interpreter(map) + super.right.interpreter(map);
+    }
+}
+
+public class SubExpression extends SymbolExpression{
+
+    public SubExpression(Expression left, Expression right) {
+        super(left, right);
+    }
+
+    public int interpreter(HashMap&lt;String, Integer&gt; map) {
+        return super.left.interpreter(map) - super.right.interpreter(map);
+    }
+
+}
+
+public class Calculator {
+
+    //定义的表达式
+    private Expression expression;
+
+    //构造函数传参,并解析
+    public Calculator(String expStr){
+
+        //定义一个堆栈，安排运算的先后顺序
+        Stack&lt;Expression&gt; stack = new Stack&lt;Expression&gt;();
+
+        //表达式拆分为字符数组
+        char[] charArray = expStr.toCharArray();
+
+        //运算
+        Expression left = null;
+        Expression right = null;
+
+        for(int i=0;i&lt;charArray.length;i++){
+            switch(charArray[i]) {
+                case &apos;+&apos;: //加法
+                    //加法结果放到堆栈中
+                    left = stack.pop();
+                    right = new VarExpression(String.valueOf(charArray[++i]));
+                    stack.push(new AddExpression(left,right));
+                    break;
+                case &apos;-&apos;:
+                    left = stack.pop();
+                    right = new VarExpression(String.valueOf(charArray[++i]));
+                    stack.push(new SubExpression(left,right));
+                    break;
+                default: //公式中的变量
+                    stack.push(new VarExpression(String.valueOf(charArray[i])));
+            }
+        }
+
+        //把运算结果抛出来
+        this.expression = stack.pop();
+    }
+
+    //开始运算
+    public int run(HashMap&lt;String,Integer&gt; var){
+        return this.expression.interpreter(var);
+    }
+}
+
+public class Client {
+
+    public static void main(String[] args) throws IOException{
+        String expStr = getExpStr();
+
+        //赋值
+        HashMap&lt;String,Integer&gt; var = getValue(expStr);
+        Calculator cal = new Calculator(expStr);
+        System.out.println(&quot;运算结果为：&quot;+expStr +&quot;=&quot;+cal.run(var));
+    }
+
+    //获得表达式
+    public static String getExpStr() throws IOException{
+        System.out.print(&quot;请输入表达式：&quot;);
+        return (new BufferedReader(new InputStreamReader(System.in))).readLine();
+    }
+
+    //获得值映射
+    public static HashMap&lt;String,Integer&gt; getValue(String exprStr) throws IOException{
+        HashMap&lt;String,Integer&gt; map = new HashMap&lt;String,Integer&gt;();
+        //解析有几个参数要传递
+        for(char ch:exprStr.toCharArray()){
+            if(ch != &apos;+&apos; &amp;&amp; ch != &apos;-&apos;){
+                if(!map.containsKey(String.valueOf(ch))){ //解决重复参数的问题
+                    System.out.print(&quot;请输入&quot;+ch+&quot;的值:&quot;);
+                    String in = (new BufferedReader(new InputStreamReader(System.in))).readLine();
+                    map.put(String.valueOf(ch),Integer.valueOf(in));
+                }
+            }
+        }
+        return map;
+    }
+}
+</code></pre>
+
+                
+            </div>
+
+            <!-- Comments -->
+            
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    
+
+
+                </div>
+            
         </div>
     </div>
-</div>
-
-
+</article>
 
     <!-- Footer -->
     <hr />

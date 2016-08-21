@@ -10,6 +10,10 @@
 
     <!--Description-->
     
+        <meta name="description" content="定义：封装一些作用于某种数据结构中的各元素的操作，它可以在不改变数据结构的前提下定义作用于这些元素的新的操作。
+业务类A为类B、C的公共属性的方法，B、C均继承A，但又有各自的属性和方法
+业务类A中包含一个公共方法accept(Visitor)，其参数为一个观察者对象，B、C具体实现visitor.">
+    
 
     <!--Author-->
     
@@ -18,7 +22,7 @@
 
     <!--Open Graph Title-->
     
-        <meta property="og:title" content="马面"/>
+        <meta property="og:title" content="设计模式读书笔记-访问者模式"/>
     
 
     <!--Open Graph Description-->
@@ -29,7 +33,7 @@
 
     <!--Type page-->
     
-        <meta property="og:type" content="website" />
+        <meta property="og:type" content="article" />
     
 
     <!--Page Cover-->
@@ -40,7 +44,7 @@
 
     <!-- Title -->
     
-    <title>Archives: 2016/8 - 马面</title>
+    <title>设计模式读书笔记-访问者模式 - 马面</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
@@ -147,169 +151,187 @@
 </nav>
 
     <!-- Main Content -->
-    
+    <!-- Page Header -->
+<!-- Set your background image for this header in your post front-matter: cover -->
 
-<!-- Page Header -->
-<!-- Set your background image for this header in the theme's configuration: index_cover -->
 <header class="intro-header" style="background-image: url('http://www.codeblocq.com/assets/projects/hexo-theme-clean-blog/img/home-bg.jpg')">
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <div class="site-heading">
-                    <h1>2016/8</h1>
+                <div class="post-heading">
+                    <h1>设计模式读书笔记-访问者模式</h1>
+                    
+                    <span class="meta">
+                        <!-- Date and Author -->
+                        
+                        2016-08-21
+                    </span>
                 </div>
             </div>
         </div>
     </div>
 </header>
 
-<!-- Main Content -->
-<div class="container">
-    <div class="row">
-        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Tags and categories -->
+           
+                <div class="col-lg-4 col-lg-offset-2 col-md-5 col-md-offset-1 post-tags">
+                    
+                        
+
+
+<a href="/tags/设计模式/">#设计模式</a>
+
+
+                    
+                </div>
+                <div class="col-lg-4 col-md-5 post-categories">
+                    
+                        
+
+<a href="/categories/读书笔记/">读书笔记</a>
+
+                    
+                </div>
             
-                <div class="post-preview">
-    <a href="/2016/08/21/设计模式读书笔记-迭代器模式/">
-        <h1 class="post-title archive">
-            设计模式读书笔记-迭代器模式
-        </h1>
-    </a>
-    <p class="post-meta archive">
-        <!-- Date and Author -->
-        
-        2016-08-21
-    </p>
-</div>
+
+            <!-- Gallery -->
             
-                <div class="post-preview">
-    <a href="/2016/08/21/设计模式读书笔记-解释器模式/">
-        <h1 class="post-title archive">
-            设计模式读书笔记-解释器模式
-        </h1>
-    </a>
-    <p class="post-meta archive">
-        <!-- Date and Author -->
-        
-        2016-08-21
-    </p>
-</div>
-            
-                <div class="post-preview">
-    <a href="/2016/08/21/设计模式读书笔记-抽象工厂模式/">
-        <h1 class="post-title archive">
-            设计模式读书笔记-抽象工厂模式
-        </h1>
-    </a>
-    <p class="post-meta archive">
-        <!-- Date and Author -->
-        
-        2016-08-21
-    </p>
-</div>
-            
-                <div class="post-preview">
-    <a href="/2016/08/21/设计模式读书笔记-工厂模式/">
-        <h1 class="post-title archive">
-            设计模式读书笔记-工厂模式
-        </h1>
-    </a>
-    <p class="post-meta archive">
-        <!-- Date and Author -->
-        
-        2016-08-21
-    </p>
-</div>
-            
-                <div class="post-preview">
-    <a href="/2016/08/21/设计模式读书笔记-简单工厂模式/">
-        <h1 class="post-title archive">
-            设计模式读书笔记-简单工厂模式
-        </h1>
-    </a>
-    <p class="post-meta archive">
-        <!-- Date and Author -->
-        
-        2016-08-21
-    </p>
-</div>
-            
-                <div class="post-preview">
-    <a href="/2016/08/21/设计模式读书笔记-装饰模式/">
-        <h1 class="post-title archive">
-            设计模式读书笔记-装饰模式
-        </h1>
-    </a>
-    <p class="post-meta archive">
-        <!-- Date and Author -->
-        
-        2016-08-21
-    </p>
-</div>
-            
-                <div class="post-preview">
-    <a href="/2016/08/21/设计模式读书笔记-访问者模式/">
-        <h1 class="post-title archive">
-            设计模式读书笔记-访问者模式
-        </h1>
-    </a>
-    <p class="post-meta archive">
-        <!-- Date and Author -->
-        
-        2016-08-21
-    </p>
-</div>
-            
-                <div class="post-preview">
-    <a href="/2016/08/21/设计模式读书笔记-适配器模式/">
-        <h1 class="post-title archive">
-            设计模式读书笔记-适配器模式
-        </h1>
-    </a>
-    <p class="post-meta archive">
-        <!-- Date and Author -->
-        
-        2016-08-21
-    </p>
-</div>
-            
-                <div class="post-preview">
-    <a href="/2016/08/21/设计模式读书笔记-桥接模式/">
-        <h1 class="post-title archive">
-            设计模式读书笔记-桥接模式
-        </h1>
-    </a>
-    <p class="post-meta archive">
-        <!-- Date and Author -->
-        
-        2016-08-21
-    </p>
-</div>
-            
-                <div class="post-preview">
-    <a href="/2016/08/21/设计模式读书笔记-享元模式/">
-        <h1 class="post-title archive">
-            设计模式读书笔记-享元模式
-        </h1>
-    </a>
-    <p class="post-meta archive">
-        <!-- Date and Author -->
-        
-        2016-08-21
-    </p>
-</div>
-            
-            <div class="archive-before-pagination"></div>
-            <ul class="pager">
-    
-    
-        <li class="next"><a href="/archives/2016/08/page/2/">Older Posts  &rarr;</a></li>
-    
+
+            <!-- Post Main Content -->
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul>
+<li>定义：封装一些作用于某种数据结构中的各元素的操作，它可以在不改变数据结构的前提下定义作用于这些元素的新的操作。</li>
+<li>业务类A为类B、C的公共属性的方法，B、C均继承A，但又有各自的属性和方法</li>
+<li>业务类A中包含一个公共方法accept(Visitor)，其参数为一个观察者对象，B、C具体实现visitor.visit(this);</li>
+<li>访问者类D会针对B、C各自实例一个具体方法，参数分别为B、C</li>
+<li>代码：</li>
 </ul>
+<pre><code>public abstract class Employee {
+
+    public final static int MALE = 0; //0代表是男性
+    public final static int FEMALE = 1; //1代表是女性
+
+    private String name;//甭管是谁，都有工资   get set
+    private int salary;//只要是员工那就有薪水   get set
+    private int sex;//性别很重要   get set
+
+    public abstract void accept(VisitorInterface visitor);//允许一个访问者访问
+
+}
+
+public class CommonEmployee extends Employee{
+    private String job;//get set
+
+    public void accept(VisitorInterface visitor) {
+        visitor.visit(this);
+    }
+}
+
+public class Manager extends Employee{
+    private String performance;//get set
+
+    public void accept(VisitorInterface visitor) {
+        visitor.visit(this);
+    }
+}
+
+public interface VisitorInterface {
+    public void visit(CommonEmployee commonEmployee);//首先定义可访问普通员工
+    public void visit(Manager manager);//其次定义，我还可以访问部门经理
+}
+
+public class Visitor implements VisitorInterface{
+    public void visit(CommonEmployee commonEmployee) {
+        String commonEmployeeInfo = getCommonEmployee(commonEmployee);
+        System.out.println(commonEmployeeInfo);
+    }
+
+    public void visit(Manager manager) {
+        String managerInfo = getManagerInfo(manager);
+        System.out.println(managerInfo);
+    }
+
+    //组装出基本信息
+    private String getBasicInfo(Employee employee){
+        String info = &quot;姓名：&quot; + employee.getName() + &quot;\t&quot;;
+        info = info + &quot;性别：&quot; + (employee.getSex() == Employee.FEMALE?&quot;女&quot;:&quot;男&quot;) + &quot;\t&quot;;
+        info = info + &quot;薪水：&quot; + employee.getSalary() + &quot;\t&quot;;
+        return info;
+    }
+
+    private String getCommonEmployee(CommonEmployee commonEmployee){
+        String basicInfo = this.getBasicInfo(commonEmployee);
+        String otherInfo = &quot;工作：&quot;+commonEmployee.getJob()+&quot;\t&quot;;
+        return basicInfo + otherInfo;
+    }
+
+    private String getManagerInfo(Manager manager){
+        String basicInfo = this.getBasicInfo(manager);
+        String otherInfo = &quot;业绩：&quot;+manager.getPerformance() + &quot;\t&quot;;
+        return basicInfo + otherInfo;
+    }
+}
+
+public class Client {
+    public static void main(String[] args){
+        for(Employee emp:mockEmployee()){
+            emp.accept(new Visitor());
+        }
+    }
+
+    //模拟出公司的人员情况，我们可以想象这个数据室通过持久层传递过来的
+    public static List&lt;Employee&gt; mockEmployee(){
+
+        List&lt;Employee&gt; empList = new ArrayList&lt;Employee&gt;();
+
+        //产生张三这个员工
+        CommonEmployee zhangSan = new CommonEmployee();
+        zhangSan.setJob(&quot;编写Java程序，绝对的蓝领、苦工加搬运工&quot;);
+        zhangSan.setName(&quot;张三&quot;);
+        zhangSan.setSalary(1800);
+        zhangSan.setSex(Employee.MALE);
+        empList.add(zhangSan);
+
+        //产生李四这个员工
+        CommonEmployee liSi = new CommonEmployee();
+        liSi.setJob(&quot;页面美工，审美素质太不流行了！&quot;);
+        liSi.setName(&quot;李四&quot;);
+        liSi.setSalary(1900);
+        liSi.setSex(Employee.FEMALE);
+        empList.add(liSi);
+
+        //再产生一个经理
+        Manager wangWu = new Manager();
+        wangWu.setName(&quot;王五&quot;);
+        wangWu.setPerformance(&quot;基本上是负值，但是我会拍马屁呀&quot;);
+        wangWu.setSalary(18750);
+        wangWu.setSex(Employee.MALE);
+        empList.add(wangWu);
+
+        return empList;
+    }
+}
+</code></pre>
+
+                
+            </div>
+
+            <!-- Comments -->
+            
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    
+
+
+                </div>
+            
         </div>
     </div>
-</div>
-
-
+</article>
 
     <!-- Footer -->
     <hr />
