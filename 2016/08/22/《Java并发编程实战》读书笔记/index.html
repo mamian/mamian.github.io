@@ -235,6 +235,42 @@ volatile
 <li>对象中所有域均final，对象也可能是可变的。因为final域中可以保存对可变对象的引用。</li>
 </ul>
 <hr>
+<h1 id="基础构建模块"><a href="#基础构建模块" class="headerlink" title="基础构建模块"></a><center>基础构建模块</center></h1><h3 id="同步容器类"><a href="#同步容器类" class="headerlink" title="同步容器类"></a>同步容器类</h3><ul>
+<li>Vector、HashTable、Collections.synchronizedXxx</li>
+<li>将类中的状态封装起来，并对每个public方法进行同步，每次仅有一个线程可访问。</li>
+</ul>
+<h5 id="同步容器类的问题"><a href="#同步容器类的问题" class="headerlink" title="同步容器类的问题"></a>同步容器类的问题</h5><ul>
+<li>同步容器类均线程安全，但某些情况需额外的客户端加锁来保护<code>复合操作</code>。如Vector迭代</li>
+</ul>
+<h5 id="迭代器与ConcurrentModificationException"><a href="#迭代器与ConcurrentModificationException" class="headerlink" title="迭代器与ConcurrentModificationException"></a>迭代器与ConcurrentModificationException</h5><ul>
+<li>对容器类进行迭代的标准方式都是使用Iterator，但若有其他线程并发修改容器，使用迭代器也无法避免在迭代期间对容器加锁。</li>
+<li>若不想在迭代期间对容器加锁，可“克隆”一个副本进行迭代。但克隆过程本身需加锁。克隆存在显著的性能开销。</li>
+</ul>
+<h5 id="隐藏迭代器"><a href="#隐藏迭代器" class="headerlink" title="隐藏迭代器"></a>隐藏迭代器</h5><ul>
+<li>containsAll、removeAll、retainAll</li>
+</ul>
+<h3 id="并发容器"><a href="#并发容器" class="headerlink" title="并发容器"></a>并发容器</h3><ul>
+<li>同步容器为串行访问，吞吐量低。使用并发容器可极大提高伸缩性并降低风险。</li>
+<li>ConcurrentHashMap增加了对一些常见复合操作的支持，如“若没有则添加”、替换、有条件删除等。</li>
+<li>CopyOnWriteArrayList用于在遍历操作为主要操作的情况下代替同步List。</li>
+<li>ConcurrentSkipListMap代替同步的SortedMap（如synchronizedMap包装的TreeMap）</li>
+<li>ConcurrentSkipListSet代替同步的SortedSet（如synchronizedMap包装的TreeSet）</li>
+<li>Queue用来临时保存一组待处理元素，ConcurrentLinkedQueue先进先出，PriorityQueue为非并发的优先队列。</li>
+<li>Queue是通过LinkedList实现的，去掉了List的随机访问需求，实现高效并发。</li>
+<li>BlockingQueue</li>
+</ul>
+<h5 id="ConcurrentHashMap"><a href="#ConcurrentHashMap" class="headerlink" title="ConcurrentHashMap"></a>ConcurrentHashMap</h5><ul>
+<li>ConcurrentHashMap使用了分段锁。</li>
+<li>ConcurrentHashMap的迭代器不会抛出CoucurrentModificationException，<code>不需在迭代过程中对容器加锁</code>。</li>
+<li>HashTable、synchronizedMap，对Map加锁并独占访问。</li>
+<li>“若没有则添加”、“若相等则删除”、“若相等则替换”均为原子操作。</li>
+</ul>
+<h5 id="CopyOnWriteArrayList"><a href="#CopyOnWriteArrayList" class="headerlink" title="CopyOnWriteArrayList"></a>CopyOnWriteArrayList</h5><ul>
+<li>CopyOnWriteArrayList迭代期间不需对容器加锁、复制（修改时需复制）。</li>
+<li>当修改容器时会复制底层数组，这需要一定开销。</li>
+<li>仅当迭代操作远多于修改操作时使用。</li>
+</ul>
+<h3 id="同步工具类"><a href="#同步工具类" class="headerlink" title="同步工具类"></a>同步工具类</h3><h5 id="闭锁"><a href="#闭锁" class="headerlink" title="闭锁"></a>闭锁</h5><h5 id="栅栏"><a href="#栅栏" class="headerlink" title="栅栏"></a>栅栏</h5><h5 id="信号量"><a href="#信号量" class="headerlink" title="信号量"></a>信号量</h5><h5 id="FutureTask"><a href="#FutureTask" class="headerlink" title="FutureTask"></a>FutureTask</h5><h3 id="阻塞队列和生产者-消费者"><a href="#阻塞队列和生产者-消费者" class="headerlink" title="阻塞队列和生产者-消费者"></a>阻塞队列和生产者-消费者</h3><h5 id="示例：桌面搜索"><a href="#示例：桌面搜索" class="headerlink" title="示例：桌面搜索"></a>示例：桌面搜索</h5><h5 id="串行线程封闭"><a href="#串行线程封闭" class="headerlink" title="串行线程封闭"></a>串行线程封闭</h5><h5 id="双端队列与工作密取"><a href="#双端队列与工作密取" class="headerlink" title="双端队列与工作密取"></a>双端队列与工作密取</h5><h3 id="阻塞方法和中断方法"><a href="#阻塞方法和中断方法" class="headerlink" title="阻塞方法和中断方法"></a>阻塞方法和中断方法</h3><h3 id="构建高效且可伸缩的结果缓存"><a href="#构建高效且可伸缩的结果缓存" class="headerlink" title="构建高效且可伸缩的结果缓存"></a>构建高效且可伸缩的结果缓存</h3><hr>
 
 
                 
