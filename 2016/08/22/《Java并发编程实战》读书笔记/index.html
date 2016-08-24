@@ -307,6 +307,98 @@ volatile
 <li>Callable</li>
 </ul>
 <hr>
+<h1 id="任务执行"><a href="#任务执行" class="headerlink" title="任务执行"></a><center>任务执行</center></h1><h3 id="在线程中执行任务"><a href="#在线程中执行任务" class="headerlink" title="在线程中执行任务"></a>在线程中执行任务</h3><ul>
+<li>大多数服务器应用程序都提供了一种自然的任务边界选择方式：以独立的客户请求为边界。如Web服务器、EJB容器、邮件服务器、文件服务器、数据库服务器。</li>
+<li><code>串行地执行任务</code>：性能太差，每次只处理1个请求。</li>
+<li><code>显式地为任务创建线程</code>：为每个请求创建一个新线程。</li>
+<li><code>无限制创建线程的不足</code><ul>
+<li>线程生命周期的开销非常高<ul>
+<li>线程的创建与销毁是有代价的。</li>
+<li>若请求到达率非常高且请求处理过程是轻量级的，如大多数服务器应用，为每个请求创建一个线程将消耗大量计算资源。</li>
+</ul>
+</li>
+<li>资源消耗<ul>
+<li>活跃的线程会消耗资源，特别是内存。若可运行线程多于cpu核数，有些线程将闲置。闲置线程占用内存较多。</li>
+<li>若已有足够多的线程使cpu保持忙碌，创建更多线程将降低性能。</li>
+</ul>
+</li>
+<li>稳定性<ul>
+<li>可创建线程数有上限。与平台、jvm启动参数、Thread构造函数中请求的栈大小、底层操作系统对线程的限制等有关。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="Executor框架"><a href="#Executor框架" class="headerlink" title="Executor框架"></a>Executor框架</h3><ul>
+<li>在Java类库中，任务执行的主要抽象不是Thread，而是Executor。</li>
+<li><p>Executor基于生产者-消费者，提前任务相当于生产者，执行任务相当于消费者。</p>
+<pre><code>public interface Executor {
+    void execute(Runnable command);
+}
+</code></pre></li>
+</ul>
+<h5 id="示例：基于Executor的Web服务器"><a href="#示例：基于Executor的Web服务器" class="headerlink" title="示例：基于Executor的Web服务器"></a>示例：基于Executor的Web服务器</h5><ul>
+<li>private static final Executor exec = Executors.newFixedThreadPool(THREADS_NUM);</li>
+<li>ServerSocket socket = new ServerSocket(80);</li>
+<li>final Socket connection = socket.accept();Runnable task = new Runnable(){connection};</li>
+<li>exec.execute(task);</li>
+</ul>
+<h5 id="执行策略"><a href="#执行策略" class="headerlink" title="执行策略"></a>执行策略</h5><ul>
+<li>将任务的提交与执行解耦。</li>
+</ul>
+<h5 id="线程池"><a href="#线程池" class="headerlink" title="线程池"></a>线程池</h5><ul>
+<li>重用现有线程而不是创建新线程，可在处理多个请求时分摊在线程创建与销毁过程中产生的巨大开销。</li>
+<li>可通过Executors中静态工厂方法之一来创建一个线程池。<ul>
+<li>newFixedThreadPool<ul>
+<li>固定大小</li>
+<li>每次提交任务创建新线程直到达到线程池最大数量。</li>
+</ul>
+</li>
+<li>newCachedThreadPool<ul>
+<li>可缓存线程池</li>
+<li>无大小</li>
+<li>若线程数量多于处理需求，则回收</li>
+</ul>
+</li>
+<li>newSingleThreadPool<ul>
+<li>单线程</li>
+<li>串行执行任务队列中的任务</li>
+</ul>
+</li>
+<li>newScheduledThreadPool<ul>
+<li>固定大小</li>
+<li>以延迟或定时的方式来执行任务</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h5 id="Executor的生命周期"><a href="#Executor的生命周期" class="headerlink" title="Executor的生命周期"></a>Executor的生命周期</h5><ul>
+<li>Executor通常会创建线程来执行任务。但JVM只有在所有（非守护）线程全部终止后才退出。如无法正确关闭Executor，JVM将无法结束。</li>
+<li>ExecutorService接口扩展了Executor接口，增加了用于生命周期管理的方法。<ul>
+<li>shutdown：平缓关闭，不再接受新任务，等待正在执行及待执行任务执行完毕。</li>
+<li>shutdownNow：粗暴关闭，尝试取消正在执行的所有任务，不再启动待执行任务。</li>
+</ul>
+</li>
+</ul>
+<h5 id="延迟任务与周期任务"><a href="#延迟任务与周期任务" class="headerlink" title="延迟任务与周期任务"></a>延迟任务与周期任务</h5><ul>
+<li>Timer类负责管理延迟任务与周期任务。但Timer有缺陷，使用<code>ScheduledThreadPoolExecutor</code>代替。</li>
+</ul>
+<h3 id="找出可利用的并行性"><a href="#找出可利用的并行性" class="headerlink" title="找出可利用的并行性"></a>找出可利用的并行性</h3><h5 id="示例：串行的页面渲染器"><a href="#示例：串行的页面渲染器" class="headerlink" title="示例：串行的页面渲染器"></a>示例：串行的页面渲染器</h5><h5 id="携带结果的任务Callable与Future"><a href="#携带结果的任务Callable与Future" class="headerlink" title="携带结果的任务Callable与Future"></a>携带结果的任务Callable与Future</h5><h5 id="示例：使用Future实现页面渲染器"><a href="#示例：使用Future实现页面渲染器" class="headerlink" title="示例：使用Future实现页面渲染器"></a>示例：使用Future实现页面渲染器</h5><h5 id="在异构任务并行化中存在的局限"><a href="#在异构任务并行化中存在的局限" class="headerlink" title="在异构任务并行化中存在的局限"></a>在异构任务并行化中存在的局限</h5><h5 id="CompletionService：Executor与BlockingQueue"><a href="#CompletionService：Executor与BlockingQueue" class="headerlink" title="CompletionService：Executor与BlockingQueue"></a>CompletionService：Executor与BlockingQueue</h5><h5 id="示例：使用CompletionService实现页面渲染器"><a href="#示例：使用CompletionService实现页面渲染器" class="headerlink" title="示例：使用CompletionService实现页面渲染器"></a>示例：使用CompletionService实现页面渲染器</h5><h5 id="为任务设置时限"><a href="#为任务设置时限" class="headerlink" title="为任务设置时限"></a>为任务设置时限</h5><h5 id="示例：旅行预订门户网站"><a href="#示例：旅行预订门户网站" class="headerlink" title="示例：旅行预订门户网站"></a>示例：旅行预订门户网站</h5><hr>
+<h1 id="取消与关闭"><a href="#取消与关闭" class="headerlink" title="取消与关闭"></a><center>取消与关闭</center></h1><hr>
+<h1 id="线程池的使用"><a href="#线程池的使用" class="headerlink" title="线程池的使用"></a><center>线程池的使用</center></h1><ul>
+<li>只有当线程本地值的生命周期受限于任务的生命周期时，在线程池的线程中使用ThreadLocal才有意义，而<code>在线程池的线程中不应该使用ThreadLocal在任务间传递值</code>。</li>
+<li>只有当任务是同类型且相互独立时，线程池的性能才能达到最佳。若将运行时间较长与较短的任务混在一起，可能“拥塞”，若任务依赖于其他任务，可能死锁。</li>
+</ul>
+<hr>
+<h1 id="图形用户界面应用程序"><a href="#图形用户界面应用程序" class="headerlink" title="图形用户界面应用程序"></a><center>图形用户界面应用程序</center></h1><hr>
+<h1 id="避免活跃性危险"><a href="#避免活跃性危险" class="headerlink" title="避免活跃性危险"></a><center>避免活跃性危险</center></h1><hr>
+<h1 id="性能与可伸缩性"><a href="#性能与可伸缩性" class="headerlink" title="性能与可伸缩性"></a><center>性能与可伸缩性</center></h1><hr>
+<h1 id="并发程序的测试"><a href="#并发程序的测试" class="headerlink" title="并发程序的测试"></a><center>并发程序的测试</center></h1><hr>
+<h1 id="显示锁"><a href="#显示锁" class="headerlink" title="显示锁"></a><center>显示锁</center></h1><hr>
+<h1 id="构建自定义的同步工具"><a href="#构建自定义的同步工具" class="headerlink" title="构建自定义的同步工具"></a><center>构建自定义的同步工具</center></h1><hr>
+<h1 id="原子变量与非阻塞同步机制"><a href="#原子变量与非阻塞同步机制" class="headerlink" title="原子变量与非阻塞同步机制"></a><center>原子变量与非阻塞同步机制</center></h1><hr>
+<h1 id="Java内存模型"><a href="#Java内存模型" class="headerlink" title="Java内存模型"></a><center>Java内存模型</center></h1><hr>
 
 
                 
