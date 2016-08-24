@@ -270,7 +270,43 @@ volatile
 <li>当修改容器时会复制底层数组，这需要一定开销。</li>
 <li>仅当迭代操作远多于修改操作时使用。</li>
 </ul>
-<h3 id="同步工具类"><a href="#同步工具类" class="headerlink" title="同步工具类"></a>同步工具类</h3><h5 id="闭锁"><a href="#闭锁" class="headerlink" title="闭锁"></a>闭锁</h5><h5 id="栅栏"><a href="#栅栏" class="headerlink" title="栅栏"></a>栅栏</h5><h5 id="信号量"><a href="#信号量" class="headerlink" title="信号量"></a>信号量</h5><h5 id="FutureTask"><a href="#FutureTask" class="headerlink" title="FutureTask"></a>FutureTask</h5><h3 id="阻塞队列和生产者-消费者"><a href="#阻塞队列和生产者-消费者" class="headerlink" title="阻塞队列和生产者-消费者"></a>阻塞队列和生产者-消费者</h3><h5 id="示例：桌面搜索"><a href="#示例：桌面搜索" class="headerlink" title="示例：桌面搜索"></a>示例：桌面搜索</h5><h5 id="串行线程封闭"><a href="#串行线程封闭" class="headerlink" title="串行线程封闭"></a>串行线程封闭</h5><h5 id="双端队列与工作密取"><a href="#双端队列与工作密取" class="headerlink" title="双端队列与工作密取"></a>双端队列与工作密取</h5><h3 id="阻塞方法和中断方法"><a href="#阻塞方法和中断方法" class="headerlink" title="阻塞方法和中断方法"></a>阻塞方法和中断方法</h3><h3 id="构建高效且可伸缩的结果缓存"><a href="#构建高效且可伸缩的结果缓存" class="headerlink" title="构建高效且可伸缩的结果缓存"></a>构建高效且可伸缩的结果缓存</h3><hr>
+<h3 id="同步工具类"><a href="#同步工具类" class="headerlink" title="同步工具类"></a>同步工具类</h3><h5 id="闭锁"><a href="#闭锁" class="headerlink" title="闭锁"></a>闭锁</h5><ul>
+<li>CountDownLatch为一种闭锁实现，使一个或多个线程等待一组事件发生。countDown方法递减计数器，await方法等待计数器达到0。</li>
+<li>闭锁为一次性对象，一旦进入终止状态，就不能被重置。</li>
+<li>闭锁拦截所有线程，直到某个状态满足条件。</li>
+</ul>
+<h5 id="栅栏Barrier"><a href="#栅栏Barrier" class="headerlink" title="栅栏Barrier"></a>栅栏Barrier</h5><ul>
+<li>闭锁用于等待事件（满足某结束状态），栅栏用于等待其他线程。</li>
+</ul>
+<h5 id="信号量Semaphore"><a href="#信号量Semaphore" class="headerlink" title="信号量Semaphore"></a>信号量Semaphore</h5><ul>
+<li>计数信号量用于控制同时访问某特定资源的操作数，或同时执行某指定操作的数量。</li>
+<li>Semaphore管理一组虚拟许可(permit)，执行操作时首先获得许可，使用后释放许可。</li>
+<li>acquire获得许可，release释放许可。</li>
+</ul>
+<h5 id="FutureTask"><a href="#FutureTask" class="headerlink" title="FutureTask"></a>FutureTask</h5><ul>
+<li>FutureTask表示一种可生成结果的计算，计算是通过Callable实现（相当于可生成结果的Runnable）。</li>
+<li>Future.get获取结果，若任务未完成，则一直阻塞直到完成后返回结果。</li>
+</ul>
+<h3 id="阻塞队列和生产者-消费者"><a href="#阻塞队列和生产者-消费者" class="headerlink" title="阻塞队列和生产者-消费者"></a>阻塞队列和生产者-消费者</h3><ul>
+<li>阻塞队列的put、take可阻塞。无界队列永不会满，无界队列上的put永远不会阻塞。</li>
+<li>BlockingQueue简化了生产者-消费者的实现，支持任意数量的生产者和消费者。</li>
+<li>如果阻塞队列不能完全符合设计需求，还可以通过信号量(Semaphore)来创建其他的阻塞数据结构。</li>
+<li>ArrayBlockingQueue、LinkedBlockingQueue为FIFO队列，比同步List拥有更好并发性。</li>
+<li>PriorityBlockingQueue既可根据元素的自然序比较元素(实现了Comparable方法)，也可用Comparator来比较。</li>
+<li>io密集型与cpu密集型的任务，使用生产者-消费者，提高吞吐率。</li>
+<li>Java增加了Deque和BlockingDeque对Queue、BlockingQueue进行扩展。Deque为双端队列，实现了在队列头、尾的高效插入、移除。具体实现包括ArrayDeque、LinkedBlockingDeque。</li>
+<li>阻塞队列用于生产者-消费者，双端队列用于工作密取模式。生产者-消费者，所有消费者共享一个工作队列，而工作密取的每个消费者有自己的双端队列。</li>
+</ul>
+<h3 id="阻塞方法和中断方法"><a href="#阻塞方法和中断方法" class="headerlink" title="阻塞方法和中断方法"></a>阻塞方法和中断方法</h3><ul>
+<li>线程A中断B时，A仅仅是要求B在执行到某个可以暂停的地方停止正在执行的操作-前提是B愿意停下来。</li>
+</ul>
+<h3 id="构建高效且可伸缩的结果缓存"><a href="#构建高效且可伸缩的结果缓存" class="headerlink" title="构建高效且可伸缩的结果缓存"></a>构建高效且可伸缩的结果缓存</h3><ul>
+<li>ConcurrentHashMap存储缓存数据</li>
+<li>Future</li>
+<li>FutureTask</li>
+<li>Callable</li>
+</ul>
+<hr>
 
 
                 
