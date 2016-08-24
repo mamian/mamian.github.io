@@ -390,15 +390,51 @@ volatile
 <li>只有当线程本地值的生命周期受限于任务的生命周期时，在线程池的线程中使用ThreadLocal才有意义，而<code>在线程池的线程中不应该使用ThreadLocal在任务间传递值</code>。</li>
 <li>只有当任务是同类型且相互独立时，线程池的性能才能达到最佳。若将运行时间较长与较短的任务混在一起，可能“拥塞”，若任务依赖于其他任务，可能死锁。</li>
 </ul>
+<h3 id="设置线程池大小"><a href="#设置线程池大小" class="headerlink" title="设置线程池大小"></a>设置线程池大小</h3><ul>
+<li>代码中通常不会固定线程池大小，而应通过某动态机制来提供，或Runtime.availableProcessors来动态计算。</li>
+<li>线程池大小：cpu数、内存大小、计算密集还是IO密集、是否需JDBC这样的稀缺资源。</li>
+<li>计算密集型：线程数=CPU数+1。（当线程偶尔由于页缺失故障或其他原因暂停，额外的+1线程可确保CPU时钟周期不会浪费）</li>
+<li>IO密集型：线程数比计算密集型更大。</li>
+<li>数据库连接池与任务线程池：相互影响。</li>
+</ul>
+<h3 id="ThreadPoolExecutor"><a href="#ThreadPoolExecutor" class="headerlink" title="ThreadPoolExecutor"></a>ThreadPoolExecutor</h3><ul>
+<li><p>若默认执行策略（newCachedThreadPool、newFixedThreadPool、newScheduledThreadExecutor）不满足需求，可使用构造方法自定义一个对象。</p>
+<pre><code>public ThreadPoolExecutor(int corePoolSize,
+                             int maximumPoolSize,
+                             long keepAliveTime,
+                             TimeUnit unit,
+                             BlockingQueue&lt;Runnable&gt; workQueue,
+                             ThreadFactory threadFactory,
+                            RejectedExecutionHandler handler
+                             ){}
+</code></pre><ul>
+<li>corePoolSize：线程池最小大小。</li>
+<li>maximumPoolSize：最大值</li>
+<li>keepAliveTime：空闲线程存活时间，超出后线程可被回收，但不一定立即回收。</li>
+</ul>
+</li>
+<li>newCachedThreadPool线程数量0-Integer.MAX_VALUE，超时时间1分钟，自动扩展与收缩。</li>
+<li>newFixedThreadPool、newSingleThreadExecutor默认使用无界LinkedBlockingQueue。</li>
+<li>使用有界队列ArrayBlockingQueue、LinkedBlockingQueue、PriorityBlockingQueue有助于避免资源耗尽。</li>
+</ul>
 <hr>
 <h1 id="图形用户界面应用程序"><a href="#图形用户界面应用程序" class="headerlink" title="图形用户界面应用程序"></a><center>图形用户界面应用程序</center></h1><hr>
 <h1 id="避免活跃性危险"><a href="#避免活跃性危险" class="headerlink" title="避免活跃性危险"></a><center>避免活跃性危险</center></h1><hr>
 <h1 id="性能与可伸缩性"><a href="#性能与可伸缩性" class="headerlink" title="性能与可伸缩性"></a><center>性能与可伸缩性</center></h1><hr>
 <h1 id="并发程序的测试"><a href="#并发程序的测试" class="headerlink" title="并发程序的测试"></a><center>并发程序的测试</center></h1><hr>
-<h1 id="显示锁"><a href="#显示锁" class="headerlink" title="显示锁"></a><center>显示锁</center></h1><hr>
+<h1 id="显示锁"><a href="#显示锁" class="headerlink" title="显示锁"></a><center>显示锁</center></h1><ul>
+<li>ReentrantLock可重入，<code>必须在finally中释放锁</code>。</li>
+<li>Lock lock = new ReentrantLock();lock.lock();try{}finally{lock.unlock();}</li>
+<li>可定时与可轮询的锁获取模式是由tryLock()方法实现的。</li>
+<li>ReadWriteLock允许多个读操作同时进行，但每次只允许一个写操作。</li>
+</ul>
+<hr>
 <h1 id="构建自定义的同步工具"><a href="#构建自定义的同步工具" class="headerlink" title="构建自定义的同步工具"></a><center>构建自定义的同步工具</center></h1><hr>
 <h1 id="原子变量与非阻塞同步机制"><a href="#原子变量与非阻塞同步机制" class="headerlink" title="原子变量与非阻塞同步机制"></a><center>原子变量与非阻塞同步机制</center></h1><hr>
-<h1 id="Java内存模型"><a href="#Java内存模型" class="headerlink" title="Java内存模型"></a><center>Java内存模型</center></h1><hr>
+<h1 id="Java内存模型"><a href="#Java内存模型" class="headerlink" title="Java内存模型"></a><center>Java内存模型</center></h1><ul>
+<li>在共享内存的多处理器体系架构中，每个处理器都拥有自己的缓存，并定期与主内存进行协调。</li>
+</ul>
+<hr>
 
 
                 
