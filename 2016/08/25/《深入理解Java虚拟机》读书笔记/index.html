@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--Description-->
+    
+        <meta name="description" content="64位JVM
+由于指针膨胀和各种数据类型对齐补白的原因，运行于64位JVM上的Java应用需消耗更多内存，通常比32位JVM多10%~30%。
+64位JVM的运行速度与32位相比有15%左右的性能差距。
+
+
+
+
+Java内存区域与内存溢出异常运行时数据区域程序计数器Java虚拟机栈本地方法栈Java">
+    
+
+    <!--Author-->
+    
+        <meta name="author" content="mamian">
+    
+
+    <!--Open Graph Title-->
+    
+        <meta property="og:title" content="《深入理解Java虚拟机》读书笔记"/>
+    
+
+    <!--Open Graph Description-->
+    
+
+    <!--Open Graph Site Name-->
+    <meta property="og:site_name" content="马面"/>
+
+    <!--Type page-->
+    
+        <meta property="og:type" content="article" />
+    
+
+    <!--Page Cover-->
+    
+
+        <meta name="twitter:card" content="summary" />
+    
+
+    <!-- Title -->
+    
+    <title>《深入理解Java虚拟机》读书笔记 - 马面</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/style.css">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Gallery -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.css" type="text/css" rel="stylesheet" />
+
+    <!-- Google Analytics -->
+    
+
+
+</head>
+
+
+<body>
+
+    <!-- Menu -->
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">马面</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                
+                    <li>
+                        <a href="/">
+                            
+                                Home
+                            
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/archives/index.html">
+                            
+                                Archives
+                            
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/tags/index.html">
+                            
+                                Tags
+                            
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/categories/index.html">
+                            
+                                Categories
+                            
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/about/index.html">
+                            
+                                About
+                            
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="https://github.com/mamian">
+                            
+                                <i class="fa fa-github fa-stack-2x"></i>
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+    <!-- Main Content -->
+    <!-- Page Header -->
+<!-- Set your background image for this header in your post front-matter: cover -->
+
+<header class="intro-header" style="background-image: url('http://www.codeblocq.com/assets/projects/hexo-theme-clean-blog/img/home-bg.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <h1>《深入理解Java虚拟机》读书笔记</h1>
+                    
+                    <span class="meta">
+                        <!-- Date and Author -->
+                        
+                        2016-08-25
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Tags and categories -->
+           
+                <div class="col-lg-4 col-lg-offset-2 col-md-5 col-md-offset-1 post-tags">
+                    
+                        
+
+
+<a href="/tags/JVM/">#JVM</a>
+
+
+                    
+                </div>
+                <div class="col-lg-4 col-md-5 post-categories">
+                    
+                        
+
+<a href="/categories/读书笔记/">读书笔记</a>
+
+                    
+                </div>
+            
+
+            <!-- Gallery -->
+            
+
+            <!-- Post Main Content -->
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul>
+<li>64位JVM<ul>
+<li>由于指针膨胀和各种数据类型对齐补白的原因，运行于64位JVM上的Java应用需消耗更多内存，通常比32位JVM多10%~30%。</li>
+<li>64位JVM的运行速度与32位相比有15%左右的性能差距。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h1 id="Java内存区域与内存溢出异常"><a href="#Java内存区域与内存溢出异常" class="headerlink" title="Java内存区域与内存溢出异常"></a><center>Java内存区域与内存溢出异常</center></h1><h3 id="运行时数据区域"><a href="#运行时数据区域" class="headerlink" title="运行时数据区域"></a>运行时数据区域</h3><h5 id="程序计数器"><a href="#程序计数器" class="headerlink" title="程序计数器"></a>程序计数器</h5><h5 id="Java虚拟机栈"><a href="#Java虚拟机栈" class="headerlink" title="Java虚拟机栈"></a>Java虚拟机栈</h5><h5 id="本地方法栈"><a href="#本地方法栈" class="headerlink" title="本地方法栈"></a>本地方法栈</h5><h5 id="Java堆"><a href="#Java堆" class="headerlink" title="Java堆"></a>Java堆</h5><h5 id="方法区"><a href="#方法区" class="headerlink" title="方法区"></a>方法区</h5><h5 id="运行时常量池"><a href="#运行时常量池" class="headerlink" title="运行时常量池"></a>运行时常量池</h5><h5 id="直接内存"><a href="#直接内存" class="headerlink" title="直接内存"></a>直接内存</h5><h3 id="对象访问"><a href="#对象访问" class="headerlink" title="对象访问"></a>对象访问</h3><h3 id="OutOfMemoryError异常"><a href="#OutOfMemoryError异常" class="headerlink" title="OutOfMemoryError异常"></a>OutOfMemoryError异常</h3><h5 id="Java堆溢出"><a href="#Java堆溢出" class="headerlink" title="Java堆溢出"></a>Java堆溢出</h5><h5 id="虚拟机栈、本地方法栈溢出"><a href="#虚拟机栈、本地方法栈溢出" class="headerlink" title="虚拟机栈、本地方法栈溢出"></a>虚拟机栈、本地方法栈溢出</h5><h5 id="运行时常量池溢出"><a href="#运行时常量池溢出" class="headerlink" title="运行时常量池溢出"></a>运行时常量池溢出</h5><h5 id="方法区溢出"><a href="#方法区溢出" class="headerlink" title="方法区溢出"></a>方法区溢出</h5><h5 id="本地直接内存溢出"><a href="#本地直接内存溢出" class="headerlink" title="本地直接内存溢出"></a>本地直接内存溢出</h5><hr>
+<h1 id="垃圾收集器与内存分配策略"><a href="#垃圾收集器与内存分配策略" class="headerlink" title="垃圾收集器与内存分配策略"></a><center>垃圾收集器与内存分配策略</center></h1><h3 id="对象已死？"><a href="#对象已死？" class="headerlink" title="对象已死？"></a>对象已死？</h3><h5 id="引用计数算法"><a href="#引用计数算法" class="headerlink" title="引用计数算法"></a>引用计数算法</h5><h5 id="根搜索算法"><a href="#根搜索算法" class="headerlink" title="根搜索算法"></a>根搜索算法</h5><h5 id="再谈引用"><a href="#再谈引用" class="headerlink" title="再谈引用"></a>再谈引用</h5><h5 id="生存还是死亡？"><a href="#生存还是死亡？" class="headerlink" title="生存还是死亡？"></a>生存还是死亡？</h5><h5 id="回收方法区"><a href="#回收方法区" class="headerlink" title="回收方法区"></a>回收方法区</h5><h3 id="垃圾收集算法"><a href="#垃圾收集算法" class="headerlink" title="垃圾收集算法"></a>垃圾收集算法</h3><h5 id="标记-清除算法"><a href="#标记-清除算法" class="headerlink" title="标记-清除算法"></a>标记-清除算法</h5><h5 id="复制算法"><a href="#复制算法" class="headerlink" title="复制算法"></a>复制算法</h5><h5 id="标记-整理算法"><a href="#标记-整理算法" class="headerlink" title="标记-整理算法"></a>标记-整理算法</h5><h5 id="分代收集算法"><a href="#分代收集算法" class="headerlink" title="分代收集算法"></a>分代收集算法</h5><h3 id="垃圾收集器"><a href="#垃圾收集器" class="headerlink" title="垃圾收集器"></a>垃圾收集器</h3><h5 id="Serial-收集器"><a href="#Serial-收集器" class="headerlink" title="Serial 收集器"></a>Serial 收集器</h5><h5 id="ParNew-收集器"><a href="#ParNew-收集器" class="headerlink" title="ParNew 收集器"></a>ParNew 收集器</h5><h5 id="Parallel-Scavenge-收集器"><a href="#Parallel-Scavenge-收集器" class="headerlink" title="Parallel Scavenge 收集器"></a>Parallel Scavenge 收集器</h5><h5 id="Serial-Old-收集器"><a href="#Serial-Old-收集器" class="headerlink" title="Serial Old 收集器"></a>Serial Old 收集器</h5><h5 id="Parallel-Old-收集器"><a href="#Parallel-Old-收集器" class="headerlink" title="Parallel Old 收集器"></a>Parallel Old 收集器</h5><h5 id="CMS-收集器"><a href="#CMS-收集器" class="headerlink" title="CMS 收集器"></a>CMS 收集器</h5><h5 id="G1-收集器"><a href="#G1-收集器" class="headerlink" title="G1 收集器"></a>G1 收集器</h5><h5 id="垃圾收集器参数总结"><a href="#垃圾收集器参数总结" class="headerlink" title="垃圾收集器参数总结"></a>垃圾收集器参数总结</h5><h3 id="内存分配与回收策略"><a href="#内存分配与回收策略" class="headerlink" title="内存分配与回收策略"></a>内存分配与回收策略</h3><h5 id="对象优先在Edun分配"><a href="#对象优先在Edun分配" class="headerlink" title="对象优先在Edun分配"></a>对象优先在Edun分配</h5><h5 id="大对象直接进入老年代"><a href="#大对象直接进入老年代" class="headerlink" title="大对象直接进入老年代"></a>大对象直接进入老年代</h5><h5 id="长期存活的对象将进入老年代"><a href="#长期存活的对象将进入老年代" class="headerlink" title="长期存活的对象将进入老年代"></a>长期存活的对象将进入老年代</h5><h5 id="动态对象年龄判定"><a href="#动态对象年龄判定" class="headerlink" title="动态对象年龄判定"></a>动态对象年龄判定</h5><h5 id="空间分配担保"><a href="#空间分配担保" class="headerlink" title="空间分配担保"></a>空间分配担保</h5><hr>
+<h1 id="虚拟机性能监控与故障处理工具"><a href="#虚拟机性能监控与故障处理工具" class="headerlink" title="虚拟机性能监控与故障处理工具"></a><center>虚拟机性能监控与故障处理工具</center></h1><h3 id="JDK的命令行工具"><a href="#JDK的命令行工具" class="headerlink" title="JDK的命令行工具"></a>JDK的命令行工具</h3><h5 id="jps：虚拟机进程状况工具"><a href="#jps：虚拟机进程状况工具" class="headerlink" title="jps：虚拟机进程状况工具"></a>jps：虚拟机进程状况工具</h5><h5 id="jstat：虚拟机统计信息监视工具"><a href="#jstat：虚拟机统计信息监视工具" class="headerlink" title="jstat：虚拟机统计信息监视工具"></a>jstat：虚拟机统计信息监视工具</h5><h5 id="jinfo：Java配置信息工具"><a href="#jinfo：Java配置信息工具" class="headerlink" title="jinfo：Java配置信息工具"></a>jinfo：Java配置信息工具</h5><h5 id="jmap：Java内存映像工具"><a href="#jmap：Java内存映像工具" class="headerlink" title="jmap：Java内存映像工具"></a>jmap：Java内存映像工具</h5><h5 id="jhat：虚拟机堆转储快照分析工具"><a href="#jhat：虚拟机堆转储快照分析工具" class="headerlink" title="jhat：虚拟机堆转储快照分析工具"></a>jhat：虚拟机堆转储快照分析工具</h5><h5 id="jstack：Java堆栈跟踪工具"><a href="#jstack：Java堆栈跟踪工具" class="headerlink" title="jstack：Java堆栈跟踪工具"></a>jstack：Java堆栈跟踪工具</h5><h3 id="JDK的可视化工具"><a href="#JDK的可视化工具" class="headerlink" title="JDK的可视化工具"></a>JDK的可视化工具</h3><h5 id="Jconsole：Java监视与管理控制台"><a href="#Jconsole：Java监视与管理控制台" class="headerlink" title="Jconsole：Java监视与管理控制台"></a>Jconsole：Java监视与管理控制台</h5><h5 id="VisualVM：多合一故障处理工具"><a href="#VisualVM：多合一故障处理工具" class="headerlink" title="VisualVM：多合一故障处理工具"></a>VisualVM：多合一故障处理工具</h5><hr>
+<h1 id="调优案例分析与实战"><a href="#调优案例分析与实战" class="headerlink" title="调优案例分析与实战"></a><center>调优案例分析与实战</center></h1><h3 id="案例分析"><a href="#案例分析" class="headerlink" title="案例分析"></a>案例分析</h3><h5 id="高性能硬件上的程序部署策略"><a href="#高性能硬件上的程序部署策略" class="headerlink" title="高性能硬件上的程序部署策略"></a>高性能硬件上的程序部署策略</h5><h5 id="集群间同步导致的内存溢出"><a href="#集群间同步导致的内存溢出" class="headerlink" title="集群间同步导致的内存溢出"></a>集群间同步导致的内存溢出</h5><h5 id="堆外内存导致的溢出错误"><a href="#堆外内存导致的溢出错误" class="headerlink" title="堆外内存导致的溢出错误"></a>堆外内存导致的溢出错误</h5><h5 id="外部命令导致系统缓慢"><a href="#外部命令导致系统缓慢" class="headerlink" title="外部命令导致系统缓慢"></a>外部命令导致系统缓慢</h5><h5 id="服务器JVM进程崩溃"><a href="#服务器JVM进程崩溃" class="headerlink" title="服务器JVM进程崩溃"></a>服务器JVM进程崩溃</h5><h3 id="实战：Eclipse运行速度调优"><a href="#实战：Eclipse运行速度调优" class="headerlink" title="实战：Eclipse运行速度调优"></a>实战：Eclipse运行速度调优</h3><h5 id="调优前的程序运行状态"><a href="#调优前的程序运行状态" class="headerlink" title="调优前的程序运行状态"></a>调优前的程序运行状态</h5><h5 id="升级JDK1-6的性能变化及兼容问题"><a href="#升级JDK1-6的性能变化及兼容问题" class="headerlink" title="升级JDK1.6的性能变化及兼容问题"></a>升级JDK1.6的性能变化及兼容问题</h5><h5 id="编译时间和类加载时间的优化"><a href="#编译时间和类加载时间的优化" class="headerlink" title="编译时间和类加载时间的优化"></a>编译时间和类加载时间的优化</h5><h5 id="调整内存设置控制垃圾收集频率"><a href="#调整内存设置控制垃圾收集频率" class="headerlink" title="调整内存设置控制垃圾收集频率"></a>调整内存设置控制垃圾收集频率</h5><h5 id="选择收集器降低延迟"><a href="#选择收集器降低延迟" class="headerlink" title="选择收集器降低延迟"></a>选择收集器降低延迟</h5><hr>
+<h1 id="类文件结构"><a href="#类文件结构" class="headerlink" title="类文件结构"></a><center>类文件结构</center></h1><h3 id="无关性的基石"><a href="#无关性的基石" class="headerlink" title="无关性的基石"></a>无关性的基石</h3><h3 id="Class类文件的结构"><a href="#Class类文件的结构" class="headerlink" title="Class类文件的结构"></a>Class类文件的结构</h3><h5 id="魔数与Class文件的版本"><a href="#魔数与Class文件的版本" class="headerlink" title="魔数与Class文件的版本"></a>魔数与Class文件的版本</h5><h5 id="常量池"><a href="#常量池" class="headerlink" title="常量池"></a>常量池</h5><h5 id="访问标志"><a href="#访问标志" class="headerlink" title="访问标志"></a>访问标志</h5><h5 id="类索引、父类索引与接口索引集合"><a href="#类索引、父类索引与接口索引集合" class="headerlink" title="类索引、父类索引与接口索引集合"></a>类索引、父类索引与接口索引集合</h5><h5 id="字段表集合"><a href="#字段表集合" class="headerlink" title="字段表集合"></a>字段表集合</h5><h5 id="方法表集合"><a href="#方法表集合" class="headerlink" title="方法表集合"></a>方法表集合</h5><h5 id="属性表集合"><a href="#属性表集合" class="headerlink" title="属性表集合"></a>属性表集合</h5><h3 id="Class文件结构的发展"><a href="#Class文件结构的发展" class="headerlink" title="Class文件结构的发展"></a>Class文件结构的发展</h3><hr>
+<h1 id="虚拟机类加载机制"><a href="#虚拟机类加载机制" class="headerlink" title="虚拟机类加载机制"></a><center>虚拟机类加载机制</center></h1><h3 id="类加载的时机"><a href="#类加载的时机" class="headerlink" title="类加载的时机"></a>类加载的时机</h3><h3 id="类加载的过程"><a href="#类加载的过程" class="headerlink" title="类加载的过程"></a>类加载的过程</h3><h5 id="加载"><a href="#加载" class="headerlink" title="加载"></a>加载</h5><h5 id="验证"><a href="#验证" class="headerlink" title="验证"></a>验证</h5><h5 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h5><h5 id="解析"><a href="#解析" class="headerlink" title="解析"></a>解析</h5><h5 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h5><h5 id="使用与缷载"><a href="#使用与缷载" class="headerlink" title="使用与缷载"></a>使用与缷载</h5><h3 id="类加载器"><a href="#类加载器" class="headerlink" title="类加载器"></a>类加载器</h3><h5 id="类与类加载器"><a href="#类与类加载器" class="headerlink" title="类与类加载器"></a>类与类加载器</h5><h5 id="双亲委派模型"><a href="#双亲委派模型" class="headerlink" title="双亲委派模型"></a>双亲委派模型</h5><h5 id="破坏双亲委派模型"><a href="#破坏双亲委派模型" class="headerlink" title="破坏双亲委派模型"></a>破坏双亲委派模型</h5><hr>
+<h1 id="虚拟机字节码执行引擎"><a href="#虚拟机字节码执行引擎" class="headerlink" title="虚拟机字节码执行引擎"></a><center>虚拟机字节码执行引擎</center></h1><h3 id="运行时栈帧结构"><a href="#运行时栈帧结构" class="headerlink" title="运行时栈帧结构"></a>运行时栈帧结构</h3><h5 id="局部变量表"><a href="#局部变量表" class="headerlink" title="局部变量表"></a>局部变量表</h5><h5 id="操作数栈"><a href="#操作数栈" class="headerlink" title="操作数栈"></a>操作数栈</h5><h5 id="运态连接"><a href="#运态连接" class="headerlink" title="运态连接"></a>运态连接</h5><h5 id="方法返回地址"><a href="#方法返回地址" class="headerlink" title="方法返回地址"></a>方法返回地址</h5><h5 id="附加信息"><a href="#附加信息" class="headerlink" title="附加信息"></a>附加信息</h5><h3 id="方法调用"><a href="#方法调用" class="headerlink" title="方法调用"></a>方法调用</h3><h5 id="解析-1"><a href="#解析-1" class="headerlink" title="解析"></a>解析</h5><h5 id="分派"><a href="#分派" class="headerlink" title="分派"></a>分派</h5><h3 id="基于栈的字节码解释执行引擎"><a href="#基于栈的字节码解释执行引擎" class="headerlink" title="基于栈的字节码解释执行引擎"></a>基于栈的字节码解释执行引擎</h3><h5 id="解释执行"><a href="#解释执行" class="headerlink" title="解释执行"></a>解释执行</h5><h5 id="基于栈的指令集与基于寄存器的指令集"><a href="#基于栈的指令集与基于寄存器的指令集" class="headerlink" title="基于栈的指令集与基于寄存器的指令集"></a>基于栈的指令集与基于寄存器的指令集</h5><h5 id="基于栈的解释器执行过程"><a href="#基于栈的解释器执行过程" class="headerlink" title="基于栈的解释器执行过程"></a>基于栈的解释器执行过程</h5><hr>
+<h1 id="类加载及执行子系统的案例与实战"><a href="#类加载及执行子系统的案例与实战" class="headerlink" title="类加载及执行子系统的案例与实战"></a><center>类加载及执行子系统的案例与实战</center></h1><h3 id="案例分析-1"><a href="#案例分析-1" class="headerlink" title="案例分析"></a>案例分析</h3><h5 id="Tomcat：正统的类加载器架构"><a href="#Tomcat：正统的类加载器架构" class="headerlink" title="Tomcat：正统的类加载器架构"></a>Tomcat：正统的类加载器架构</h5><h5 id="OSGi：灵活的类加载器架构"><a href="#OSGi：灵活的类加载器架构" class="headerlink" title="OSGi：灵活的类加载器架构"></a>OSGi：灵活的类加载器架构</h5><h5 id="字节码生成技术与动态代理的实现"><a href="#字节码生成技术与动态代理的实现" class="headerlink" title="字节码生成技术与动态代理的实现"></a>字节码生成技术与动态代理的实现</h5><h5 id="Retrotranslator：跨越JDK版本"><a href="#Retrotranslator：跨越JDK版本" class="headerlink" title="Retrotranslator：跨越JDK版本"></a>Retrotranslator：跨越JDK版本</h5><h3 id="实战：自己动手实现远程执行功能"><a href="#实战：自己动手实现远程执行功能" class="headerlink" title="实战：自己动手实现远程执行功能"></a>实战：自己动手实现远程执行功能</h3><h5 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h5><h5 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h5><h5 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h5><h5 id="验证-1"><a href="#验证-1" class="headerlink" title="验证"></a>验证</h5><hr>
+<h1 id="早期（编译期）优化"><a href="#早期（编译期）优化" class="headerlink" title="早期（编译期）优化"></a><center>早期（编译期）优化</center></h1><h3 id="Javac-编译器"><a href="#Javac-编译器" class="headerlink" title="Javac 编译器"></a>Javac 编译器</h3><h5 id="Javac-的源码与调试"><a href="#Javac-的源码与调试" class="headerlink" title="Javac 的源码与调试"></a>Javac 的源码与调试</h5><h5 id="解析与填充符号表"><a href="#解析与填充符号表" class="headerlink" title="解析与填充符号表"></a>解析与填充符号表</h5><h5 id="注解处理器"><a href="#注解处理器" class="headerlink" title="注解处理器"></a>注解处理器</h5><h5 id="语义分析与字节码生成"><a href="#语义分析与字节码生成" class="headerlink" title="语义分析与字节码生成"></a>语义分析与字节码生成</h5><h3 id="Java-语法糖的味道"><a href="#Java-语法糖的味道" class="headerlink" title="Java 语法糖的味道"></a>Java 语法糖的味道</h3><h5 id="泛型与类型擦除"><a href="#泛型与类型擦除" class="headerlink" title="泛型与类型擦除"></a>泛型与类型擦除</h5><h5 id="自动装箱、拆箱与遍历循环"><a href="#自动装箱、拆箱与遍历循环" class="headerlink" title="自动装箱、拆箱与遍历循环"></a>自动装箱、拆箱与遍历循环</h5><h5 id="条件编译"><a href="#条件编译" class="headerlink" title="条件编译"></a>条件编译</h5><h3 id="实战：插入式注解处理器"><a href="#实战：插入式注解处理器" class="headerlink" title="实战：插入式注解处理器"></a>实战：插入式注解处理器</h3><h5 id="实战目标"><a href="#实战目标" class="headerlink" title="实战目标"></a>实战目标</h5><h5 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h5><h5 id="运行与测试"><a href="#运行与测试" class="headerlink" title="运行与测试"></a>运行与测试</h5><h5 id="其他应用案例"><a href="#其他应用案例" class="headerlink" title="其他应用案例"></a>其他应用案例</h5><hr>
+<h1 id="晚期（运行期）优化"><a href="#晚期（运行期）优化" class="headerlink" title="晚期（运行期）优化"></a><center>晚期（运行期）优化</center></h1><h3 id="HotSpot-虚拟机内的即时编译器"><a href="#HotSpot-虚拟机内的即时编译器" class="headerlink" title="HotSpot 虚拟机内的即时编译器"></a>HotSpot 虚拟机内的即时编译器</h3><h5 id="解释器与编译器"><a href="#解释器与编译器" class="headerlink" title="解释器与编译器"></a>解释器与编译器</h5><h5 id="编译对象与解发条件"><a href="#编译对象与解发条件" class="headerlink" title="编译对象与解发条件"></a>编译对象与解发条件</h5><h5 id="编译过程"><a href="#编译过程" class="headerlink" title="编译过程"></a>编译过程</h5><h5 id="查看与分析即时编译结果"><a href="#查看与分析即时编译结果" class="headerlink" title="查看与分析即时编译结果"></a>查看与分析即时编译结果</h5><h3 id="编译优化技术"><a href="#编译优化技术" class="headerlink" title="编译优化技术"></a>编译优化技术</h3><h5 id="优化技术概览"><a href="#优化技术概览" class="headerlink" title="优化技术概览"></a>优化技术概览</h5><h5 id="公共子表达式消除"><a href="#公共子表达式消除" class="headerlink" title="公共子表达式消除"></a>公共子表达式消除</h5><h5 id="数组边界检查消除"><a href="#数组边界检查消除" class="headerlink" title="数组边界检查消除"></a>数组边界检查消除</h5><h5 id="方法内联"><a href="#方法内联" class="headerlink" title="方法内联"></a>方法内联</h5><h5 id="逃逸分析"><a href="#逃逸分析" class="headerlink" title="逃逸分析"></a>逃逸分析</h5><h3 id="Java与C-C-的编译器对比"><a href="#Java与C-C-的编译器对比" class="headerlink" title="Java与C/C++的编译器对比"></a>Java与C/C++的编译器对比</h3><hr>
+<h1 id="Java内存模型与线程"><a href="#Java内存模型与线程" class="headerlink" title="Java内存模型与线程"></a><center>Java内存模型与线程</center></h1><h3 id="硬件的效率与一致性"><a href="#硬件的效率与一致性" class="headerlink" title="硬件的效率与一致性"></a>硬件的效率与一致性</h3><h3 id="Java内存模型"><a href="#Java内存模型" class="headerlink" title="Java内存模型"></a>Java内存模型</h3><h5 id="主内存与工作内存"><a href="#主内存与工作内存" class="headerlink" title="主内存与工作内存"></a>主内存与工作内存</h5><h5 id="内存间交互操作"><a href="#内存间交互操作" class="headerlink" title="内存间交互操作"></a>内存间交互操作</h5><h5 id="对于-volatile-型变量的特殊规则"><a href="#对于-volatile-型变量的特殊规则" class="headerlink" title="对于 volatile 型变量的特殊规则"></a>对于 volatile 型变量的特殊规则</h5><h5 id="对于-long-和-double-型变量的特殊规则"><a href="#对于-long-和-double-型变量的特殊规则" class="headerlink" title="对于 long 和 double 型变量的特殊规则"></a>对于 long 和 double 型变量的特殊规则</h5><h5 id="原子性、可见性与有序性"><a href="#原子性、可见性与有序性" class="headerlink" title="原子性、可见性与有序性"></a>原子性、可见性与有序性</h5><h5 id="先行发生原则"><a href="#先行发生原则" class="headerlink" title="先行发生原则"></a>先行发生原则</h5><h3 id="Java与线程"><a href="#Java与线程" class="headerlink" title="Java与线程"></a>Java与线程</h3><h5 id="线程的实现"><a href="#线程的实现" class="headerlink" title="线程的实现"></a>线程的实现</h5><h5 id="Java线程调度"><a href="#Java线程调度" class="headerlink" title="Java线程调度"></a>Java线程调度</h5><h5 id="状态转换"><a href="#状态转换" class="headerlink" title="状态转换"></a>状态转换</h5><hr>
+<h1 id="线程安全与锁优化"><a href="#线程安全与锁优化" class="headerlink" title="线程安全与锁优化"></a><center>线程安全与锁优化</center></h1><h3 id="线程安全"><a href="#线程安全" class="headerlink" title="线程安全"></a>线程安全</h3><h5 id="Java语言中的线程安全"><a href="#Java语言中的线程安全" class="headerlink" title="Java语言中的线程安全"></a>Java语言中的线程安全</h5><h5 id="线程安全的实现方法"><a href="#线程安全的实现方法" class="headerlink" title="线程安全的实现方法"></a>线程安全的实现方法</h5><h3 id="锁优化"><a href="#锁优化" class="headerlink" title="锁优化"></a>锁优化</h3><h5 id="自旋锁与自适应自旋"><a href="#自旋锁与自适应自旋" class="headerlink" title="自旋锁与自适应自旋"></a>自旋锁与自适应自旋</h5><h5 id="锁消除"><a href="#锁消除" class="headerlink" title="锁消除"></a>锁消除</h5><h5 id="锁粗化"><a href="#锁粗化" class="headerlink" title="锁粗化"></a>锁粗化</h5><h5 id="轻量级锁"><a href="#轻量级锁" class="headerlink" title="轻量级锁"></a>轻量级锁</h5><h5 id="偏向锁"><a href="#偏向锁" class="headerlink" title="偏向锁"></a>偏向锁</h5>
+
+                
+            </div>
+
+            <!-- Comments -->
+            
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    
+
+
+                </div>
+            
+        </div>
+    </div>
+</article>
+
+    <!-- Footer -->
+    <hr />
+
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+
+                    
+
+                    
+                        <li>
+                            <a href="https://github.com/mamian" target="_blank">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                    
+
+                    
+
+                    
+
+                    
+                </ul>
+                <p class="copyright text-muted">© 2016  <a href="http://www.mamian.net/" target="_blank">mamian</a>  All Rights Reserved</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+    <!-- After footer scripts -->
+    
+<!-- jQuery -->
+<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+
+<!-- Bootstrap -->
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+<!-- Gallery -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.js" type="text/javascript" charset="utf-8"></script>
+
+<!-- Disqus Comments -->
+
+
+
+</body>
+
+</html>
