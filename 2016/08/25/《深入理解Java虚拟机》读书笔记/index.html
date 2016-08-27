@@ -221,9 +221,161 @@ Java内存区域与内存溢出异常运行时数据区域程序计数器Java虚
 <h1 id="垃圾收集器与内存分配策略"><a href="#垃圾收集器与内存分配策略" class="headerlink" title="垃圾收集器与内存分配策略"></a><center>垃圾收集器与内存分配策略</center></h1><h3 id="对象已死？"><a href="#对象已死？" class="headerlink" title="对象已死？"></a>对象已死？</h3><h5 id="引用计数算法"><a href="#引用计数算法" class="headerlink" title="引用计数算法"></a>引用计数算法</h5><h5 id="根搜索算法"><a href="#根搜索算法" class="headerlink" title="根搜索算法"></a>根搜索算法</h5><h5 id="再谈引用"><a href="#再谈引用" class="headerlink" title="再谈引用"></a>再谈引用</h5><h5 id="生存还是死亡？"><a href="#生存还是死亡？" class="headerlink" title="生存还是死亡？"></a>生存还是死亡？</h5><h5 id="回收方法区"><a href="#回收方法区" class="headerlink" title="回收方法区"></a>回收方法区</h5><h3 id="垃圾收集算法"><a href="#垃圾收集算法" class="headerlink" title="垃圾收集算法"></a>垃圾收集算法</h3><h5 id="标记-清除算法"><a href="#标记-清除算法" class="headerlink" title="标记-清除算法"></a>标记-清除算法</h5><h5 id="复制算法"><a href="#复制算法" class="headerlink" title="复制算法"></a>复制算法</h5><h5 id="标记-整理算法"><a href="#标记-整理算法" class="headerlink" title="标记-整理算法"></a>标记-整理算法</h5><h5 id="分代收集算法"><a href="#分代收集算法" class="headerlink" title="分代收集算法"></a>分代收集算法</h5><h3 id="垃圾收集器"><a href="#垃圾收集器" class="headerlink" title="垃圾收集器"></a>垃圾收集器</h3><h5 id="Serial-收集器"><a href="#Serial-收集器" class="headerlink" title="Serial 收集器"></a>Serial 收集器</h5><h5 id="ParNew-收集器"><a href="#ParNew-收集器" class="headerlink" title="ParNew 收集器"></a>ParNew 收集器</h5><h5 id="Parallel-Scavenge-收集器"><a href="#Parallel-Scavenge-收集器" class="headerlink" title="Parallel Scavenge 收集器"></a>Parallel Scavenge 收集器</h5><h5 id="Serial-Old-收集器"><a href="#Serial-Old-收集器" class="headerlink" title="Serial Old 收集器"></a>Serial Old 收集器</h5><h5 id="Parallel-Old-收集器"><a href="#Parallel-Old-收集器" class="headerlink" title="Parallel Old 收集器"></a>Parallel Old 收集器</h5><h5 id="CMS-收集器"><a href="#CMS-收集器" class="headerlink" title="CMS 收集器"></a>CMS 收集器</h5><h5 id="G1-收集器"><a href="#G1-收集器" class="headerlink" title="G1 收集器"></a>G1 收集器</h5><h5 id="垃圾收集器参数总结"><a href="#垃圾收集器参数总结" class="headerlink" title="垃圾收集器参数总结"></a>垃圾收集器参数总结</h5><h3 id="内存分配与回收策略"><a href="#内存分配与回收策略" class="headerlink" title="内存分配与回收策略"></a>内存分配与回收策略</h3><h5 id="对象优先在Edun分配"><a href="#对象优先在Edun分配" class="headerlink" title="对象优先在Edun分配"></a>对象优先在Edun分配</h5><h5 id="大对象直接进入老年代"><a href="#大对象直接进入老年代" class="headerlink" title="大对象直接进入老年代"></a>大对象直接进入老年代</h5><h5 id="长期存活的对象将进入老年代"><a href="#长期存活的对象将进入老年代" class="headerlink" title="长期存活的对象将进入老年代"></a>长期存活的对象将进入老年代</h5><h5 id="动态对象年龄判定"><a href="#动态对象年龄判定" class="headerlink" title="动态对象年龄判定"></a>动态对象年龄判定</h5><h5 id="空间分配担保"><a href="#空间分配担保" class="headerlink" title="空间分配担保"></a>空间分配担保</h5><hr>
 <h1 id="虚拟机性能监控与故障处理工具"><a href="#虚拟机性能监控与故障处理工具" class="headerlink" title="虚拟机性能监控与故障处理工具"></a><center>虚拟机性能监控与故障处理工具</center></h1><h3 id="JDK的命令行工具"><a href="#JDK的命令行工具" class="headerlink" title="JDK的命令行工具"></a>JDK的命令行工具</h3><h5 id="jps：虚拟机进程状况工具"><a href="#jps：虚拟机进程状况工具" class="headerlink" title="jps：虚拟机进程状况工具"></a>jps：虚拟机进程状况工具</h5><h5 id="jstat：虚拟机统计信息监视工具"><a href="#jstat：虚拟机统计信息监视工具" class="headerlink" title="jstat：虚拟机统计信息监视工具"></a>jstat：虚拟机统计信息监视工具</h5><h5 id="jinfo：Java配置信息工具"><a href="#jinfo：Java配置信息工具" class="headerlink" title="jinfo：Java配置信息工具"></a>jinfo：Java配置信息工具</h5><h5 id="jmap：Java内存映像工具"><a href="#jmap：Java内存映像工具" class="headerlink" title="jmap：Java内存映像工具"></a>jmap：Java内存映像工具</h5><h5 id="jhat：虚拟机堆转储快照分析工具"><a href="#jhat：虚拟机堆转储快照分析工具" class="headerlink" title="jhat：虚拟机堆转储快照分析工具"></a>jhat：虚拟机堆转储快照分析工具</h5><h5 id="jstack：Java堆栈跟踪工具"><a href="#jstack：Java堆栈跟踪工具" class="headerlink" title="jstack：Java堆栈跟踪工具"></a>jstack：Java堆栈跟踪工具</h5><h3 id="JDK的可视化工具"><a href="#JDK的可视化工具" class="headerlink" title="JDK的可视化工具"></a>JDK的可视化工具</h3><h5 id="Jconsole：Java监视与管理控制台"><a href="#Jconsole：Java监视与管理控制台" class="headerlink" title="Jconsole：Java监视与管理控制台"></a>Jconsole：Java监视与管理控制台</h5><h5 id="VisualVM：多合一故障处理工具"><a href="#VisualVM：多合一故障处理工具" class="headerlink" title="VisualVM：多合一故障处理工具"></a>VisualVM：多合一故障处理工具</h5><hr>
 <h1 id="调优案例分析与实战"><a href="#调优案例分析与实战" class="headerlink" title="调优案例分析与实战"></a><center>调优案例分析与实战</center></h1><h3 id="案例分析"><a href="#案例分析" class="headerlink" title="案例分析"></a>案例分析</h3><h5 id="高性能硬件上的程序部署策略"><a href="#高性能硬件上的程序部署策略" class="headerlink" title="高性能硬件上的程序部署策略"></a>高性能硬件上的程序部署策略</h5><h5 id="集群间同步导致的内存溢出"><a href="#集群间同步导致的内存溢出" class="headerlink" title="集群间同步导致的内存溢出"></a>集群间同步导致的内存溢出</h5><h5 id="堆外内存导致的溢出错误"><a href="#堆外内存导致的溢出错误" class="headerlink" title="堆外内存导致的溢出错误"></a>堆外内存导致的溢出错误</h5><h5 id="外部命令导致系统缓慢"><a href="#外部命令导致系统缓慢" class="headerlink" title="外部命令导致系统缓慢"></a>外部命令导致系统缓慢</h5><h5 id="服务器JVM进程崩溃"><a href="#服务器JVM进程崩溃" class="headerlink" title="服务器JVM进程崩溃"></a>服务器JVM进程崩溃</h5><h3 id="实战：Eclipse运行速度调优"><a href="#实战：Eclipse运行速度调优" class="headerlink" title="实战：Eclipse运行速度调优"></a>实战：Eclipse运行速度调优</h3><h5 id="调优前的程序运行状态"><a href="#调优前的程序运行状态" class="headerlink" title="调优前的程序运行状态"></a>调优前的程序运行状态</h5><h5 id="升级JDK1-6的性能变化及兼容问题"><a href="#升级JDK1-6的性能变化及兼容问题" class="headerlink" title="升级JDK1.6的性能变化及兼容问题"></a>升级JDK1.6的性能变化及兼容问题</h5><h5 id="编译时间和类加载时间的优化"><a href="#编译时间和类加载时间的优化" class="headerlink" title="编译时间和类加载时间的优化"></a>编译时间和类加载时间的优化</h5><h5 id="调整内存设置控制垃圾收集频率"><a href="#调整内存设置控制垃圾收集频率" class="headerlink" title="调整内存设置控制垃圾收集频率"></a>调整内存设置控制垃圾收集频率</h5><h5 id="选择收集器降低延迟"><a href="#选择收集器降低延迟" class="headerlink" title="选择收集器降低延迟"></a>选择收集器降低延迟</h5><hr>
-<h1 id="类文件结构"><a href="#类文件结构" class="headerlink" title="类文件结构"></a><center>类文件结构</center></h1><h3 id="无关性的基石"><a href="#无关性的基石" class="headerlink" title="无关性的基石"></a>无关性的基石</h3><h3 id="Class类文件的结构"><a href="#Class类文件的结构" class="headerlink" title="Class类文件的结构"></a>Class类文件的结构</h3><h5 id="魔数与Class文件的版本"><a href="#魔数与Class文件的版本" class="headerlink" title="魔数与Class文件的版本"></a>魔数与Class文件的版本</h5><h5 id="常量池"><a href="#常量池" class="headerlink" title="常量池"></a>常量池</h5><h5 id="访问标志"><a href="#访问标志" class="headerlink" title="访问标志"></a>访问标志</h5><h5 id="类索引、父类索引与接口索引集合"><a href="#类索引、父类索引与接口索引集合" class="headerlink" title="类索引、父类索引与接口索引集合"></a>类索引、父类索引与接口索引集合</h5><h5 id="字段表集合"><a href="#字段表集合" class="headerlink" title="字段表集合"></a>字段表集合</h5><h5 id="方法表集合"><a href="#方法表集合" class="headerlink" title="方法表集合"></a>方法表集合</h5><h5 id="属性表集合"><a href="#属性表集合" class="headerlink" title="属性表集合"></a>属性表集合</h5><h3 id="Class文件结构的发展"><a href="#Class文件结构的发展" class="headerlink" title="Class文件结构的发展"></a>Class文件结构的发展</h3><hr>
-<h1 id="虚拟机类加载机制"><a href="#虚拟机类加载机制" class="headerlink" title="虚拟机类加载机制"></a><center>虚拟机类加载机制</center></h1><h3 id="类加载的时机"><a href="#类加载的时机" class="headerlink" title="类加载的时机"></a>类加载的时机</h3><h3 id="类加载的过程"><a href="#类加载的过程" class="headerlink" title="类加载的过程"></a>类加载的过程</h3><h5 id="加载"><a href="#加载" class="headerlink" title="加载"></a>加载</h5><h5 id="验证"><a href="#验证" class="headerlink" title="验证"></a>验证</h5><h5 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h5><h5 id="解析"><a href="#解析" class="headerlink" title="解析"></a>解析</h5><h5 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h5><h5 id="使用与缷载"><a href="#使用与缷载" class="headerlink" title="使用与缷载"></a>使用与缷载</h5><h3 id="类加载器"><a href="#类加载器" class="headerlink" title="类加载器"></a>类加载器</h3><h5 id="类与类加载器"><a href="#类与类加载器" class="headerlink" title="类与类加载器"></a>类与类加载器</h5><h5 id="双亲委派模型"><a href="#双亲委派模型" class="headerlink" title="双亲委派模型"></a>双亲委派模型</h5><h5 id="破坏双亲委派模型"><a href="#破坏双亲委派模型" class="headerlink" title="破坏双亲委派模型"></a>破坏双亲委派模型</h5><hr>
-<h1 id="虚拟机字节码执行引擎"><a href="#虚拟机字节码执行引擎" class="headerlink" title="虚拟机字节码执行引擎"></a><center>虚拟机字节码执行引擎</center></h1><h3 id="运行时栈帧结构"><a href="#运行时栈帧结构" class="headerlink" title="运行时栈帧结构"></a>运行时栈帧结构</h3><h5 id="局部变量表"><a href="#局部变量表" class="headerlink" title="局部变量表"></a>局部变量表</h5><h5 id="操作数栈"><a href="#操作数栈" class="headerlink" title="操作数栈"></a>操作数栈</h5><h5 id="运态连接"><a href="#运态连接" class="headerlink" title="运态连接"></a>运态连接</h5><h5 id="方法返回地址"><a href="#方法返回地址" class="headerlink" title="方法返回地址"></a>方法返回地址</h5><h5 id="附加信息"><a href="#附加信息" class="headerlink" title="附加信息"></a>附加信息</h5><h3 id="方法调用"><a href="#方法调用" class="headerlink" title="方法调用"></a>方法调用</h3><h5 id="解析-1"><a href="#解析-1" class="headerlink" title="解析"></a>解析</h5><h5 id="分派"><a href="#分派" class="headerlink" title="分派"></a>分派</h5><h3 id="基于栈的字节码解释执行引擎"><a href="#基于栈的字节码解释执行引擎" class="headerlink" title="基于栈的字节码解释执行引擎"></a>基于栈的字节码解释执行引擎</h3><h5 id="解释执行"><a href="#解释执行" class="headerlink" title="解释执行"></a>解释执行</h5><h5 id="基于栈的指令集与基于寄存器的指令集"><a href="#基于栈的指令集与基于寄存器的指令集" class="headerlink" title="基于栈的指令集与基于寄存器的指令集"></a>基于栈的指令集与基于寄存器的指令集</h5><h5 id="基于栈的解释器执行过程"><a href="#基于栈的解释器执行过程" class="headerlink" title="基于栈的解释器执行过程"></a>基于栈的解释器执行过程</h5><hr>
+<h1 id="类文件结构"><a href="#类文件结构" class="headerlink" title="类文件结构"></a><center>类文件结构</center></h1><ul>
+<li>字节码命令所能提供的语义描述能力比Java语言本身更强大。因此Java无法有效支持的语言特性并不代表字节码本身无法支持。</li>
+</ul>
+<h3 id="Class类文件的结构"><a href="#Class类文件的结构" class="headerlink" title="Class类文件的结构"></a>Class类文件的结构</h3><ul>
+<li>Class文件是一组以 8bit 为基础单位的二进制流，各数据项目按序紧凑排列在Class文件中，中间无任何分隔符。</li>
+<li>Class文件格式中只存在2种数据类型：无符号数、表。<ul>
+<li>无符号数<ul>
+<li>u1、u2、u4、u8表示1、2、4、8字节的无符号数。</li>
+<li>基本数据类型，用来描述数字、索引引用、数量值或按UTF-8编码构成字符串值。</li>
+</ul>
+</li>
+<li>表<ul>
+<li>复合数据类型，由无符号数或其他表构成。</li>
+<li>整个Class文件本质上就是一张表。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>当需要描述同一类型但数量不定的多个数据时，经常会使用一个前置的容量计数器加若干个连续的数据项的形式。</li>
+</ul>
+<h5 id="魔数与Class文件的版本"><a href="#魔数与Class文件的版本" class="headerlink" title="魔数与Class文件的版本"></a>魔数与Class文件的版本</h5><h5 id="常量池"><a href="#常量池" class="headerlink" title="常量池"></a>常量池</h5><h5 id="访问标志"><a href="#访问标志" class="headerlink" title="访问标志"></a>访问标志</h5><h5 id="类索引、父类索引与接口索引集合"><a href="#类索引、父类索引与接口索引集合" class="headerlink" title="类索引、父类索引与接口索引集合"></a>类索引、父类索引与接口索引集合</h5><h5 id="字段表集合"><a href="#字段表集合" class="headerlink" title="字段表集合"></a>字段表集合</h5><h5 id="方法表集合"><a href="#方法表集合" class="headerlink" title="方法表集合"></a>方法表集合</h5><h5 id="属性表集合"><a href="#属性表集合" class="headerlink" title="属性表集合"></a>属性表集合</h5><h3 id="Class文件结构的发展"><a href="#Class文件结构的发展" class="headerlink" title="Class文件结构的发展"></a>Class文件结构的发展</h3><hr>
+<h1 id="虚拟机类加载机制"><a href="#虚拟机类加载机制" class="headerlink" title="虚拟机类加载机制"></a><center>虚拟机类加载机制</center></h1><ul>
+<li>类加载机制：JVM 将 Class 文件<code>加载</code>到内存，对数据进行<code>校验</code>、转换<code>解析</code>、<code>初始化</code>，形成可被 JVM 直接使用的 Java 类型。</li>
+<li>与在编译期进行连接工作的语言不同，Java 类型的加载和连接过程都是在程序<code>运行期</code>完成。如编写一个接口，可以等到运行时再指定其实际的实现。</li>
+</ul>
+<h3 id="类加载的时机"><a href="#类加载的时机" class="headerlink" title="类加载的时机"></a>类加载的时机</h3><ul>
+<li>类生命周期：<code>加载</code>、<code>验证</code>、<code>准备</code>、<code>解析</code>、<code>初始化</code>、<code>使用</code>、<code>缷载</code>。验证、准备、解析统称为<code>连接</code>过程。</li>
+<li><code>初始化</code>仅4种触发方式<ul>
+<li>遇到new、getstatic、putstatic、invokestatic字节码指令，若类没被初始化，则触发初始化。<ul>
+<li>使用 new 实例化对象</li>
+<li>读取或设置类的静态字段（被final修饰、在编译期把结果放入常量池的静态字段除外）</li>
+<li>调用类的静态方法。</li>
+</ul>
+</li>
+<li>使用java.lang.relect对类进行反射时，若类未初始化则先初始化。</li>
+<li>初始化类时，若其父类未初始化，则先初始化父类。</li>
+<li>jvm启动，用户需指定主类(包含 main() 方法)，虚拟机会先初始化这个主类。</li>
+</ul>
+</li>
+<li>子类 SubClass 使用父类 SuperClass 中的 static 字段，当执行 SubClass.staticField 时，仅触发父类的初始化。</li>
+<li>类中的 static 块，在初始化时执行。</li>
+</ul>
+<h3 id="类加载的过程"><a href="#类加载的过程" class="headerlink" title="类加载的过程"></a>类加载的过程</h3><h5 id="加载"><a href="#加载" class="headerlink" title="加载"></a>加载</h5><ul>
+<li>加载过程<ul>
+<li>通过类的全限定名获取定义此类的二进制字节流。<ul>
+<li>从zip包中读取，如jar、ear、war格式</li>
+<li>从网络中获取</li>
+<li>运行时生成，如java.lang.relect.Proxy</li>
+<li>由其他文件生成，如 jsp 应用</li>
+</ul>
+</li>
+<li>将字节流代表的静态存储结构转化为方法区的运行时数据结构。</li>
+<li>在Java堆中生成一个代表这个类的 java.lang.Class 对象，作为方法区这些数据的访问入口。</li>
+</ul>
+</li>
+<li>加载阶段既可使用系统类加载器，也可使用自定义类加载器，开发人员可自定义类加载器来控制字节流的获取方式。</li>
+</ul>
+<h5 id="验证"><a href="#验证" class="headerlink" title="验证"></a>验证</h5><ul>
+<li>确保 Class 文件的字节流中包含的信息符合当前虚拟机的要求，并且不会危害虚拟机自身安全。</li>
+<li>Java本身是相对安全的语言，但 Class 并不一定是由Java编译而来。若 Class 文件的语义中 访问数组边界外的数据、将一个对象转为其未实现的类型、跳转到并不存在的代码行，则不安全。需在验证阶段验证不会发生这些情况。</li>
+<li>验证过程<ul>
+<li>文件格式验证<ul>
+<li>保证字节流能正确解析并存储于方法区，格式上符合描述一个 Java 类型的要求。经过此阶段验证后，字节流才会进入内存的方法区中进行存储。后面3个验证阶段均基于方法区的存储结构进行。</li>
+<li>验证魔数是否正确、主次版本号能否被当前虚拟机处理、常量池中的常量是否有不被支持的常量类型。。。</li>
+</ul>
+</li>
+<li>元数据验证：保证符合 Java 语言规则<ul>
+<li>是否存在父类（除 Object，所有类都应有父类）</li>
+<li>父类是否继承了不允许被继承的类（被 final 修饰）</li>
+<li>若非抽象类，是否实现父类或接口的所有方法</li>
+<li>类中字段与方法是否与父类产生冲突（如覆盖父类 final 字段，方法参数相同返回值不同等不符合规则的方法重载）</li>
+</ul>
+</li>
+<li>字节码验证：数据流与控制流分析，对类的方法体进行校验，保证方法在运行时不会危害虚拟机安全。<ul>
+<li>操作数栈的数据类型与指令代码序列能配合工作：如操作数栈中为 int ，使用时却按 long 来加载入本地变量表中。</li>
+<li>保证跳转指令不会跳转到方法体以外的字节码指令上。</li>
+<li>保证方法体中的类型转换有效：如可把子类赋值给父类数据类型，但不能把父类对象赋值给子类数据类型。</li>
+</ul>
+</li>
+<li>符号引用验证<ul>
+<li>符号引用中通过字符串描述的全限定名是否能找到对应的类。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>验证阶段对 JVM 的类加载机制来说，很重要但非必需。若代码已反复使用，在实施阶段可使用 -Xverity:none 参数来关闭大部分类验证措施，缩短虚拟机类加载的时间。</li>
+</ul>
+<h5 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h5><ul>
+<li>为<code>类变量</code>分配内存并设置类变量初始值，这些内存都将在<code>方法区</code>中分配。这里的“初始值”通常指数据类型的0值。<ul>
+<li>public static int value = 123;<ul>
+<li>准备阶段将 value 赋值为0，初始化阶段 value 才赋值为123。</li>
+</ul>
+</li>
+<li>public static final int value = 123;<ul>
+<li>准备阶段将 value 赋值123。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>实例变量将在对象实例化时随着对象一起分配在 Java 堆中。</li>
+</ul>
+<h5 id="解析：常量池中的符号引用替换为直接引用"><a href="#解析：常量池中的符号引用替换为直接引用" class="headerlink" title="解析：常量池中的符号引用替换为直接引用"></a>解析：常量池中的符号引用替换为直接引用</h5><ul>
+<li>符号引用<ul>
+<li>以一组符号来描述引用目标，引用的目标并不一定已经加载到内存中。</li>
+</ul>
+</li>
+<li>直接引用<ul>
+<li>可以是直接指向目标的指针、相对偏移量或一个能间接定位到目标的句柄。直接引用与虚拟机实现的内存布局相关，同一符号引用在不同的虚拟机实例上翻译出的直接引用一般会不同。</li>
+<li>若有直接引用，那引用的目标必定已在内存中存在。</li>
+</ul>
+</li>
+<li>解析过程<ul>
+<li>类或接口的解析</li>
+<li>字段解析</li>
+<li>类方法解析</li>
+<li>接口方法解析</li>
+</ul>
+</li>
+</ul>
+<h5 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h5><ul>
+<li>初始化阶段才开始执行类中定义的 Java 代码，是执行类构造器<code>&lt;clinit&gt;()</code>方法的过程。</li>
+<li><clinit>()是编译器自动收集 static 变量赋值操作及 static 块中的语句合并产生的。</clinit></li>
+<li>与类构造函数（或者说实例构造器<init>()方法）不同，<clinit>()不需要显式地调用父类构造器，虚拟机会保证子类的<clinit>()方法执行前，父类的<clinit>()已执行完毕。</clinit></clinit></clinit></init></li>
+<li>虚拟机会保证一个类的<clinit>()方法在多线程环境中被正确地加锁和同步。</clinit></li>
+</ul>
+<h5 id="使用与缷载"><a href="#使用与缷载" class="headerlink" title="使用与缷载"></a>使用与缷载</h5><h3 id="类加载器"><a href="#类加载器" class="headerlink" title="类加载器"></a>类加载器</h3><ul>
+<li>通过类的全限定名来获取描述此类的二进制字节流。实现类的<code>加载</code>过程。</li>
+</ul>
+<h5 id="类与类加载器"><a href="#类与类加载器" class="headerlink" title="类与类加载器"></a>类与类加载器</h5><ul>
+<li>对任意一个类，均需由加载它的<code>类加载器和类本身</code>一同确定其在 Java 虚拟机中的唯一性。两个类来源于同一个Class，但类加载器不同，那这两个类也不相等。</li>
+</ul>
+<h5 id="双亲委派模型"><a href="#双亲委派模型" class="headerlink" title="双亲委派模型"></a>双亲委派模型</h5><ul>
+<li>类加载器类型<ul>
+<li>启动类加载器 <code>Bootstrap ClassLoader</code><ul>
+<li>加载<java_home>/lib中且是虚拟机识别的类库到虚拟机内存中。（名字不符合的类库即使放在lib中也不会被加载）</java_home></li>
+<li>无法被Java程序直接引用。</li>
+</ul>
+</li>
+<li>扩展类加载器 <code>Extension ClassLoader</code><ul>
+<li>加载<java_home>/lib/ext中的类库</java_home></li>
+<li>开发者可直接使用扩展类加载器</li>
+</ul>
+</li>
+<li>应用程序类加载器 <code>Application ClassLoader</code><ul>
+<li>加载用户类路径上所指定的类库</li>
+<li>若应用程序中没有自定义类加载器，则 Application ClassLoader 为默认类加载器。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>类加载器间的父子关系一般不会以继承（Inheritance）的关系来关现，而是通过组合（Composition）来复用父加载器的代码。</li>
+<li>如果一个类加载器收到加载请求，它首先委派给父类加载器去加载，父类加载器无法加载时才自己加载。</li>
+</ul>
+<h5 id="破坏双亲委派模型"><a href="#破坏双亲委派模型" class="headerlink" title="破坏双亲委派模型"></a>破坏双亲委派模型</h5><hr>
+<h1 id="虚拟机字节码执行引擎"><a href="#虚拟机字节码执行引擎" class="headerlink" title="虚拟机字节码执行引擎"></a><center>虚拟机字节码执行引擎</center></h1><h3 id="运行时栈帧结构"><a href="#运行时栈帧结构" class="headerlink" title="运行时栈帧结构"></a>运行时栈帧结构</h3><h5 id="局部变量表"><a href="#局部变量表" class="headerlink" title="局部变量表"></a>局部变量表</h5><h5 id="操作数栈"><a href="#操作数栈" class="headerlink" title="操作数栈"></a>操作数栈</h5><h5 id="运态连接"><a href="#运态连接" class="headerlink" title="运态连接"></a>运态连接</h5><h5 id="方法返回地址"><a href="#方法返回地址" class="headerlink" title="方法返回地址"></a>方法返回地址</h5><h5 id="附加信息"><a href="#附加信息" class="headerlink" title="附加信息"></a>附加信息</h5><h3 id="方法调用"><a href="#方法调用" class="headerlink" title="方法调用"></a>方法调用</h3><h5 id="解析"><a href="#解析" class="headerlink" title="解析"></a>解析</h5><h5 id="分派"><a href="#分派" class="headerlink" title="分派"></a>分派</h5><h3 id="基于栈的字节码解释执行引擎"><a href="#基于栈的字节码解释执行引擎" class="headerlink" title="基于栈的字节码解释执行引擎"></a>基于栈的字节码解释执行引擎</h3><h5 id="解释执行"><a href="#解释执行" class="headerlink" title="解释执行"></a>解释执行</h5><h5 id="基于栈的指令集与基于寄存器的指令集"><a href="#基于栈的指令集与基于寄存器的指令集" class="headerlink" title="基于栈的指令集与基于寄存器的指令集"></a>基于栈的指令集与基于寄存器的指令集</h5><h5 id="基于栈的解释器执行过程"><a href="#基于栈的解释器执行过程" class="headerlink" title="基于栈的解释器执行过程"></a>基于栈的解释器执行过程</h5><hr>
 <h1 id="类加载及执行子系统的案例与实战"><a href="#类加载及执行子系统的案例与实战" class="headerlink" title="类加载及执行子系统的案例与实战"></a><center>类加载及执行子系统的案例与实战</center></h1><h3 id="案例分析-1"><a href="#案例分析-1" class="headerlink" title="案例分析"></a>案例分析</h3><h5 id="Tomcat：正统的类加载器架构"><a href="#Tomcat：正统的类加载器架构" class="headerlink" title="Tomcat：正统的类加载器架构"></a>Tomcat：正统的类加载器架构</h5><h5 id="OSGi：灵活的类加载器架构"><a href="#OSGi：灵活的类加载器架构" class="headerlink" title="OSGi：灵活的类加载器架构"></a>OSGi：灵活的类加载器架构</h5><h5 id="字节码生成技术与动态代理的实现"><a href="#字节码生成技术与动态代理的实现" class="headerlink" title="字节码生成技术与动态代理的实现"></a>字节码生成技术与动态代理的实现</h5><h5 id="Retrotranslator：跨越JDK版本"><a href="#Retrotranslator：跨越JDK版本" class="headerlink" title="Retrotranslator：跨越JDK版本"></a>Retrotranslator：跨越JDK版本</h5><h3 id="实战：自己动手实现远程执行功能"><a href="#实战：自己动手实现远程执行功能" class="headerlink" title="实战：自己动手实现远程执行功能"></a>实战：自己动手实现远程执行功能</h3><h5 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h5><h5 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h5><h5 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h5><h5 id="验证-1"><a href="#验证-1" class="headerlink" title="验证"></a>验证</h5><hr>
 <h1 id="早期（编译期）优化"><a href="#早期（编译期）优化" class="headerlink" title="早期（编译期）优化"></a><center>早期（编译期）优化</center></h1><h3 id="Javac-编译器"><a href="#Javac-编译器" class="headerlink" title="Javac 编译器"></a>Javac 编译器</h3><h5 id="Javac-的源码与调试"><a href="#Javac-的源码与调试" class="headerlink" title="Javac 的源码与调试"></a>Javac 的源码与调试</h5><h5 id="解析与填充符号表"><a href="#解析与填充符号表" class="headerlink" title="解析与填充符号表"></a>解析与填充符号表</h5><h5 id="注解处理器"><a href="#注解处理器" class="headerlink" title="注解处理器"></a>注解处理器</h5><h5 id="语义分析与字节码生成"><a href="#语义分析与字节码生成" class="headerlink" title="语义分析与字节码生成"></a>语义分析与字节码生成</h5><h3 id="Java-语法糖的味道"><a href="#Java-语法糖的味道" class="headerlink" title="Java 语法糖的味道"></a>Java 语法糖的味道</h3><h5 id="泛型与类型擦除"><a href="#泛型与类型擦除" class="headerlink" title="泛型与类型擦除"></a>泛型与类型擦除</h5><h5 id="自动装箱、拆箱与遍历循环"><a href="#自动装箱、拆箱与遍历循环" class="headerlink" title="自动装箱、拆箱与遍历循环"></a>自动装箱、拆箱与遍历循环</h5><h5 id="条件编译"><a href="#条件编译" class="headerlink" title="条件编译"></a>条件编译</h5><h3 id="实战：插入式注解处理器"><a href="#实战：插入式注解处理器" class="headerlink" title="实战：插入式注解处理器"></a>实战：插入式注解处理器</h3><h5 id="实战目标"><a href="#实战目标" class="headerlink" title="实战目标"></a>实战目标</h5><h5 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h5><h5 id="运行与测试"><a href="#运行与测试" class="headerlink" title="运行与测试"></a>运行与测试</h5><h5 id="其他应用案例"><a href="#其他应用案例" class="headerlink" title="其他应用案例"></a>其他应用案例</h5><hr>
 <h1 id="晚期（运行期）优化"><a href="#晚期（运行期）优化" class="headerlink" title="晚期（运行期）优化"></a><center>晚期（运行期）优化</center></h1><h3 id="HotSpot-虚拟机内的即时编译器"><a href="#HotSpot-虚拟机内的即时编译器" class="headerlink" title="HotSpot 虚拟机内的即时编译器"></a>HotSpot 虚拟机内的即时编译器</h3><h5 id="解释器与编译器"><a href="#解释器与编译器" class="headerlink" title="解释器与编译器"></a>解释器与编译器</h5><h5 id="编译对象与解发条件"><a href="#编译对象与解发条件" class="headerlink" title="编译对象与解发条件"></a>编译对象与解发条件</h5><h5 id="编译过程"><a href="#编译过程" class="headerlink" title="编译过程"></a>编译过程</h5><h5 id="查看与分析即时编译结果"><a href="#查看与分析即时编译结果" class="headerlink" title="查看与分析即时编译结果"></a>查看与分析即时编译结果</h5><h3 id="编译优化技术"><a href="#编译优化技术" class="headerlink" title="编译优化技术"></a>编译优化技术</h3><h5 id="优化技术概览"><a href="#优化技术概览" class="headerlink" title="优化技术概览"></a>优化技术概览</h5><h5 id="公共子表达式消除"><a href="#公共子表达式消除" class="headerlink" title="公共子表达式消除"></a>公共子表达式消除</h5><h5 id="数组边界检查消除"><a href="#数组边界检查消除" class="headerlink" title="数组边界检查消除"></a>数组边界检查消除</h5><h5 id="方法内联"><a href="#方法内联" class="headerlink" title="方法内联"></a>方法内联</h5><h5 id="逃逸分析"><a href="#逃逸分析" class="headerlink" title="逃逸分析"></a>逃逸分析</h5><h3 id="Java与C-C-的编译器对比"><a href="#Java与C-C-的编译器对比" class="headerlink" title="Java与C/C++的编译器对比"></a>Java与C/C++的编译器对比</h3><hr>
@@ -491,15 +643,24 @@ Java内存区域与内存溢出异常运行时数据区域程序计数器Java虚
 <li>4Bits存储对象分代年龄</li>
 <li><p>2Bits存储锁标志位</p>
 <p>  HotSpot对象头 Mark Word</p>
-<p>  存储内容                       |标志位|状态<br>  ——————————|—–|——–<br>  对象哈希码、对象分代年龄          |  01 |未锁定<br>  指向锁记录的指针                 |  00 |轻量级锁定<br>  指向重量级锁的指针               |  10 |膨胀（重量级锁定）<br>  空，不需记录信息                 |  11 |GC标记<br>  偏向线程ID、偏向时间戮、对象分代年龄|  01 |可偏向</p>
-</li>
-<li><p>1Bits固定为0</p>
 </li>
 </ul>
 </li>
-<li>指向方法区对象类型数据的指针</li>
 </ul>
 </li>
+</ul>
+<pre><code>        存储内容                       |标志位|状态
+        ------------------------------|-----|--------
+        对象哈希码、对象分代年龄          |  01 |未锁定
+        指向锁记录的指针                 |  00 |轻量级锁定
+        指向重量级锁的指针               |  10 |膨胀（重量级锁定）
+        空，不需记录信息                 |  11 |GC标记
+        偏向线程ID、偏向时间戮、对象分代年龄|  01 |可偏向
+
+
+    - 1Bits固定为0
+- 指向方法区对象类型数据的指针
+</code></pre><ul>
 <li>轻量级锁过程<ul>
 <li>进入同步代码块后，若同步对象未锁定（“01”状态），JVM先在当前线程的栈帧中建立锁记录，用于存储 Mark Word 的拷贝。</li>
 <li>JVM使用CAS操作尝试将对象的 Mark Word 更新为指向 Lock Record 的指针。<ul>
