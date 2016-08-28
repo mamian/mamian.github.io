@@ -218,7 +218,284 @@ Java内存区域与内存溢出异常运行时数据区域程序计数器Java虚
 </ul>
 <hr>
 <h1 id="Java内存区域与内存溢出异常"><a href="#Java内存区域与内存溢出异常" class="headerlink" title="Java内存区域与内存溢出异常"></a><center>Java内存区域与内存溢出异常</center></h1><h3 id="运行时数据区域"><a href="#运行时数据区域" class="headerlink" title="运行时数据区域"></a>运行时数据区域</h3><h5 id="程序计数器"><a href="#程序计数器" class="headerlink" title="程序计数器"></a>程序计数器</h5><h5 id="Java虚拟机栈"><a href="#Java虚拟机栈" class="headerlink" title="Java虚拟机栈"></a>Java虚拟机栈</h5><h5 id="本地方法栈"><a href="#本地方法栈" class="headerlink" title="本地方法栈"></a>本地方法栈</h5><h5 id="Java堆"><a href="#Java堆" class="headerlink" title="Java堆"></a>Java堆</h5><h5 id="方法区"><a href="#方法区" class="headerlink" title="方法区"></a>方法区</h5><h5 id="运行时常量池"><a href="#运行时常量池" class="headerlink" title="运行时常量池"></a>运行时常量池</h5><h5 id="直接内存"><a href="#直接内存" class="headerlink" title="直接内存"></a>直接内存</h5><h3 id="对象访问"><a href="#对象访问" class="headerlink" title="对象访问"></a>对象访问</h3><h3 id="OutOfMemoryError异常"><a href="#OutOfMemoryError异常" class="headerlink" title="OutOfMemoryError异常"></a>OutOfMemoryError异常</h3><h5 id="Java堆溢出"><a href="#Java堆溢出" class="headerlink" title="Java堆溢出"></a>Java堆溢出</h5><h5 id="虚拟机栈、本地方法栈溢出"><a href="#虚拟机栈、本地方法栈溢出" class="headerlink" title="虚拟机栈、本地方法栈溢出"></a>虚拟机栈、本地方法栈溢出</h5><h5 id="运行时常量池溢出"><a href="#运行时常量池溢出" class="headerlink" title="运行时常量池溢出"></a>运行时常量池溢出</h5><h5 id="方法区溢出"><a href="#方法区溢出" class="headerlink" title="方法区溢出"></a>方法区溢出</h5><h5 id="本地直接内存溢出"><a href="#本地直接内存溢出" class="headerlink" title="本地直接内存溢出"></a>本地直接内存溢出</h5><hr>
-<h1 id="垃圾收集器与内存分配策略"><a href="#垃圾收集器与内存分配策略" class="headerlink" title="垃圾收集器与内存分配策略"></a><center>垃圾收集器与内存分配策略</center></h1><h3 id="对象已死？"><a href="#对象已死？" class="headerlink" title="对象已死？"></a>对象已死？</h3><h5 id="引用计数算法"><a href="#引用计数算法" class="headerlink" title="引用计数算法"></a>引用计数算法</h5><h5 id="根搜索算法"><a href="#根搜索算法" class="headerlink" title="根搜索算法"></a>根搜索算法</h5><h5 id="再谈引用"><a href="#再谈引用" class="headerlink" title="再谈引用"></a>再谈引用</h5><h5 id="生存还是死亡？"><a href="#生存还是死亡？" class="headerlink" title="生存还是死亡？"></a>生存还是死亡？</h5><h5 id="回收方法区"><a href="#回收方法区" class="headerlink" title="回收方法区"></a>回收方法区</h5><h3 id="垃圾收集算法"><a href="#垃圾收集算法" class="headerlink" title="垃圾收集算法"></a>垃圾收集算法</h3><h5 id="标记-清除算法"><a href="#标记-清除算法" class="headerlink" title="标记-清除算法"></a>标记-清除算法</h5><h5 id="复制算法"><a href="#复制算法" class="headerlink" title="复制算法"></a>复制算法</h5><h5 id="标记-整理算法"><a href="#标记-整理算法" class="headerlink" title="标记-整理算法"></a>标记-整理算法</h5><h5 id="分代收集算法"><a href="#分代收集算法" class="headerlink" title="分代收集算法"></a>分代收集算法</h5><h3 id="垃圾收集器"><a href="#垃圾收集器" class="headerlink" title="垃圾收集器"></a>垃圾收集器</h3><h5 id="Serial-收集器"><a href="#Serial-收集器" class="headerlink" title="Serial 收集器"></a>Serial 收集器</h5><h5 id="ParNew-收集器"><a href="#ParNew-收集器" class="headerlink" title="ParNew 收集器"></a>ParNew 收集器</h5><h5 id="Parallel-Scavenge-收集器"><a href="#Parallel-Scavenge-收集器" class="headerlink" title="Parallel Scavenge 收集器"></a>Parallel Scavenge 收集器</h5><h5 id="Serial-Old-收集器"><a href="#Serial-Old-收集器" class="headerlink" title="Serial Old 收集器"></a>Serial Old 收集器</h5><h5 id="Parallel-Old-收集器"><a href="#Parallel-Old-收集器" class="headerlink" title="Parallel Old 收集器"></a>Parallel Old 收集器</h5><h5 id="CMS-收集器"><a href="#CMS-收集器" class="headerlink" title="CMS 收集器"></a>CMS 收集器</h5><h5 id="G1-收集器"><a href="#G1-收集器" class="headerlink" title="G1 收集器"></a>G1 收集器</h5><h5 id="垃圾收集器参数总结"><a href="#垃圾收集器参数总结" class="headerlink" title="垃圾收集器参数总结"></a>垃圾收集器参数总结</h5><h3 id="内存分配与回收策略"><a href="#内存分配与回收策略" class="headerlink" title="内存分配与回收策略"></a>内存分配与回收策略</h3><h5 id="对象优先在Edun分配"><a href="#对象优先在Edun分配" class="headerlink" title="对象优先在Edun分配"></a>对象优先在Edun分配</h5><h5 id="大对象直接进入老年代"><a href="#大对象直接进入老年代" class="headerlink" title="大对象直接进入老年代"></a>大对象直接进入老年代</h5><h5 id="长期存活的对象将进入老年代"><a href="#长期存活的对象将进入老年代" class="headerlink" title="长期存活的对象将进入老年代"></a>长期存活的对象将进入老年代</h5><h5 id="动态对象年龄判定"><a href="#动态对象年龄判定" class="headerlink" title="动态对象年龄判定"></a>动态对象年龄判定</h5><h5 id="空间分配担保"><a href="#空间分配担保" class="headerlink" title="空间分配担保"></a>空间分配担保</h5><hr>
+<h1 id="垃圾收集器与内存分配策略"><a href="#垃圾收集器与内存分配策略" class="headerlink" title="垃圾收集器与内存分配策略"></a><center>垃圾收集器与内存分配策略</center></h1><ul>
+<li>需要排查各种内存溢出、内存泄漏问题；当gc成为系统达到更高并发量的瓶颈时。需了解GC和内存分配。</li>
+<li>程序计数器、虚拟机栈、本地方法栈，随线程而生，随线程而灭。方法结束或线程结束，这部分内存跟随着回收了。每个栈帧分配多少内存基本上是在类结构确定下来时就已知。</li>
+<li>Java 堆、方法区，这部分内存的分配和回收都是动态的，<code>平时所说的GC是指 Java 堆和方法区的回收</code>。在程序运行期间才能知道会创建哪些对象。</li>
+</ul>
+<h3 id="对象已死？"><a href="#对象已死？" class="headerlink" title="对象已死？"></a>对象已死？</h3><h5 id="引用计数算法"><a href="#引用计数算法" class="headerlink" title="引用计数算法"></a>引用计数算法</h5><ul>
+<li>给对象添加一个引用计数器，每多一次引用，计数器加1，引用失效计数器减1。</li>
+<li>Java 并没有选用引用计数算法来管理内存，因为它很难解决对象间的相互循环引用的问题。</li>
+</ul>
+<h5 id="根搜索算法"><a href="#根搜索算法" class="headerlink" title="根搜索算法"></a><code>根搜索算法</code></h5><ul>
+<li>Java 使用根搜索算法判定对象是否存活。</li>
+<li><code>GC Roots</code>对象作为起点向下搜索，搜索所走过的路径称为引用链，当一个对象到 GC Roots 没有任何引用链相连，则此对象不可用。</li>
+<li>GC Roots<ul>
+<li>虚拟机栈（栈帧中的本地变量表）中的引用的对象。</li>
+<li>方法区中的类静态属性引用的对象。</li>
+<li>方法区中的常量引用的对象。</li>
+<li>本地方法栈中 JNI（即一般说的Native方法）的引用的对象。</li>
+</ul>
+</li>
+</ul>
+<h5 id="再谈引用"><a href="#再谈引用" class="headerlink" title="再谈引用"></a>再谈引用</h5><ul>
+<li>引用强度从强到弱：强引用、软引用、弱引用、虚引用。<ul>
+<li>强引用<ul>
+<li>Object obj = new Object();</li>
+<li>只要强引用存在，GC 永远不会回收被引用对象。</li>
+</ul>
+</li>
+<li>软引用<ul>
+<li>描述还有用，但非必需的对象。</li>
+<li>将发生内存溢出前，将这些对象列入回收范围中并进行2次回收。若还是内存不足，才抛出内存溢出。</li>
+</ul>
+</li>
+<li>弱引用<ul>
+<li>描述非必需对象。</li>
+<li>所关联对象仅生存到下一次 GC 发生前。</li>
+</ul>
+</li>
+<li>虚引用<ul>
+<li>为一个对象设置虚引用关联的唯一目的是希望在回收此对象时收到一个系统通知。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h5 id="生存还是死亡？"><a href="#生存还是死亡？" class="headerlink" title="生存还是死亡？"></a>生存还是死亡？</h5><ul>
+<li>一个对象的finalize()方法最多只会被系统调用一次。</li>
+<li>根搜索算法不可达的对象，并非“非死不可”，宣告对象死亡，需经历2次标记<ul>
+<li>根搜索后发现对象未与 GC Roots 相连接，将第1次标记。之后筛选是否需要执行对象的 finalize() 方法。<ul>
+<li>当对象未覆盖 finalize() 方法或 finalize() 方法已被 JVM 调用过，则无需再  finalize() 。</li>
+<li>当对象需执行 finalize() 方法时，可在 finalize() 方法中恢复对象的引用以逃脱回收。GC 对 F-Queue中的对象进行第2次小规模的标记。若finalize()中未恢复对象引用，则标记为可回收；若恢复引用，则将对象移出“即将回收”集合。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>finalize() 方法能做的所有工作，使用try-finally或其他方式都可以做得更好，可以忘掉Java有 finalize() 方法。</li>
+</ul>
+<h5 id="回收方法区（永久代）"><a href="#回收方法区（永久代）" class="headerlink" title="回收方法区（永久代）"></a>回收方法区（永久代）</h5><ul>
+<li>永久代主要回收：废弃常量、无用的类。<ul>
+<li>无用的类<ul>
+<li>该类所有实例均已被回收，即堆中不存在该类的任何实例。</li>
+<li>该类的ClassLoader已被回收。</li>
+<li>该类对应的java.lang.Class对象没有在任何地方被引用，无法在任何地方通过反射访问该类的方法。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>大量使用反射、动态代理、CGLib的场景，以及动态生成 JSP 和 OSGi这类频繁自定义 ClassLoader 的场景均需 JVM 提供类缷载功能，以保证永久代不会溢出。</li>
+</ul>
+<h3 id="垃圾收集算法（分代回收）"><a href="#垃圾收集算法（分代回收）" class="headerlink" title="垃圾收集算法（分代回收）"></a>垃圾收集算法（分代回收）</h3><h5 id="标记-清除算法"><a href="#标记-清除算法" class="headerlink" title="标记-清除算法"></a>标记-清除算法</h5><ul>
+<li>标记出需回收对象，标记完成后统一回收。</li>
+<li>缺点：<ul>
+<li>效率：标记、清除过程效率都不高</li>
+<li>内存碎片：标记清除后产生大量不连续的内存碎片，碎片太多会导致无法分配较大对象而提前触发另一次GC。</li>
+</ul>
+</li>
+</ul>
+<h5 id="复制算法（新生代）"><a href="#复制算法（新生代）" class="headerlink" title="复制算法（新生代）"></a><code>复制算法</code>（新生代）</h5><ul>
+<li>将内存分为相等的2块，每次只使用1块。1块内存用完，将块中存活对象复制到另一块，并清空原内存块。</li>
+<li>商用实现：将内存分为一块较大的<code>Eden</code>空间和2块较小的<code>Survivor</code>空间，每次使用Eden和其中的一块Survivor。<ul>
+<li>Eden:Survivor:Survivor=8:1:1</li>
+<li>若另外一块Survivor空间不足以存放存活对象，这些对象将直接进入老年代。</li>
+</ul>
+</li>
+</ul>
+<h5 id="标记-整理算法（老年代）"><a href="#标记-整理算法（老年代）" class="headerlink" title="标记-整理算法（老年代）"></a><code>标记-整理算法</code>（老年代）</h5><ul>
+<li>标记出可回收对象，将存活对象都向一端移动，清理存活对象边界收外的内存。</li>
+</ul>
+<h3 id="垃圾收集器"><a href="#垃圾收集器" class="headerlink" title="垃圾收集器"></a>垃圾收集器</h3><ul>
+<li>可通过参数配置各年代所使用的垃圾收集器。</li>
+<li>没有最好的收集器，需根据具体应用选择合适的收集器。</li>
+<li>垃圾收集器<ul>
+<li>新生代：Serial、ParNew、Parallel Scavenge</li>
+<li>老年代：CMS、Serial Old、Parallel Old</li>
+<li>不分代：G1</li>
+</ul>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>新生代</th>
+<th>老年代</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Serial</td>
+<td>CMS、Serial Old</td>
+</tr>
+<tr>
+<td>ParNew</td>
+<td>CMS、Serial Old</td>
+</tr>
+<tr>
+<td>Parallel Scavenge</td>
+<td>Serial Old、Parallel Old</td>
+</tr>
+<tr>
+<td>G1</td>
+<td>G1</td>
+</tr>
+</tbody>
+</table>
+<h5 id="Serial-收集器（新生代，单线程）"><a href="#Serial-收集器（新生代，单线程）" class="headerlink" title="Serial 收集器（新生代，单线程）"></a>Serial 收集器（新生代，单线程）</h5><ul>
+<li>JVM 在 Client 模式下的默认新生代收集器。</li>
+<li>单线程收集器</li>
+<li>暂停其他所有工作线程</li>
+<li>新生代：复制算法，老年代：标记-整理算法</li>
+</ul>
+<h5 id="ParNew-收集器（新生代，多线程）"><a href="#ParNew-收集器（新生代，多线程）" class="headerlink" title="ParNew 收集器（新生代，多线程）"></a>ParNew 收集器（新生代，多线程）</h5><ul>
+<li>多线程收集，其他与Serial完全一样。</li>
+<li>老年代若使用CMS，则新生代默认为ParNew。</li>
+<li>默认开启线程数与cpu数相同，可使用-XX:ParallelGCThreads限制垃圾收集的线程数。</li>
+</ul>
+<h5 id="Parallel-Scavenge-收集器（新生代，多线程）"><a href="#Parallel-Scavenge-收集器（新生代，多线程）" class="headerlink" title="Parallel Scavenge 收集器（新生代，多线程）"></a>Parallel Scavenge 收集器（新生代，多线程）</h5><ul>
+<li>与ParNew区别<ul>
+<li>Parallel Scavenge 目标是达到一个可控制的吞吐量</li>
+<li>可开启自适应调节开关</li>
+</ul>
+</li>
+<li>最大垃圾收集停顿时间 -XXMaxGCPauseMillis</li>
+<li>吞吐量大小 -XX:GCTimeRatio</li>
+<li>自适应调节开关 -XX:+UseAdaptiveSizePolicy<ul>
+<li>无需指定新生代大小（-Xmm），Eden与Survivor比例（-XX:SurvivorRatio），晋升老年代对象年龄（-XX:PretenureSizeThreshold）</li>
+</ul>
+</li>
+</ul>
+<h5 id="Serial-Old-收集器（老年代，单线程）"><a href="#Serial-Old-收集器（老年代，单线程）" class="headerlink" title="Serial Old 收集器（老年代，单线程）"></a>Serial Old 收集器（老年代，单线程）</h5><ul>
+<li>与Serial一样，只是作用于老年代。</li>
+</ul>
+<h5 id="Parallel-Old-收集器（老年代，多线程）"><a href="#Parallel-Old-收集器（老年代，多线程）" class="headerlink" title="Parallel Old 收集器（老年代，多线程）"></a>Parallel Old 收集器（老年代，多线程）</h5><ul>
+<li>Parallel Old是 Parallel 的老年代版本。</li>
+<li>注重吞吐量及CPU资源敏感的场合，可以使用 Parallel Scavenge + Parallel Old 。</li>
+</ul>
+<h5 id="CMS-收集器（老年代，多线程）"><a href="#CMS-收集器（老年代，多线程）" class="headerlink" title="CMS 收集器（老年代，多线程）"></a>CMS 收集器（老年代，多线程）</h5><ul>
+<li>目标：使回收停顿时间最短。适用于互联网站等重视服务响应速度的场景。</li>
+<li>回收过程<ul>
+<li>初始标记<ul>
+<li>标记 GC Roots 直接关联的对象</li>
+<li>stop the world</li>
+</ul>
+</li>
+<li>并发标记<ul>
+<li>GC Roots Tracing</li>
+<li>与用户线程一起并发执行</li>
+</ul>
+</li>
+<li>重新标记<ul>
+<li>修正并发标记期间，因用户程序继续运行而导致标记产生变动的那一部分对象的标记记录</li>
+<li>stop the world</li>
+</ul>
+</li>
+<li>并发清除<ul>
+<li>与用户线程一起并发执行</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>缺点<ul>
+<li>消耗cpu资源</li>
+<li>无法处理浮动垃圾，即GC时用户线程还在运行，新产生的垃圾。</li>
+<li>空间碎片：使用的是 标记-清除 算法。</li>
+</ul>
+</li>
+</ul>
+<h5 id="G1-收集器"><a href="#G1-收集器" class="headerlink" title="G1 收集器"></a>G1 收集器</h5><ul>
+<li>使用 标记-整理 算法，不会产生空间碎片。</li>
+<li>可精确控制停顿：可让使用者时确指定在M毫秒时间段内，消耗在GC上的时间不超过N毫秒。</li>
+<li>G1可实现在不牺牲吞吐量的前提下完成低停顿的GC，因为<code>G1能极力避免全区域的GC</code>。</li>
+<li>G1将整个堆（包括新生代、老年代）划分为多个大小固定的独立区域，并跟踪各区的垃圾堆积程序。同时在后台维护一个优先列表，每次根据允许的时间，优先回收垃圾最多的区域。</li>
+<li>区域划分及有优先级的区域回收，保证了G1在有限的时间内可以获得最高的收集效率。</li>
+</ul>
+<h5 id="垃圾收集器参数总结"><a href="#垃圾收集器参数总结" class="headerlink" title="垃圾收集器参数总结"></a>垃圾收集器参数总结</h5><table>
+<thead>
+<tr>
+<th>参数</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>UseSerialGC</td>
+<td>JVM 在Client模式下的默认值，Serial + Serial Old</td>
+</tr>
+<tr>
+<td>UseParNewGC</td>
+<td>ParNew + Serial Old</td>
+</tr>
+<tr>
+<td>UseConcMarkSweepGC</td>
+<td>ParNew + CMS + Serial Old。CMS出现Concurrent Mode Failure后使用Serial Old</td>
+</tr>
+<tr>
+<td>UseParallelGC</td>
+<td>JVM 在Server模式下的默认值，Parallel Scavenge + Serial Old</td>
+</tr>
+<tr>
+<td>UseParallelOldGC</td>
+<td>Parallel Scavenge + parallel Old</td>
+</tr>
+<tr>
+<td>SurvivorRatio</td>
+<td>新生代中Eden与Survivor容量比，默认Eden:Survivor=8:1</td>
+</tr>
+<tr>
+<td>PretenureSizeThreshold</td>
+<td>直接晋升老年代的对象大小</td>
+</tr>
+<tr>
+<td>MaxTenuringThreshold</td>
+<td>晋升到老年代的对象年龄，对象坚持过一次Minor GC后，年龄加1</td>
+</tr>
+<tr>
+<td>UseAdaptiveSizePolicy</td>
+<td>动态调整Java堆中各区域的大小及进入老年代的年龄</td>
+</tr>
+<tr>
+<td>HandlePromotionFailure</td>
+<td>是否允许分配担保失败，即老年代剩余空间不足以应付新生代整个Eden、Survivor所有对象都存活的极端情况</td>
+</tr>
+<tr>
+<td>ParallelGCThreads</td>
+<td>设置并行GC时进行内存回收的线程数</td>
+</tr>
+<tr>
+<td>GCTimeRatio</td>
+<td>GC占总时间比，默认99表示允许1%的GC时间，仅 Parallel Scavenge时有效</td>
+</tr>
+<tr>
+<td>MaxGCPauseMillis</td>
+<td>GC最大停顿时间，仅 Parallel Scavenge时有效</td>
+</tr>
+<tr>
+<td>CMSInitiatingOccupancyFraction</td>
+<td>CMS在老年代空间被使用多少后触发GC，默认68%，仅 CMS 时有效</td>
+</tr>
+<tr>
+<td>UseCMSCompactAtFullCollection</td>
+<td>CMS完成GC后是否要进行一次内存碎片整理，仅 CMS 时有效</td>
+</tr>
+<tr>
+<td>CMSFullGCsBeforeCompaction</td>
+<td>CMS在进行若干次GC后再启动一次内存碎片整理，仅 CMS 时有效</td>
+</tr>
+</tbody>
+</table>
+<h3 id="内存分配与回收策略"><a href="#内存分配与回收策略" class="headerlink" title="内存分配与回收策略"></a>内存分配与回收策略</h3><h5 id="对象优先在Eden分配"><a href="#对象优先在Eden分配" class="headerlink" title="对象优先在Eden分配"></a>对象优先在Eden分配</h5><ul>
+<li>当Eden区空间不足，发起一次 Minor GC</li>
+<li>Minor GC（新生代GC）：发生在新生代的GC</li>
+<li>Major GC / Full GC（老年代GC）:发生在老年代的GC，一般比 Minor GC 慢10倍。</li>
+</ul>
+<h5 id="大对象直接进入老年代"><a href="#大对象直接进入老年代" class="headerlink" title="大对象直接进入老年代"></a>大对象直接进入老年代</h5><h5 id="长期存活的对象将进入老年代"><a href="#长期存活的对象将进入老年代" class="headerlink" title="长期存活的对象将进入老年代"></a>长期存活的对象将进入老年代</h5><ul>
+<li>JVM 给每个对象定义了一个对象年龄计数器。对象每经过一次 Minor GC ，年龄加1，年龄达到一定程度（默认15），晋升老年代。</li>
+</ul>
+<h5 id="动态对象年龄判定"><a href="#动态对象年龄判定" class="headerlink" title="动态对象年龄判定"></a>动态对象年龄判定</h5><ul>
+<li>并不是对象年龄必须达到MaxTenuringThreshold才晋升老年代。若 Survivor 空间中相同年龄所有对象大小的部和大于 Survivor 的一半，年龄大于或等于该年龄的对象就可直接进入老年代。</li>
+</ul>
+<h5 id="空间分配担保"><a href="#空间分配担保" class="headerlink" title="空间分配担保"></a>空间分配担保</h5><hr>
 <h1 id="虚拟机性能监控与故障处理工具"><a href="#虚拟机性能监控与故障处理工具" class="headerlink" title="虚拟机性能监控与故障处理工具"></a><center>虚拟机性能监控与故障处理工具</center></h1><h3 id="JDK的命令行工具"><a href="#JDK的命令行工具" class="headerlink" title="JDK的命令行工具"></a>JDK的命令行工具</h3><h5 id="jps：虚拟机进程状况工具"><a href="#jps：虚拟机进程状况工具" class="headerlink" title="jps：虚拟机进程状况工具"></a>jps：虚拟机进程状况工具</h5><h5 id="jstat：虚拟机统计信息监视工具"><a href="#jstat：虚拟机统计信息监视工具" class="headerlink" title="jstat：虚拟机统计信息监视工具"></a>jstat：虚拟机统计信息监视工具</h5><h5 id="jinfo：Java配置信息工具"><a href="#jinfo：Java配置信息工具" class="headerlink" title="jinfo：Java配置信息工具"></a>jinfo：Java配置信息工具</h5><h5 id="jmap：Java内存映像工具"><a href="#jmap：Java内存映像工具" class="headerlink" title="jmap：Java内存映像工具"></a>jmap：Java内存映像工具</h5><h5 id="jhat：虚拟机堆转储快照分析工具"><a href="#jhat：虚拟机堆转储快照分析工具" class="headerlink" title="jhat：虚拟机堆转储快照分析工具"></a>jhat：虚拟机堆转储快照分析工具</h5><h5 id="jstack：Java堆栈跟踪工具"><a href="#jstack：Java堆栈跟踪工具" class="headerlink" title="jstack：Java堆栈跟踪工具"></a>jstack：Java堆栈跟踪工具</h5><h3 id="JDK的可视化工具"><a href="#JDK的可视化工具" class="headerlink" title="JDK的可视化工具"></a>JDK的可视化工具</h3><h5 id="Jconsole：Java监视与管理控制台"><a href="#Jconsole：Java监视与管理控制台" class="headerlink" title="Jconsole：Java监视与管理控制台"></a>Jconsole：Java监视与管理控制台</h5><h5 id="VisualVM：多合一故障处理工具"><a href="#VisualVM：多合一故障处理工具" class="headerlink" title="VisualVM：多合一故障处理工具"></a>VisualVM：多合一故障处理工具</h5><hr>
 <h1 id="调优案例分析与实战"><a href="#调优案例分析与实战" class="headerlink" title="调优案例分析与实战"></a><center>调优案例分析与实战</center></h1><h3 id="案例分析"><a href="#案例分析" class="headerlink" title="案例分析"></a>案例分析</h3><h5 id="高性能硬件上的程序部署策略"><a href="#高性能硬件上的程序部署策略" class="headerlink" title="高性能硬件上的程序部署策略"></a>高性能硬件上的程序部署策略</h5><h5 id="集群间同步导致的内存溢出"><a href="#集群间同步导致的内存溢出" class="headerlink" title="集群间同步导致的内存溢出"></a>集群间同步导致的内存溢出</h5><h5 id="堆外内存导致的溢出错误"><a href="#堆外内存导致的溢出错误" class="headerlink" title="堆外内存导致的溢出错误"></a>堆外内存导致的溢出错误</h5><h5 id="外部命令导致系统缓慢"><a href="#外部命令导致系统缓慢" class="headerlink" title="外部命令导致系统缓慢"></a>外部命令导致系统缓慢</h5><h5 id="服务器JVM进程崩溃"><a href="#服务器JVM进程崩溃" class="headerlink" title="服务器JVM进程崩溃"></a>服务器JVM进程崩溃</h5><h3 id="实战：Eclipse运行速度调优"><a href="#实战：Eclipse运行速度调优" class="headerlink" title="实战：Eclipse运行速度调优"></a>实战：Eclipse运行速度调优</h3><h5 id="调优前的程序运行状态"><a href="#调优前的程序运行状态" class="headerlink" title="调优前的程序运行状态"></a>调优前的程序运行状态</h5><h5 id="升级JDK1-6的性能变化及兼容问题"><a href="#升级JDK1-6的性能变化及兼容问题" class="headerlink" title="升级JDK1.6的性能变化及兼容问题"></a>升级JDK1.6的性能变化及兼容问题</h5><h5 id="编译时间和类加载时间的优化"><a href="#编译时间和类加载时间的优化" class="headerlink" title="编译时间和类加载时间的优化"></a>编译时间和类加载时间的优化</h5><h5 id="调整内存设置控制垃圾收集频率"><a href="#调整内存设置控制垃圾收集频率" class="headerlink" title="调整内存设置控制垃圾收集频率"></a>调整内存设置控制垃圾收集频率</h5><h5 id="选择收集器降低延迟"><a href="#选择收集器降低延迟" class="headerlink" title="选择收集器降低延迟"></a>选择收集器降低延迟</h5><hr>
 <h1 id="类文件结构"><a href="#类文件结构" class="headerlink" title="类文件结构"></a><center>类文件结构</center></h1><ul>
