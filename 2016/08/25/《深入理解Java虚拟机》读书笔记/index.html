@@ -1107,23 +1107,56 @@ Java内存区域与内存溢出异常运行时数据区域
 <li>编码时，尽量使同步块作用域最小。但如果一系列连续操作均是对同一个对象加锁解锁，频繁地进行互斥同步会对性能有所损耗，此时虚拟机会扩大锁的作用域。</li>
 </ul>
 <h5 id="轻量级锁"><a href="#轻量级锁" class="headerlink" title="轻量级锁"></a>轻量级锁</h5><ul>
-<li><p>对象头信息</p>
-<ul>
-<li><p>对象自身的运行时数据（<code>Mark Word</code>，实现轻量级锁与偏向锁的关键）：哈希码、GC分代年龄。32Bits或64Bits</p>
-<ul>
+<li>对象头信息<ul>
+<li>对象自身的运行时数据（<code>Mark Word</code>，实现轻量级锁与偏向锁的关键）：哈希码、GC分代年龄。32Bits或64Bits<ul>
 <li>32位vm，25Bits存储对象哈希码</li>
 <li>4Bits存储对象分代年龄</li>
-<li><p>2Bits存储锁标志位</p>
-<p>  HotSpot对象头 Mark Word</p>
-<p>  存储内容                       |标志位|状态<br>  ——————————|—–|——–<br>  对象哈希码、对象分代年龄          |  01 |未锁定<br>  指向锁记录的指针                 |  00 |轻量级锁定<br>  指向重量级锁的指针               |  10 |膨胀（重量级锁定）<br>  空，不需记录信息                 |  11 |GC标记<br>  偏向线程ID、偏向时间戮、对象分代年龄|  01 |可偏向</p>
-</li>
-<li><p>1Bits固定为0</p>
-</li>
+<li>2Bits存储锁标志位        </li>
+<li>1Bits固定为0</li>
 </ul>
 </li>
 <li>指向方法区对象类型数据的指针</li>
 </ul>
 </li>
+<li>HotSpot对象头 Mark Word</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>存储内容</th>
+<th>标志位</th>
+<th>状态</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>对象哈希码、对象分代年龄</td>
+<td>01</td>
+<td>未锁定</td>
+</tr>
+<tr>
+<td>指向锁记录的指针</td>
+<td>00</td>
+<td>轻量级锁定</td>
+</tr>
+<tr>
+<td>指向重量级锁的指针</td>
+<td>10</td>
+<td>膨胀（重量级锁定）</td>
+</tr>
+<tr>
+<td>空，不需记录信息</td>
+<td>11</td>
+<td>GC标记</td>
+</tr>
+<tr>
+<td>偏向线程ID、偏向时间戮、对象分代年龄</td>
+<td>01</td>
+<td>可偏向</td>
+</tr>
+</tbody>
+</table>
+<ul>
 <li>轻量级锁过程<ul>
 <li>进入同步代码块后，若同步对象未锁定（“01”状态），JVM先在当前线程的栈帧中建立锁记录，用于存储 Mark Word 的拷贝。</li>
 <li>JVM使用CAS操作尝试将对象的 Mark Word 更新为指向 Lock Record 的指针。<ul>
