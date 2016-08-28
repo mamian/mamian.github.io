@@ -375,7 +375,115 @@ Java内存区域与内存溢出异常运行时数据区域程序计数器Java虚
 <li>如果一个类加载器收到加载请求，它首先委派给父类加载器去加载，父类加载器无法加载时才自己加载。</li>
 </ul>
 <h5 id="破坏双亲委派模型"><a href="#破坏双亲委派模型" class="headerlink" title="破坏双亲委派模型"></a>破坏双亲委派模型</h5><hr>
-<h1 id="虚拟机字节码执行引擎"><a href="#虚拟机字节码执行引擎" class="headerlink" title="虚拟机字节码执行引擎"></a><center>虚拟机字节码执行引擎</center></h1><h3 id="运行时栈帧结构"><a href="#运行时栈帧结构" class="headerlink" title="运行时栈帧结构"></a>运行时栈帧结构</h3><h5 id="局部变量表"><a href="#局部变量表" class="headerlink" title="局部变量表"></a>局部变量表</h5><h5 id="操作数栈"><a href="#操作数栈" class="headerlink" title="操作数栈"></a>操作数栈</h5><h5 id="运态连接"><a href="#运态连接" class="headerlink" title="运态连接"></a>运态连接</h5><h5 id="方法返回地址"><a href="#方法返回地址" class="headerlink" title="方法返回地址"></a>方法返回地址</h5><h5 id="附加信息"><a href="#附加信息" class="headerlink" title="附加信息"></a>附加信息</h5><h3 id="方法调用"><a href="#方法调用" class="headerlink" title="方法调用"></a>方法调用</h3><h5 id="解析"><a href="#解析" class="headerlink" title="解析"></a>解析</h5><h5 id="分派"><a href="#分派" class="headerlink" title="分派"></a>分派</h5><h3 id="基于栈的字节码解释执行引擎"><a href="#基于栈的字节码解释执行引擎" class="headerlink" title="基于栈的字节码解释执行引擎"></a>基于栈的字节码解释执行引擎</h3><h5 id="解释执行"><a href="#解释执行" class="headerlink" title="解释执行"></a>解释执行</h5><h5 id="基于栈的指令集与基于寄存器的指令集"><a href="#基于栈的指令集与基于寄存器的指令集" class="headerlink" title="基于栈的指令集与基于寄存器的指令集"></a>基于栈的指令集与基于寄存器的指令集</h5><h5 id="基于栈的解释器执行过程"><a href="#基于栈的解释器执行过程" class="headerlink" title="基于栈的解释器执行过程"></a>基于栈的解释器执行过程</h5><hr>
+<h1 id="虚拟机字节码执行引擎"><a href="#虚拟机字节码执行引擎" class="headerlink" title="虚拟机字节码执行引擎"></a><center>虚拟机字节码执行引擎</center></h1><h3 id="运行时栈帧结构"><a href="#运行时栈帧结构" class="headerlink" title="运行时栈帧结构"></a>运行时栈帧结构</h3><ul>
+<li>栈帧是用于支持 JVM 方法调用和方法执行的数据结构，是 JVM 运行时数据区中的<code>虚拟机栈</code>的栈元素。</li>
+<li>栈帧包括<code>局部变量表</code>、<code>操作数栈</code>、<code>动态连接</code>、<code>方法返回地址</code>、<code>附加信息</code>。</li>
+<li>编译代码时，栈帧需要多大的局部变量表、多深的操作数栈都已确定，并写入到方法表的 Code 属性中。一个栈帧需分配多少内存，不会受到程序运行期变量数据的影响，而仅取决于具体的 JVM 实现。</li>
+<li>一个线程的方法调用链可以很长，多方法同时执行。活动线程中，只有栈顶的栈帧是有效的，称<code>当前栈帧</code>，此栈帧所关联方法称<code>当前方法</code>。执行引擎所运行的所有字节码指令都只针对当前栈帧进行。</li>
+</ul>
+<h5 id="局部变量表"><a href="#局部变量表" class="headerlink" title="局部变量表"></a>局部变量表</h5><ul>
+<li>存放<code>方法参数</code>、<code>方法内的局部变量</code>。</li>
+<li>Java 编译为 Class 时，就在方法的 Code 属性的 max_locals 数据项中确定了该方法所需分配的最大局部变量表的容量。</li>
+<li>局部变量表的最小容量以变量槽（Variable Slot）为最小单位，每个 Slot 应能存放1个boolean、byte、char、short、int、float、refrence、returnAddress类型的数据。<ul>
+<li>refrence：指对象的引用，<code>JVM 可从 refrence 中直接或间接查询到对象在堆中的起始地址索引和方法区中的对象类型数据</code>。</li>
+<li>returnAddress：指向一条字节码指令地址。</li>
+</ul>
+</li>
+<li>局部变量表作为<code>GC Roots</code>的一部分。若局部变量所占用的 Slot 还没被其他变量所复用，则局部变量表还保持着对此 Slot 的关联。此处内存区域不会被回收。<ul>
+<li>byte[] placeholder = new byte[64 <em> 1024 </em> 1024];System.gc();</li>
+<li>不会被回收</li>
+</ul>
+</li>
+<li>局部变量与类变量不同，类变量在<code>准备</code>阶段赋初始值、<code>初始化</code>阶段赋程序定义的初始值。<code>局部变量定义后没赋初始值则无法使用</code>。不要认为 Java 中任何情况下 int 默认0、boolean 默认false。</li>
+</ul>
+<h5 id="操作数栈"><a href="#操作数栈" class="headerlink" title="操作数栈"></a>操作数栈</h5><ul>
+<li>操作数栈的深度在编译时被写入到 Code 属性的 max_stacks 数据项中。</li>
+<li>方法开始执行时，此方法的操作数栈为空，方法执行过程中会有各种字节码指令向操作数栈中写入和提取内容。</li>
+</ul>
+<h5 id="动态连接"><a href="#动态连接" class="headerlink" title="动态连接"></a>动态连接</h5><ul>
+<li>每个栈帧都包含一个指向运行时常量池中该栈帧所属方法的引用，持有此引用是为了支持方法调用过程中的动态连接。</li>
+<li>Class 文件的常量池中存在大量符号引用，字节码中的方法调用指令就以常量池中指向方法的符号引用为参数。<ul>
+<li>静态解析：这些符号引用一部分在类加载阶段或第一次使用时转为直接引用。</li>
+<li>动态连接：另一部分在每一次的运行期间转为直接引用。</li>
+</ul>
+</li>
+</ul>
+<h5 id="方法返回地址"><a href="#方法返回地址" class="headerlink" title="方法返回地址"></a>方法返回地址</h5><ul>
+<li>方法退出<ul>
+<li>正常完成出口<ul>
+<li>执行引擎遇到任意一个方法返回的字节码指令，此时可能会有返回值传递给上层的方法调用者。是否有返回值和返回值的类型将根据遇到何种方法返回指令来决定。</li>
+</ul>
+</li>
+<li>异常完成出口<ul>
+<li>方法执行过程中遇异常，且此异常未在方法体内得到处理。</li>
+<li>一个方法使用异常完成出口的方式退出，是不会给它的上层调用者产生任何返回值的。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>方法退出后，都需返回到方法被调用的位置，程序才能继续执行，方法返回时可能需在栈帧中保存一些信息，用来帮助恢复它的上层方法的执行状态。</li>
+<li>方法正常退出时，调用者的PC计数器的值可作为返回地址，栈帧中很可能会保存这个计数器值。异常退出时，返回地址要通过异常处理器表来确定，栈帧中一般不会保存这部分信息。</li>
+<li>方法退出的过程实际上等同于把当前栈帧出栈，因此退出时可执行的操作：恢复上层方法的局部变量表和操作数栈，把返回值（如果有的话）压入调用者栈帧的操作数栈中，调整PC计数器的值以指向方法调用指令后面的一条指令。</li>
+</ul>
+<h5 id="附加信息"><a href="#附加信息" class="headerlink" title="附加信息"></a>附加信息</h5><h3 id="方法调用"><a href="#方法调用" class="headerlink" title="方法调用"></a>方法调用</h3><ul>
+<li>与方法执行不同，方法调用的唯一任务是确定被调用方法的版本（即调用哪个方法），不涉及方法内部的具体执行过程</li>
+</ul>
+<h5 id="解析"><a href="#解析" class="headerlink" title="解析"></a>解析</h5><ul>
+<li>所有方法调用中的目标方法在 Class 文件里面都是一个常量池中的符号引用。在类加载的<code>解析</code>阶段，会将其中一部分符号引用转化为直接引用，这种解析的前提：方法在程序运行前就有一个可确定的调用版本，即调用目标在代码写好、编译器进行编译时就必须确定下来。</li>
+<li>这类方法包括<code>静态方法</code>、<code>私有方法</code>。</li>
+</ul>
+<h5 id="分派"><a href="#分派" class="headerlink" title="分派"></a>分派</h5><ul>
+<li>分派调用过程揭示<code>多态</code>性特征的一些基本体现（如重载、重写）在Java中是如何实现的。</li>
+<li><p>静态分派</p>
+<ul>
+<li>Human man = new Man();</li>
+<li>Human为变量的<code>静态类型</code>或外观类型，Man为变量的<code>实际类型</code>。</li>
+<li>虚拟机<code>重载</code>时是通过参数的<code>静态类型</code>而不是实际类型作为判定依据的。</li>
+<li>所有依赖静态类型来定位方法执行版本的分派动作称为静态分派。静态分派典型应用为方法重载。</li>
+<li>char可转型为int，但Character不能转型为Integer。</li>
+</ul>
+</li>
+<li><p>动态分派</p>
+<ul>
+<li>在运行期根据实际类型确定方法执行版本的分派过程称为动态分派。</li>
+<li>动态分派的典型应用为方法<code>覆盖</code>。</li>
+</ul>
+</li>
+<li><p>单分派与多分派</p>
+<ul>
+<li>方法的接收者与方法的参数统称为方法的宗量。分派基于多少种宗量，将分派划分为单分派、多分派。单分派根据一个宗量对目标方法进行选择，多分派根据多个宗量对目标方法进行选择。</li>
+<li>JDK1.6是一门静态多分派、动态单分派的语言。</li>
+</ul>
+</li>
+<li><p>虚拟机动态分派的实现</p>
+</li>
+</ul>
+<h3 id="基于栈的字节码解释执行引擎"><a href="#基于栈的字节码解释执行引擎" class="headerlink" title="基于栈的字节码解释执行引擎"></a>基于栈的字节码解释执行引擎</h3><ul>
+<li>JVM 如何执行方法里的字节码指令。JVM 的执行引擎在执行Java代码时有解释执行（通过解释器）和编译执行（通过即时编译器产生本地代码）。</li>
+</ul>
+<h5 id="解释执行"><a href="#解释执行" class="headerlink" title="解释执行"></a>解释执行</h5><ul>
+<li><p>从程序代码到 JVM 可执行的指令集</p>
+<pre><code>程序源码--&gt;词法分析--&gt;单词流--------&gt;语法分析
+                                      ↓
+解释执行&lt;--解释器&lt;--指令流（可选）&lt;--抽象语法树
+                                      ↓
+目标代码&lt;--生成器&lt;--中间代码（可选）&lt;--优化器（可选）
+</code></pre><ul>
+<li>中间那条分支为解释器执行过程。</li>
+<li>Javac编译器：程序代码经过词法分析、语法分析到抽象语法树，再遍历语法树生成线性的字节码指令流。这一部分是在 JVM 之外进行的。</li>
+<li>解释器是在 JVM 内部。</li>
+</ul>
+</li>
+</ul>
+<h5 id="基于栈的指令集与基于寄存器的指令集"><a href="#基于栈的指令集与基于寄存器的指令集" class="headerlink" title="基于栈的指令集与基于寄存器的指令集"></a>基于栈的指令集与基于寄存器的指令集</h5><ul>
+<li>基于栈的指令集：Java编译器输出的指令流，其中的指令大部分都是0地址指令，它们依赖操作数栈进行工作。<ul>
+<li>优势：可移植性、代码相对更紧凑、编译器实现更简单</li>
+<li>缺点：执行速度相对较慢。</li>
+</ul>
+</li>
+<li>基于寄存器的指令集：PC中直接支持的指令集加构，这些指令依赖寄存器工作。</li>
+</ul>
+<h5 id="基于栈的解释器执行过程"><a href="#基于栈的解释器执行过程" class="headerlink" title="基于栈的解释器执行过程"></a>基于栈的解释器执行过程</h5><hr>
 <h1 id="类加载及执行子系统的案例与实战"><a href="#类加载及执行子系统的案例与实战" class="headerlink" title="类加载及执行子系统的案例与实战"></a><center>类加载及执行子系统的案例与实战</center></h1><h3 id="案例分析-1"><a href="#案例分析-1" class="headerlink" title="案例分析"></a>案例分析</h3><h5 id="Tomcat：正统的类加载器架构"><a href="#Tomcat：正统的类加载器架构" class="headerlink" title="Tomcat：正统的类加载器架构"></a>Tomcat：正统的类加载器架构</h5><h5 id="OSGi：灵活的类加载器架构"><a href="#OSGi：灵活的类加载器架构" class="headerlink" title="OSGi：灵活的类加载器架构"></a>OSGi：灵活的类加载器架构</h5><h5 id="字节码生成技术与动态代理的实现"><a href="#字节码生成技术与动态代理的实现" class="headerlink" title="字节码生成技术与动态代理的实现"></a>字节码生成技术与动态代理的实现</h5><h5 id="Retrotranslator：跨越JDK版本"><a href="#Retrotranslator：跨越JDK版本" class="headerlink" title="Retrotranslator：跨越JDK版本"></a>Retrotranslator：跨越JDK版本</h5><h3 id="实战：自己动手实现远程执行功能"><a href="#实战：自己动手实现远程执行功能" class="headerlink" title="实战：自己动手实现远程执行功能"></a>实战：自己动手实现远程执行功能</h3><h5 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h5><h5 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h5><h5 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h5><h5 id="验证-1"><a href="#验证-1" class="headerlink" title="验证"></a>验证</h5><hr>
 <h1 id="早期（编译期）优化"><a href="#早期（编译期）优化" class="headerlink" title="早期（编译期）优化"></a><center>早期（编译期）优化</center></h1><h3 id="Javac-编译器"><a href="#Javac-编译器" class="headerlink" title="Javac 编译器"></a>Javac 编译器</h3><h5 id="Javac-的源码与调试"><a href="#Javac-的源码与调试" class="headerlink" title="Javac 的源码与调试"></a>Javac 的源码与调试</h5><h5 id="解析与填充符号表"><a href="#解析与填充符号表" class="headerlink" title="解析与填充符号表"></a>解析与填充符号表</h5><h5 id="注解处理器"><a href="#注解处理器" class="headerlink" title="注解处理器"></a>注解处理器</h5><h5 id="语义分析与字节码生成"><a href="#语义分析与字节码生成" class="headerlink" title="语义分析与字节码生成"></a>语义分析与字节码生成</h5><h3 id="Java-语法糖的味道"><a href="#Java-语法糖的味道" class="headerlink" title="Java 语法糖的味道"></a>Java 语法糖的味道</h3><h5 id="泛型与类型擦除"><a href="#泛型与类型擦除" class="headerlink" title="泛型与类型擦除"></a>泛型与类型擦除</h5><h5 id="自动装箱、拆箱与遍历循环"><a href="#自动装箱、拆箱与遍历循环" class="headerlink" title="自动装箱、拆箱与遍历循环"></a>自动装箱、拆箱与遍历循环</h5><h5 id="条件编译"><a href="#条件编译" class="headerlink" title="条件编译"></a>条件编译</h5><h3 id="实战：插入式注解处理器"><a href="#实战：插入式注解处理器" class="headerlink" title="实战：插入式注解处理器"></a>实战：插入式注解处理器</h3><h5 id="实战目标"><a href="#实战目标" class="headerlink" title="实战目标"></a>实战目标</h5><h5 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h5><h5 id="运行与测试"><a href="#运行与测试" class="headerlink" title="运行与测试"></a>运行与测试</h5><h5 id="其他应用案例"><a href="#其他应用案例" class="headerlink" title="其他应用案例"></a>其他应用案例</h5><hr>
 <h1 id="晚期（运行期）优化"><a href="#晚期（运行期）优化" class="headerlink" title="晚期（运行期）优化"></a><center>晚期（运行期）优化</center></h1><h3 id="HotSpot-虚拟机内的即时编译器"><a href="#HotSpot-虚拟机内的即时编译器" class="headerlink" title="HotSpot 虚拟机内的即时编译器"></a>HotSpot 虚拟机内的即时编译器</h3><h5 id="解释器与编译器"><a href="#解释器与编译器" class="headerlink" title="解释器与编译器"></a>解释器与编译器</h5><h5 id="编译对象与解发条件"><a href="#编译对象与解发条件" class="headerlink" title="编译对象与解发条件"></a>编译对象与解发条件</h5><h5 id="编译过程"><a href="#编译过程" class="headerlink" title="编译过程"></a>编译过程</h5><h5 id="查看与分析即时编译结果"><a href="#查看与分析即时编译结果" class="headerlink" title="查看与分析即时编译结果"></a>查看与分析即时编译结果</h5><h3 id="编译优化技术"><a href="#编译优化技术" class="headerlink" title="编译优化技术"></a>编译优化技术</h3><h5 id="优化技术概览"><a href="#优化技术概览" class="headerlink" title="优化技术概览"></a>优化技术概览</h5><h5 id="公共子表达式消除"><a href="#公共子表达式消除" class="headerlink" title="公共子表达式消除"></a>公共子表达式消除</h5><h5 id="数组边界检查消除"><a href="#数组边界检查消除" class="headerlink" title="数组边界检查消除"></a>数组边界检查消除</h5><h5 id="方法内联"><a href="#方法内联" class="headerlink" title="方法内联"></a>方法内联</h5><h5 id="逃逸分析"><a href="#逃逸分析" class="headerlink" title="逃逸分析"></a>逃逸分析</h5><h3 id="Java与C-C-的编译器对比"><a href="#Java与C-C-的编译器对比" class="headerlink" title="Java与C/C++的编译器对比"></a>Java与C/C++的编译器对比</h3><hr>
@@ -643,24 +751,15 @@ Java内存区域与内存溢出异常运行时数据区域程序计数器Java虚
 <li>4Bits存储对象分代年龄</li>
 <li><p>2Bits存储锁标志位</p>
 <p>  HotSpot对象头 Mark Word</p>
+<p>  存储内容                       |标志位|状态<br>  ——————————|—–|——–<br>  对象哈希码、对象分代年龄          |  01 |未锁定<br>  指向锁记录的指针                 |  00 |轻量级锁定<br>  指向重量级锁的指针               |  10 |膨胀（重量级锁定）<br>  空，不需记录信息                 |  11 |GC标记<br>  偏向线程ID、偏向时间戮、对象分代年龄|  01 |可偏向</p>
+</li>
+<li><p>1Bits固定为0</p>
 </li>
 </ul>
 </li>
+<li>指向方法区对象类型数据的指针</li>
 </ul>
 </li>
-</ul>
-<pre><code>        存储内容                       |标志位|状态
-        ------------------------------|-----|--------
-        对象哈希码、对象分代年龄          |  01 |未锁定
-        指向锁记录的指针                 |  00 |轻量级锁定
-        指向重量级锁的指针               |  10 |膨胀（重量级锁定）
-        空，不需记录信息                 |  11 |GC标记
-        偏向线程ID、偏向时间戮、对象分代年龄|  01 |可偏向
-
-
-    - 1Bits固定为0
-- 指向方法区对象类型数据的指针
-</code></pre><ul>
 <li>轻量级锁过程<ul>
 <li>进入同步代码块后，若同步对象未锁定（“01”状态），JVM先在当前线程的栈帧中建立锁记录，用于存储 Mark Word 的拷贝。</li>
 <li>JVM使用CAS操作尝试将对象的 Mark Word 更新为指向 Lock Record 的指针。<ul>
