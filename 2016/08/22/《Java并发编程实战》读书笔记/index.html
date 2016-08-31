@@ -426,7 +426,10 @@ volatile
 <li>ReentrantLock可重入，<code>必须在finally中释放锁</code>。</li>
 <li>Lock lock = new ReentrantLock();lock.lock();try{}finally{lock.unlock();}</li>
 <li>可定时与可轮询的锁获取模式是由tryLock()方法实现的。</li>
-<li>ReadWriteLock允许多个读操作同时进行，但每次只允许一个写操作。</li>
+<li>ReadWriteLock允许多个读操作同时进行，但每次只允许一个写操作。<ul>
+<li>当写操作时，其他线程无法读、写数据，而当读操作时，其它线程无法写数据，但可读数据</li>
+</ul>
+</li>
 </ul>
 <hr>
 <h1 id="构建自定义的同步工具"><a href="#构建自定义的同步工具" class="headerlink" title="构建自定义的同步工具"></a><center>构建自定义的同步工具</center></h1><hr>
