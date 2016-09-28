@@ -10,6 +10,13 @@
 
     <!--Description-->
     
+        <meta name="description" content="FreeMarker模板文件主要由如下4个部分组成
+文本：直接输出的部分
+注释：&amp;lt;#– … –&amp;gt; 格式部分，不会输出
+插值：即 ${…} 或 #{…} 格式的部分，将使用数据模型中的部分替代输出
+指令：FreeMarker 指定，和 HTML 标记类似，名字前加 # 予以区分，不会输出
+">
+    
 
     <!--Author-->
     
@@ -200,7 +207,242 @@
 
             <!-- Post Main Content -->
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                
+                <h3 id="FreeMarker模板文件主要由如下4个部分组成"><a href="#FreeMarker模板文件主要由如下4个部分组成" class="headerlink" title="FreeMarker模板文件主要由如下4个部分组成"></a>FreeMarker模板文件主要由如下4个部分组成</h3><ul>
+<li>文本：直接输出的部分</li>
+<li>注释：&lt;#– … –&gt; 格式部分，不会输出</li>
+<li>插值：即 ${…} 或 #{…} 格式的部分，将使用数据模型中的部分替代输出</li>
+<li><p>指令：FreeMarker 指定，和 HTML 标记类似，名字前加 # 予以区分，不会输出</p>
+<pre><code>&lt;html&gt;
+    &lt;head&gt;
+        &lt;title&gt;Welcome!&lt;/title&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;#-- 注释部分 --&gt;
+        &lt;#-- 下面使用插值 --&gt;
+        &lt;h1&gt;Welcome ${username} !&lt;/h1&gt;
+
+        &lt;p&gt;We have these animals:&lt;/p&gt;
+        &lt;u1&gt;
+            &lt;!-- 使用FTL指令 --&gt;
+            &lt;#list animals as animal&gt;
+                &lt;li&gt;${animal.name} for ${animal.price} Euros&lt;/li&gt;
+            &lt;/#list&gt;
+        &lt;/u1&gt;
+    &lt;/body&gt;
+&lt;/html&gt;
+</code></pre></li>
+</ul>
+<h3 id="控制语句"><a href="#控制语句" class="headerlink" title="控制语句"></a>控制语句</h3><pre><code>&lt;#if condition&gt; 
+    ... 
+&lt;#elseif condition2&gt; 
+    ... 
+&lt;#elseif condition3&gt; 
+    ... 
+&lt;#else&gt;
+
+&lt;#switch value&gt; 
+    &lt;#case refValue1&gt; 
+        ... 
+        &lt;#break&gt; 
+    &lt;#case refValue2&gt; 
+        ... 
+        &lt;#break&gt; 
+    &lt;#case refValueN&gt; 
+        ... 
+        &lt;#break&gt; 
+    &lt;#default&gt; 
+        ... 
+&lt;/#switch&gt;
+</code></pre><h3 id="通用插值"><a href="#通用插值" class="headerlink" title="通用插值"></a>通用插值</h3><ul>
+<li>插值结果为字符串值：直接输出表达式结果</li>
+<li>插值结果为数字值：根据默认格式（由#setting指令设置）将表达式结果转换成文本输出。可以使用内建的字符</li>
+<li>插值结果为日期值：根据默认格式(由#setting指令设置)将表达式结果转换成文本输出</li>
+<li><p>数字格式化插值</p>
+<pre><code>&lt;#settion number_format=&quot;currency&quot;/&gt; 
+&lt;#assign answer=42/&gt; 
+${answer} 
+${answer?string} &lt;#-- the same as ${answer} --&gt; 
+${answer?string.number} 
+${answer?string.currency} 
+${answer?string.percent} 
+</code></pre><p>  输出结果是:</p>
+<ul>
+<li>$42.00 </li>
+<li>$42.00 </li>
+<li>42 </li>
+<li>$42.00 </li>
+<li><p>4,200%</p>
+<p>  ${lastUpdated?string(“yyyy-MM-dd HH:mm:ss zzzz”)}<br>  ${lastUpdated?string(“EEE, MMM d, ‘’yy”)}<br>  ${lastUpdated?string(“EEEE, MMMM dd, yyyy, hh:mm:ss a ‘(‘zzz’)’”)}</p>
+<p>输出结果是:</p>
+</li>
+<li>2008-04-08 08:08:08 Pacific Daylight Time </li>
+<li>Tue, Apr 8, ‘03 </li>
+<li><p>Tuesday, April 08, 2003, 08:08:08 PM (PDT)</p>
+<p>  数字格式化插值可采用 #{expr;format} 形式来格式化数字，其中format可以是：<br>  mX:小数部分最小X位<br>  MX:小数部分最大X位 </p>
+<p>  如下面的例子:<br>  &lt;#assign x=2.582/&gt;<br>  &lt;#assign y=4/&gt;<br>  #{x; M2} &lt;#– 输出2.58 –&gt;<br>  #{y; M2} &lt;#– 输出4 –&gt;<br>  #{x; m2} &lt;#– 输出2.6 –&gt;<br>  #{y; m2} &lt;#– 输出4.0 –&gt;<br>  #{x; m1M2} &lt;#– 输出2.58 –&gt;<br>  #{x; m1M2} &lt;#– 输出4.0 –&gt;</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="函数调用"><a href="#函数调用" class="headerlink" title="函数调用"></a>函数调用</h3><ul>
+<li>函数调用在变量后用 ?：${username?upper_case}</li>
+</ul>
+<h3 id="防止空指针报错"><a href="#防止空指针报错" class="headerlink" title="防止空指针报错"></a>防止空指针报错</h3><ul>
+<li>变量名后用 ! 加默认值：${foo!”Default”}，如果 foo 为 null 则输出 Default</li>
+</ul>
+<h3 id="指令"><a href="#指令" class="headerlink" title="指令"></a>指令</h3><ul>
+<li>指令调用用 &lt;#commandName arguments&gt;&lt;/#commandName&gt;</li>
+</ul>
+<h3 id="宏（相当于-JSP-的-tag-定义）"><a href="#宏（相当于-JSP-的-tag-定义）" class="headerlink" title="宏（相当于 JSP 的 tag 定义）"></a>宏（相当于 JSP 的 tag 定义）</h3><pre><code>&lt;!-- 定义宏用 &lt;#macro macroName parameterList&gt; --&gt;
+&lt;#macro list title items&gt;
+    &lt;p&gt;${title?cap_first}:
+    &lt;ul&gt;
+        &lt;#list items as item&gt;
+        &lt;li&gt;${item}
+        &lt;/#list&gt;
+    &lt;/ul&gt;
+&lt;/#macro&gt;
+
+&lt;!-- 调用宏用 &lt;@macroName arguments&gt; --&gt;
+&lt;@list items=animals title=&quot;animals&quot;/&gt;
+</code></pre><h3 id="include指令"><a href="#include指令" class="headerlink" title="include指令"></a>include指令</h3><ul>
+<li>include 指令的作用类似于 JSP 的包含指令，用于包含指定页。include指令的语法格式如下：<ul>
+<li>&lt;#include filename [options]&gt;</li>
+</ul>
+</li>
+</ul>
+<h3 id="import"><a href="#import" class="headerlink" title="import"></a>import</h3><ul>
+<li>&lt;#import path as hash&gt;</li>
+<li>类似于 java 里的 import，它导入文件，然后就可以在当前文件里使用被导入文件里的宏组件。</li>
+<li><p>假设 mylib.ftl 里定义了宏 copyright 那么我们在其他模板页面里可以这样使用</p>
+<pre><code>&lt;#import &quot;/libs/mylib.ftl&quot; as my&gt; 
+&lt;@my.copyright date=&quot;1999-2002&quot;/&gt; 
+</code></pre><ul>
+<li>my 在 freemarker 里被称作 namespace</li>
+</ul>
+</li>
+</ul>
+<h3 id="noparse指令"><a href="#noparse指令" class="headerlink" title="noparse指令"></a>noparse指令</h3><ul>
+<li><p>noparse 指令指定 FreeMarker 不处理该指定里包含的内容，该指令的语法格式如下：</p>
+<ul>
+<li><p>&lt;#noparse&gt;…&lt;/#noparse&gt;</p>
+<p>  &lt;#noparse&gt;</p>
+<pre><code>&lt;#list animals as animal&gt;
+&lt;li&gt;${animal.name} for ${animal.price} Euros&lt;/li&gt;
+&lt;/#list&gt;
+</code></pre><p>  &lt;/#noparse&gt;</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="转义-HTML-特殊字符"><a href="#转义-HTML-特殊字符" class="headerlink" title="转义 HTML 特殊字符"></a>转义 HTML 特殊字符</h3><ul>
+<li>${username?html}</li>
+</ul>
+<h3 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h3><pre><code>&lt;!-- UUID: 0D85193C-E51F-4A06-9C65-DB1E5AC999ED --&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;Welcome!&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;#-- 注释部分 --&gt;
+
+    &lt;#-- 下面使用插值 --&gt;
+    &lt;h1&gt;Welcome ${username}!&lt;/h1&gt;
+
+    如果直接访问为 null 则报错，防止 null 报错可以在 ! 后跟默认值: ${foo!&quot;Default&quot;}&lt;br&gt;
+    函数调用用问号后跟函数名: ${username?upper_case}&lt;br&gt;
+    ${username?html}
+
+    &lt;p&gt;访问 list，指令中的参数不加 $ {}: &lt;br&gt;
+    We have these animals:&lt;/p&gt;
+    &lt;u1&gt;
+        &lt;!-- 使用FTL指令 --&gt;
+        &lt;#list animals as animal&gt;
+        &lt;li&gt;${animal.name} for ${animal.price} Euros&lt;/li&gt;
+        &lt;/#list&gt;
+    &lt;/u1&gt;
+
+    定义循环输出的宏: list 是宏的名字，title, items 是宏的参数&lt;br&gt;
+    &lt;#macro list title items&gt;
+        &lt;p&gt;${title?cap_first}:
+        &lt;ul&gt;
+            &lt;#list items as item&gt;
+            &lt;li&gt;${item}
+            &lt;/#list&gt;
+        &lt;/ul&gt;
+    &lt;/#macro&gt;
+
+    调用宏用：
+    &lt;@list items=animals title=&quot;animals&quot;/&gt;
+
+    &lt;#noparse&gt;
+        &lt;#list animals as animal&gt;
+        &lt;li&gt;${animal.name} for ${animal.price} Euros&lt;/li&gt;
+        &lt;/#list&gt;
+    &lt;/#noparse&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre><ul>
+<li><p>domain.Animal</p>
+<pre><code>package domain;
+
+public class Animal {
+    private String name;
+    private Integer price;
+
+    public Animal(String name, Integer price) {
+        this.name = name;
+        this.price = price;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Integer getPrice() {
+        return price;
+    }
+
+    public void setPrice(Integer price) {
+        this.price = price;
+    }
+}
+</code></pre></li>
+<li><p>controller.FreemarkerController</p>
+<pre><code>package controller;
+
+import domain.Animal;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.LinkedList;
+import java.util.List;
+
+@Controller
+public class FreemarkerController {
+    @RequestMapping(&quot;/freemarker-syntax&quot;)
+    public String syntax(ModelMap map) {
+        map.addAttribute(&quot;username&quot;, &quot;Alice&quot;);
+
+        List&lt;Animal&gt; animals = new LinkedList&lt;Animal&gt;();
+        animals.add(new Animal(&quot;Dog&quot;, 10));
+        animals.add(new Animal(&quot;Pig&quot;, 20));
+        animals.add(new Animal(&quot;Cat&quot;, 30));
+        animals.add(new Animal(&quot;Tiger&quot;, 40));
+
+        map.addAttribute(&quot;animals&quot;, animals);
+
+        return &quot;freemarker-syntax.htm&quot;;
+    }
+}
+</code></pre></li>
+</ul>
+
 
                 
             </div>
