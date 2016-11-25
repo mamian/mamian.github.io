@@ -285,7 +285,9 @@ public void getDefaultValue (){
     int defaultValue = testService.getDefaultValue();
     ...
 }
-</code></pre><h3 id="2-变量名需为有意义的字符串，不可出现类似x、i等无法判定含义的字符串。"><a href="#2-变量名需为有意义的字符串，不可出现类似x、i等无法判定含义的字符串。" class="headerlink" title="2. 变量名需为有意义的字符串，不可出现类似x、i等无法判定含义的字符串。"></a>2. 变量名需为有意义的字符串，不可出现类似x、i等无法判定含义的字符串。</h3><pre><code>int x = paymentService.sum();
+</code></pre><h3 id="2-枚举、常量、变量名需为有意义的字符串，不可出现类似x、i等无法判定含义的字符串。"><a href="#2-枚举、常量、变量名需为有意义的字符串，不可出现类似x、i等无法判定含义的字符串。" class="headerlink" title="2. 枚举、常量、变量名需为有意义的字符串，不可出现类似x、i等无法判定含义的字符串。"></a>2. 枚举、常量、变量名需为有意义的字符串，不可出现类似x、i等无法判定含义的字符串。</h3><pre><code>int x = paymentService.sum();
+
+public static final String ONE = 1;
 </code></pre><h3 id="3-抽象类使用Abstract前缀，接口使用I前缀，实现类使用Impl后缀。"><a href="#3-抽象类使用Abstract前缀，接口使用I前缀，实现类使用Impl后缀。" class="headerlink" title="3. 抽象类使用Abstract前缀，接口使用I前缀，实现类使用Impl后缀。"></a>3. 抽象类使用Abstract前缀，接口使用I前缀，实现类使用Impl后缀。</h3><h1 id="方法"><a href="#方法" class="headerlink" title="方法"></a><center>方法</center></h1><h3 id="1-定义及使用方法时，若参数多于3个，使用竖版方式，且参数要对齐"><a href="#1-定义及使用方法时，若参数多于3个，使用竖版方式，且参数要对齐" class="headerlink" title="1. 定义及使用方法时，若参数多于3个，使用竖版方式，且参数要对齐"></a>1. 定义及使用方法时，若参数多于3个，使用竖版方式，且参数要对齐</h3><pre><code>public Result create(String loginName,
                      String password,
                      String name,
