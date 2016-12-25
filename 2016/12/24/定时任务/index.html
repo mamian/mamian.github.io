@@ -10,6 +10,20 @@
 
     <!--Description-->
     
+        <meta name="description" content="定时任务实现方式
+Java中的java.util.Timer与java.util.TimerTask
+Quartz
+SpringBoot中的Scheduled
+
+
+
+springboot定时任务
+定义任务
+@Component
+public class ScheduleJob {
+
+    @Sch">
+    
 
     <!--Author-->
     
@@ -18,7 +32,7 @@
 
     <!--Open Graph Title-->
     
-        <meta property="og:title" content="马面"/>
+        <meta property="og:title" content="定时任务"/>
     
 
     <!--Open Graph Description-->
@@ -29,7 +43,7 @@
 
     <!--Type page-->
     
-        <meta property="og:type" content="website" />
+        <meta property="og:type" content="article" />
     
 
     <!--Page Cover-->
@@ -40,7 +54,7 @@
 
     <!-- Title -->
     
-    <title>page - Archiv: 2016 - 马面</title>
+    <title>定时任务 - 马面</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
@@ -147,91 +161,108 @@
 </nav>
 
     <!-- Main Content -->
-    
+    <!-- Page Header -->
+<!-- Set your background image for this header in your post front-matter: cover -->
 
-<!-- Page Header -->
-<!-- Set your background image for this header in the theme's configuration: index_cover -->
 <header class="intro-header" style="background-image: url('http://www.codeblocq.com/assets/projects/hexo-theme-clean-blog/img/home-bg.jpg')">
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <div class="site-heading">
-                    <h1>2016</h1>
+                <div class="post-heading">
+                    <h1>定时任务</h1>
+                    
+                    <span class="meta">
+                        <!-- Date and Author -->
+                        
+                        2016-12-24
+                    </span>
                 </div>
             </div>
         </div>
     </div>
 </header>
 
-<!-- Main Content -->
-<div class="container">
-    <div class="row">
-        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Tags and categories -->
+           
+
+            <!-- Gallery -->
             
-                <div class="post-preview">
-    <a href="/2016/07/26/mysql数据库增量同步/">
-        <h1 class="post-title archive">
-            mysql数据库增量同步
-        </h1>
-    </a>
-    <p class="post-meta archive">
-        <!-- Date and Author -->
-        
-        2016-07-26
-    </p>
-</div>
-            
-                <div class="post-preview">
-    <a href="/2016/07/18/mysql修改字符集/">
-        <h1 class="post-title archive">
-            mysql修改字符集
-        </h1>
-    </a>
-    <p class="post-meta archive">
-        <!-- Date and Author -->
-        
-        2016-07-18
-    </p>
-</div>
-            
-                <div class="post-preview">
-    <a href="/2016/07/17/hexo安装/">
-        <h1 class="post-title archive">
-            hexo安装
-        </h1>
-    </a>
-    <p class="post-meta archive">
-        <!-- Date and Author -->
-        
-        2016-07-17
-    </p>
-</div>
-            
-                <div class="post-preview">
-    <a href="/2016/07/07/github-mamian/">
-        <h1 class="post-title archive">
-            My open source projects on github
-        </h1>
-    </a>
-    <p class="post-meta archive">
-        <!-- Date and Author -->
-        
-        2016-07-07
-    </p>
-</div>
-            
-            <div class="archive-before-pagination"></div>
-            <ul class="pager">
-    
-        <li class="previous"><a href="/archives/2016/page/4/">&larr;  Nächste Seite</a></li>
-    
-    
+
+            <!-- Post Main Content -->
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul>
+<li>定时任务实现方式<ul>
+<li>Java中的java.util.Timer与java.util.TimerTask</li>
+<li>Quartz</li>
+<li>SpringBoot中的Scheduled</li>
 </ul>
+</li>
+</ul>
+<h1 id="springboot定时任务"><a href="#springboot定时任务" class="headerlink" title="springboot定时任务"></a><center>springboot定时任务</center></h1><ul>
+<li><p>定义任务</p>
+<pre><code>@Component
+public class ScheduleJob {
+
+    @Scheduled(cron=&quot;0 0/2 8-20 * * ?&quot;) 
+    public void job1() {
+        //间隔2分钟执行任务
+    }
+
+    @Scheduled(cron=&quot;0 0/1 8-20 * * ?&quot;) 
+    public void job2() {
+        // 间隔1分钟执行任务 
+    }
+}
+</code></pre></li>
+<li><p>启动任务</p>
+<pre><code>@EnableScheduling
+@SpringBootApplication
+public class Application {
+    public static void main(String[] args) {
+        SpringApplication.run(Application.class, args);
+    }
+}
+</code></pre></li>
+<li><p>并行执行</p>
+<ul>
+<li><p>springboot的schedule默认串行执行，要支持并行，需在applicationContext.xml中添加如下内容</p>
+<pre><code>&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;
+    xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; 
+    xmlns:task=&quot;http://www.springframework.org/schema/task&quot;
+    xmlns:context=&quot;http://www.springframework.org/schema/context&quot;
+    xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.0.xsd&quot;&gt;
+
+    &lt;!-- Enables the Spring Task @Scheduled programming model --&gt;
+    &lt;task:executor id=&quot;executor&quot; pool-size=&quot;5&quot; /&gt;
+    &lt;task:scheduler id=&quot;scheduler&quot; pool-size=&quot;10&quot; /&gt;
+    &lt;task:annotation-driven executor=&quot;executor&quot; scheduler=&quot;scheduler&quot; /&gt;
+
+&lt;/beans&gt;
+</code></pre></li>
+</ul>
+</li>
+</ul>
+
+
+                
+            </div>
+
+            <!-- Comments -->
+            
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    
+
+
+                </div>
+            
         </div>
     </div>
-</div>
-
-
+</article>
 
     <!-- Footer -->
     <hr />
