@@ -756,6 +756,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 </li>
 </ul>
 <hr>
+<h1 id="Spring-Boot起步依赖"><a href="#Spring-Boot起步依赖" class="headerlink" title="Spring Boot起步依赖"></a><center>Spring Boot起步依赖</center></h1><hr>
+<h1 id="配置属性"><a href="#配置属性" class="headerlink" title="配置属性"></a><center>配置属性</center></h1><ul>
+<li>@ConfigurationProperties注解</li>
+<li>要指定内嵌tomcat或jetty监听端口，可设置server.port属性。此属性可设置于application.properties、application.yml、操作系统环境变量。</li>
+<li>设置的属性是否生效取决于对应的组件是否声明为spring应用程序上下文里的Bean(基本是自动配置的)。为一个不生效的组件设置属性是无效的。</li>
+</ul>
+<hr>
+<h1 id="Spring-Boot依赖"><a href="#Spring-Boot依赖" class="headerlink" title="Spring Boot依赖"></a><center>Spring Boot依赖</center></h1><ul>
+<li>如起步依赖中未包含所需依赖，需显示依赖，不需指定版本号（如此依赖为springboot依赖管理范围内）。</li>
+</ul>
 
 
                 
@@ -768,7 +778,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 
     <hr />
-    <h3>Kommentare:</h3>
+    <h3>Comments:</h3>
     <div id="fb-root"></div>
     <script>
         (function(d, s, id) {
