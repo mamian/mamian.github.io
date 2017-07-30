@@ -277,7 +277,28 @@ Docker可理解为一种轻量级的沙盒。每个容器内运行着一个应�
 </ul>
 </li>
 </ul>
-<h3 id="2-2-安装docker"><a href="#2-2-安装docker" class="headerlink" title="2.2 安装docker"></a>2.2 安装docker</h3><h5 id="2-2-1-Ubuntu环境下安装docker"><a href="#2-2-1-Ubuntu环境下安装docker" class="headerlink" title="2.2.1 Ubuntu环境下安装docker"></a>2.2.1 Ubuntu环境下安装docker</h5><h5 id="2-2-2-Centos环境下安装docker"><a href="#2-2-2-Centos环境下安装docker" class="headerlink" title="2.2.2 Centos环境下安装docker"></a>2.2.2 Centos环境下安装docker</h5><h5 id="2-2-3-通过脚本安装"><a href="#2-2-3-通过脚本安装" class="headerlink" title="2.2.3 通过脚本安装"></a>2.2.3 通过脚本安装</h5><h5 id="2-2-4-Mac-os环境下安装docker"><a href="#2-2-4-Mac-os环境下安装docker" class="headerlink" title="2.2.4 Mac os环境下安装docker"></a>2.2.4 Mac os环境下安装docker</h5><h5 id="2-2-5-Windows环境下安装docker"><a href="#2-2-5-Windows环境下安装docker" class="headerlink" title="2.2.5 Windows环境下安装docker"></a>2.2.5 Windows环境下安装docker</h5><h3 id="2-3-配置docker服务"><a href="#2-3-配置docker服务" class="headerlink" title="2.3 配置docker服务"></a>2.3 配置docker服务</h3><h3 id="2-4-推荐实践环境"><a href="#2-4-推荐实践环境" class="headerlink" title="2.4 推荐实践环境"></a>2.4 推荐实践环境</h3><h3 id="2-5-本章小结"><a href="#2-5-本章小结" class="headerlink" title="2.5 本章小结"></a>2.5 本章小结</h3><hr>
+<h3 id="2-2-安装docker"><a href="#2-2-安装docker" class="headerlink" title="2.2 安装docker"></a>2.2 安装docker</h3><ul>
+<li>Docker Platform<ul>
+<li>支持在桌面系统或云平台安装Docker</li>
+</ul>
+</li>
+<li>DockerHub<ul>
+<li>官方云托管服务，提供公有或私有镜像仓库</li>
+</ul>
+</li>
+<li>DockerCloud<ul>
+<li>官方容器云服务，可完成容器部署与管理，可完整支持容器化项目，还有CI、CD功能。</li>
+</ul>
+</li>
+<li>Docker DataCenter<ul>
+<li>提供企业级的简单安全弹性的容器集群编排和管理。</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>尽量使用Linux来运行Docker，Linux原生支持。</p>
+</blockquote>
+<h5 id="2-2-1-Ubuntu环境下安装docker"><a href="#2-2-1-Ubuntu环境下安装docker" class="headerlink" title="2.2.1 Ubuntu环境下安装docker"></a>2.2.1 Ubuntu环境下安装docker</h5><h5 id="2-2-2-Centos环境下安装docker"><a href="#2-2-2-Centos环境下安装docker" class="headerlink" title="2.2.2 Centos环境下安装docker"></a>2.2.2 Centos环境下安装docker</h5><h5 id="2-2-3-通过脚本安装"><a href="#2-2-3-通过脚本安装" class="headerlink" title="2.2.3 通过脚本安装"></a>2.2.3 通过脚本安装</h5><h5 id="2-2-4-Mac-os环境下安装docker"><a href="#2-2-4-Mac-os环境下安装docker" class="headerlink" title="2.2.4 Mac os环境下安装docker"></a>2.2.4 Mac os环境下安装docker</h5><h5 id="2-2-5-Windows环境下安装docker"><a href="#2-2-5-Windows环境下安装docker" class="headerlink" title="2.2.5 Windows环境下安装docker"></a>2.2.5 Windows环境下安装docker</h5><h3 id="2-3-配置docker服务"><a href="#2-3-配置docker服务" class="headerlink" title="2.3 配置docker服务"></a>2.3 配置docker服务</h3><h3 id="2-4-推荐实践环境"><a href="#2-4-推荐实践环境" class="headerlink" title="2.4 推荐实践环境"></a>2.4 推荐实践环境</h3><h3 id="2-5-本章小结"><a href="#2-5-本章小结" class="headerlink" title="2.5 本章小结"></a>2.5 本章小结</h3><hr>
 <h1 id="第3章-使用docker镜像"><a href="#第3章-使用docker镜像" class="headerlink" title="第3章 使用docker镜像"></a>第3章 使用docker镜像</h1><h3 id="3-1-获取镜像"><a href="#3-1-获取镜像" class="headerlink" title="3.1 获取镜像"></a>3.1 获取镜像</h3><h3 id="3-2-查看镜像信息"><a href="#3-2-查看镜像信息" class="headerlink" title="3.2 查看镜像信息"></a>3.2 查看镜像信息</h3><h3 id="3-3-搜寻镜像"><a href="#3-3-搜寻镜像" class="headerlink" title="3.3 搜寻镜像"></a>3.3 搜寻镜像</h3><h3 id="3-4-删除镜像"><a href="#3-4-删除镜像" class="headerlink" title="3.4 删除镜像"></a>3.4 删除镜像</h3><h3 id="3-5-创建镜像"><a href="#3-5-创建镜像" class="headerlink" title="3.5 创建镜像"></a>3.5 创建镜像</h3><h3 id="3-6-存出和载入镜像"><a href="#3-6-存出和载入镜像" class="headerlink" title="3.6 存出和载入镜像"></a>3.6 存出和载入镜像</h3><h3 id="3-7-上传镜像"><a href="#3-7-上传镜像" class="headerlink" title="3.7 上传镜像"></a>3.7 上传镜像</h3><h3 id="3-8-本章小结"><a href="#3-8-本章小结" class="headerlink" title="3.8 本章小结"></a>3.8 本章小结</h3><hr>
 <h1 id="第4章-操作docker容器"><a href="#第4章-操作docker容器" class="headerlink" title="第4章 操作docker容器"></a>第4章 操作docker容器</h1><h3 id="4-1-创建容器"><a href="#4-1-创建容器" class="headerlink" title="4.1 创建容器"></a>4.1 创建容器</h3><h3 id="4-2-终止容器"><a href="#4-2-终止容器" class="headerlink" title="4.2 终止容器"></a>4.2 终止容器</h3><h3 id="4-3-进入容器"><a href="#4-3-进入容器" class="headerlink" title="4.3 进入容器"></a>4.3 进入容器</h3><h3 id="4-4-删除容器"><a href="#4-4-删除容器" class="headerlink" title="4.4 删除容器"></a>4.4 删除容器</h3><h3 id="4-5-导入和导出容器"><a href="#4-5-导入和导出容器" class="headerlink" title="4.5 导入和导出容器"></a>4.5 导入和导出容器</h3><h3 id="4-6-本章小结"><a href="#4-6-本章小结" class="headerlink" title="4.6 本章小结"></a>4.6 本章小结</h3><hr>
 <h1 id="第5章-访问docker仓库"><a href="#第5章-访问docker仓库" class="headerlink" title="第5章 访问docker仓库"></a>第5章 访问docker仓库</h1><h3 id="5-1-docker-hub公共镜像市场"><a href="#5-1-docker-hub公共镜像市场" class="headerlink" title="5.1 docker hub公共镜像市场"></a>5.1 docker hub公共镜像市场</h3><h3 id="5-2-时速云镜像市场"><a href="#5-2-时速云镜像市场" class="headerlink" title="5.2 时速云镜像市场"></a>5.2 时速云镜像市场</h3><h3 id="5-3-搭建本地私有仓库"><a href="#5-3-搭建本地私有仓库" class="headerlink" title="5.3 搭建本地私有仓库"></a>5.3 搭建本地私有仓库</h3><h3 id="5-4-本章小结"><a href="#5-4-本章小结" class="headerlink" title="5.4 本章小结"></a>5.4 本章小结</h3><hr>
@@ -316,7 +337,7 @@ Docker可理解为一种轻量级的沙盒。每个容器内运行着一个应�
 
 
     <hr />
-    <h3>Comments:</h3>
+    <h3>Kommentare:</h3>
     <div id="fb-root"></div>
     <script>
         (function(d, s, id) {
