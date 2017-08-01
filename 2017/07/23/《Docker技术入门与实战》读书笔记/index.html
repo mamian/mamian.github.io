@@ -298,7 +298,54 @@ Docker可理解为一种轻量级的沙盒。每个容器内运行着一个应�
 <blockquote>
 <p>尽量使用Linux来运行Docker，Linux原生支持。</p>
 </blockquote>
-<h5 id="2-2-1-Ubuntu环境下安装docker"><a href="#2-2-1-Ubuntu环境下安装docker" class="headerlink" title="2.2.1 Ubuntu环境下安装docker"></a>2.2.1 Ubuntu环境下安装docker</h5><h5 id="2-2-2-Centos环境下安装docker"><a href="#2-2-2-Centos环境下安装docker" class="headerlink" title="2.2.2 Centos环境下安装docker"></a>2.2.2 Centos环境下安装docker</h5><h5 id="2-2-3-通过脚本安装"><a href="#2-2-3-通过脚本安装" class="headerlink" title="2.2.3 通过脚本安装"></a>2.2.3 通过脚本安装</h5><h5 id="2-2-4-Mac-os环境下安装docker"><a href="#2-2-4-Mac-os环境下安装docker" class="headerlink" title="2.2.4 Mac os环境下安装docker"></a>2.2.4 Mac os环境下安装docker</h5><h5 id="2-2-5-Windows环境下安装docker"><a href="#2-2-5-Windows环境下安装docker" class="headerlink" title="2.2.5 Windows环境下安装docker"></a>2.2.5 Windows环境下安装docker</h5><h3 id="2-3-配置docker服务"><a href="#2-3-配置docker服务" class="headerlink" title="2.3 配置docker服务"></a>2.3 配置docker服务</h3><h3 id="2-4-推荐实践环境"><a href="#2-4-推荐实践环境" class="headerlink" title="2.4 推荐实践环境"></a>2.4 推荐实践环境</h3><h3 id="2-5-本章小结"><a href="#2-5-本章小结" class="headerlink" title="2.5 本章小结"></a>2.5 本章小结</h3><hr>
+<h5 id="2-2-1-Ubuntu环境下安装docker"><a href="#2-2-1-Ubuntu环境下安装docker" class="headerlink" title="2.2.1 Ubuntu环境下安装docker"></a>2.2.1 Ubuntu环境下安装docker</h5><ul>
+<li>系统要求：64位、内核&gt;3.10<ul>
+<li>查询linux版本：uname -a 或 cat /proc/version</li>
+<li>为让docker使用aufs存储，安装linux-image-extra软件包<ul>
+<li>sudo apt-get install -y linux-image-extra-$(uname -r)</li>
+</ul>
+</li>
+<li>ubuntu&gt;14.04 LTS</li>
+</ul>
+</li>
+<li>添加镜像源<ul>
+<li>安装apt-transport-https以支持https协议的源<ul>
+<li>sudo apt-get install -y apt-transport-https</li>
+</ul>
+</li>
+<li>添加源的gpg密钥<ul>
+<li>sudo apt-key adv –keyserver hkp://p80.pool.sks-keyservers.net:80 –recv-keys 58118E89F3A912897C070ADBF76221572C52609D</li>
+</ul>
+</li>
+<li>获取当前操作系统代号<ul>
+<li>lsb_release -c</li>
+<li>14.04 LTS代号为trusty</li>
+</ul>
+</li>
+<li>添加docker官方apt源，通过以下命令创建/etc/apt/sources.list.d/docker.list，并写入源的地址。<ul>
+<li>sudo cat &lt;<eof>&gt; /etc/apt/sources.list.d/docker.list<br>deb <a href="https://apt.dockerproject.org/repo" target="_blank" rel="external">https://apt.dockerproject.org/repo</a> ubuntu-trusty main<br>EOF</eof></li>
+</ul>
+</li>
+<li>添加成功后，更新apt软件包缓存<ul>
+<li>sudo apt-get update</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>开始安装docker<ul>
+<li>sudo apt-get install -y docker-engine</li>
+<li>除手动添加软件源方式安装，也可使用官方脚本自动化安装<ul>
+<li>sudo curl -sSL <a href="https://get.docker.com/" target="_blank" rel="external">https://get.docker.com/</a> | sh</li>
+</ul>
+</li>
+<li>安装成功后启动docker<ul>
+<li>sudo service docker start</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h5 id="2-2-2-Centos环境下安装docker"><a href="#2-2-2-Centos环境下安装docker" class="headerlink" title="2.2.2 Centos环境下安装docker"></a>2.2.2 Centos环境下安装docker</h5><h5 id="2-2-3-通过脚本安装"><a href="#2-2-3-通过脚本安装" class="headerlink" title="2.2.3 通过脚本安装"></a>2.2.3 通过脚本安装</h5><h5 id="2-2-4-Mac-os环境下安装docker"><a href="#2-2-4-Mac-os环境下安装docker" class="headerlink" title="2.2.4 Mac os环境下安装docker"></a>2.2.4 Mac os环境下安装docker</h5><h5 id="2-2-5-Windows环境下安装docker"><a href="#2-2-5-Windows环境下安装docker" class="headerlink" title="2.2.5 Windows环境下安装docker"></a>2.2.5 Windows环境下安装docker</h5><h3 id="2-3-配置docker服务"><a href="#2-3-配置docker服务" class="headerlink" title="2.3 配置docker服务"></a>2.3 配置docker服务</h3><h3 id="2-4-推荐实践环境"><a href="#2-4-推荐实践环境" class="headerlink" title="2.4 推荐实践环境"></a>2.4 推荐实践环境</h3><h3 id="2-5-本章小结"><a href="#2-5-本章小结" class="headerlink" title="2.5 本章小结"></a>2.5 本章小结</h3><hr>
 <h1 id="第3章-使用docker镜像"><a href="#第3章-使用docker镜像" class="headerlink" title="第3章 使用docker镜像"></a>第3章 使用docker镜像</h1><h3 id="3-1-获取镜像"><a href="#3-1-获取镜像" class="headerlink" title="3.1 获取镜像"></a>3.1 获取镜像</h3><h3 id="3-2-查看镜像信息"><a href="#3-2-查看镜像信息" class="headerlink" title="3.2 查看镜像信息"></a>3.2 查看镜像信息</h3><h3 id="3-3-搜寻镜像"><a href="#3-3-搜寻镜像" class="headerlink" title="3.3 搜寻镜像"></a>3.3 搜寻镜像</h3><h3 id="3-4-删除镜像"><a href="#3-4-删除镜像" class="headerlink" title="3.4 删除镜像"></a>3.4 删除镜像</h3><h3 id="3-5-创建镜像"><a href="#3-5-创建镜像" class="headerlink" title="3.5 创建镜像"></a>3.5 创建镜像</h3><h3 id="3-6-存出和载入镜像"><a href="#3-6-存出和载入镜像" class="headerlink" title="3.6 存出和载入镜像"></a>3.6 存出和载入镜像</h3><h3 id="3-7-上传镜像"><a href="#3-7-上传镜像" class="headerlink" title="3.7 上传镜像"></a>3.7 上传镜像</h3><h3 id="3-8-本章小结"><a href="#3-8-本章小结" class="headerlink" title="3.8 本章小结"></a>3.8 本章小结</h3><hr>
 <h1 id="第4章-操作docker容器"><a href="#第4章-操作docker容器" class="headerlink" title="第4章 操作docker容器"></a>第4章 操作docker容器</h1><h3 id="4-1-创建容器"><a href="#4-1-创建容器" class="headerlink" title="4.1 创建容器"></a>4.1 创建容器</h3><h3 id="4-2-终止容器"><a href="#4-2-终止容器" class="headerlink" title="4.2 终止容器"></a>4.2 终止容器</h3><h3 id="4-3-进入容器"><a href="#4-3-进入容器" class="headerlink" title="4.3 进入容器"></a>4.3 进入容器</h3><h3 id="4-4-删除容器"><a href="#4-4-删除容器" class="headerlink" title="4.4 删除容器"></a>4.4 删除容器</h3><h3 id="4-5-导入和导出容器"><a href="#4-5-导入和导出容器" class="headerlink" title="4.5 导入和导出容器"></a>4.5 导入和导出容器</h3><h3 id="4-6-本章小结"><a href="#4-6-本章小结" class="headerlink" title="4.6 本章小结"></a>4.6 本章小结</h3><hr>
 <h1 id="第5章-访问docker仓库"><a href="#第5章-访问docker仓库" class="headerlink" title="第5章 访问docker仓库"></a>第5章 访问docker仓库</h1><h3 id="5-1-docker-hub公共镜像市场"><a href="#5-1-docker-hub公共镜像市场" class="headerlink" title="5.1 docker hub公共镜像市场"></a>5.1 docker hub公共镜像市场</h3><h3 id="5-2-时速云镜像市场"><a href="#5-2-时速云镜像市场" class="headerlink" title="5.2 时速云镜像市场"></a>5.2 时速云镜像市场</h3><h3 id="5-3-搭建本地私有仓库"><a href="#5-3-搭建本地私有仓库" class="headerlink" title="5.3 搭建本地私有仓库"></a>5.3 搭建本地私有仓库</h3><h3 id="5-4-本章小结"><a href="#5-4-本章小结" class="headerlink" title="5.4 本章小结"></a>5.4 本章小结</h3><hr>
