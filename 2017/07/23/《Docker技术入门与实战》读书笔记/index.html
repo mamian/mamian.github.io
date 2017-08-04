@@ -384,7 +384,17 @@ Docker可理解为一种轻量级的沙盒。每个容器内运行着一个应�
 <li>退出重新登录生效</li>
 </ul>
 </li>
-<li>docker默认配置文件：<code>/etc/default/docker</code></li>
+<li>docker默认配置文件：<code>/etc/default/docker</code><ul>
+<li>修改参数，如让docker服务通过本地2375端口接收来自外部的请求<ul>
+<li>DOCKER_OPTS=”$DOCKER_OPTS -H tcp://0.0.0.0:2375 -H unix:///var/run/docker.sock”</li>
+</ul>
+</li>
+<li>修改后重启docker服务：<ul>
+<li>sudo service docker restart</li>
+</ul>
+</li>
+</ul>
+</li>
 <li></li>
 </ul>
 <h3 id="2-4-推荐实践环境"><a href="#2-4-推荐实践环境" class="headerlink" title="2.4 推荐实践环境"></a>2.4 推荐实践环境</h3><h3 id="2-5-本章小结"><a href="#2-5-本章小结" class="headerlink" title="2.5 本章小结"></a>2.5 本章小结</h3><hr>
