@@ -417,7 +417,21 @@ Docker可理解为一种轻量级的沙盒。每个容器内运行着一个应�
 <li>Ubuntu 14.04.3 LTS</li>
 </ul>
 <hr>
-<h1 id="第3章-使用docker镜像"><a href="#第3章-使用docker镜像" class="headerlink" title="第3章 使用docker镜像"></a>第3章 使用docker镜像</h1><h3 id="3-1-获取镜像"><a href="#3-1-获取镜像" class="headerlink" title="3.1 获取镜像"></a>3.1 获取镜像</h3><h3 id="3-2-查看镜像信息"><a href="#3-2-查看镜像信息" class="headerlink" title="3.2 查看镜像信息"></a>3.2 查看镜像信息</h3><h3 id="3-3-搜寻镜像"><a href="#3-3-搜寻镜像" class="headerlink" title="3.3 搜寻镜像"></a>3.3 搜寻镜像</h3><h3 id="3-4-删除镜像"><a href="#3-4-删除镜像" class="headerlink" title="3.4 删除镜像"></a>3.4 删除镜像</h3><h3 id="3-5-创建镜像"><a href="#3-5-创建镜像" class="headerlink" title="3.5 创建镜像"></a>3.5 创建镜像</h3><h3 id="3-6-存出和载入镜像"><a href="#3-6-存出和载入镜像" class="headerlink" title="3.6 存出和载入镜像"></a>3.6 存出和载入镜像</h3><h3 id="3-7-上传镜像"><a href="#3-7-上传镜像" class="headerlink" title="3.7 上传镜像"></a>3.7 上传镜像</h3><h3 id="3-8-本章小结"><a href="#3-8-本章小结" class="headerlink" title="3.8 本章小结"></a>3.8 本章小结</h3><hr>
+<h1 id="第3章-使用docker镜像"><a href="#第3章-使用docker镜像" class="headerlink" title="第3章 使用docker镜像"></a>第3章 使用docker镜像</h1><h3 id="3-1-获取镜像"><a href="#3-1-获取镜像" class="headerlink" title="3.1 获取镜像"></a>3.1 获取镜像</h3><ul>
+<li>从官方docker hub镜像源下载镜像：<code>docker pull NAME[:TAG]</code><ul>
+<li>NAME为境像仓库名，TAG为镜像标签（通常为版本）</li>
+<li>获取ubuntu：<code>docker pull ubuntu:14.04</code></li>
+<li>不显示指定TAG，默认选择latest标签</li>
+</ul>
+</li>
+<li>从pull过程可知，镜像文件由若干层组成。当不同镜像包含相同的层时，本地仅存一份。</li>
+<li>从不同的仓库下载镜像，可能重名。严格的说，镜像仓库名中应添加仓库地址，默认为从docker hub下载，前缀可忽略。<ul>
+<li>docker pull registry.hub.docker.com/ubuntu:14.04 即 docker pull ubuntu:14.04</li>
+</ul>
+</li>
+<li>下载镜像后，利用镜像创建容器，在容器中执行bash应用：<code>docker run -it ubuntu:14.04 bash</code>，bash中执行命令：<code>ping localhost</code></li>
+</ul>
+<h3 id="3-2-查看镜像信息"><a href="#3-2-查看镜像信息" class="headerlink" title="3.2 查看镜像信息"></a>3.2 查看镜像信息</h3><h3 id="3-3-搜寻镜像"><a href="#3-3-搜寻镜像" class="headerlink" title="3.3 搜寻镜像"></a>3.3 搜寻镜像</h3><h3 id="3-4-删除镜像"><a href="#3-4-删除镜像" class="headerlink" title="3.4 删除镜像"></a>3.4 删除镜像</h3><h3 id="3-5-创建镜像"><a href="#3-5-创建镜像" class="headerlink" title="3.5 创建镜像"></a>3.5 创建镜像</h3><h3 id="3-6-存出和载入镜像"><a href="#3-6-存出和载入镜像" class="headerlink" title="3.6 存出和载入镜像"></a>3.6 存出和载入镜像</h3><h3 id="3-7-上传镜像"><a href="#3-7-上传镜像" class="headerlink" title="3.7 上传镜像"></a>3.7 上传镜像</h3><h3 id="3-8-本章小结"><a href="#3-8-本章小结" class="headerlink" title="3.8 本章小结"></a>3.8 本章小结</h3><hr>
 <h1 id="第4章-操作docker容器"><a href="#第4章-操作docker容器" class="headerlink" title="第4章 操作docker容器"></a>第4章 操作docker容器</h1><h3 id="4-1-创建容器"><a href="#4-1-创建容器" class="headerlink" title="4.1 创建容器"></a>4.1 创建容器</h3><h3 id="4-2-终止容器"><a href="#4-2-终止容器" class="headerlink" title="4.2 终止容器"></a>4.2 终止容器</h3><h3 id="4-3-进入容器"><a href="#4-3-进入容器" class="headerlink" title="4.3 进入容器"></a>4.3 进入容器</h3><h3 id="4-4-删除容器"><a href="#4-4-删除容器" class="headerlink" title="4.4 删除容器"></a>4.4 删除容器</h3><h3 id="4-5-导入和导出容器"><a href="#4-5-导入和导出容器" class="headerlink" title="4.5 导入和导出容器"></a>4.5 导入和导出容器</h3><h3 id="4-6-本章小结"><a href="#4-6-本章小结" class="headerlink" title="4.6 本章小结"></a>4.6 本章小结</h3><hr>
 <h1 id="第5章-访问docker仓库"><a href="#第5章-访问docker仓库" class="headerlink" title="第5章 访问docker仓库"></a>第5章 访问docker仓库</h1><h3 id="5-1-docker-hub公共镜像市场"><a href="#5-1-docker-hub公共镜像市场" class="headerlink" title="5.1 docker hub公共镜像市场"></a>5.1 docker hub公共镜像市场</h3><h3 id="5-2-时速云镜像市场"><a href="#5-2-时速云镜像市场" class="headerlink" title="5.2 时速云镜像市场"></a>5.2 时速云镜像市场</h3><h3 id="5-3-搭建本地私有仓库"><a href="#5-3-搭建本地私有仓库" class="headerlink" title="5.3 搭建本地私有仓库"></a>5.3 搭建本地私有仓库</h3><h3 id="5-4-本章小结"><a href="#5-4-本章小结" class="headerlink" title="5.4 本章小结"></a>5.4 本章小结</h3><hr>
 <h1 id="第6章-docker数据管理"><a href="#第6章-docker数据管理" class="headerlink" title="第6章 docker数据管理"></a>第6章 docker数据管理</h1><h3 id="6-1-数据卷"><a href="#6-1-数据卷" class="headerlink" title="6.1 数据卷"></a>6.1 数据卷</h3><h3 id="6-2-数据卷容器"><a href="#6-2-数据卷容器" class="headerlink" title="6.2 数据卷容器"></a>6.2 数据卷容器</h3><h3 id="6-3-利用数据卷容器来迁移数据"><a href="#6-3-利用数据卷容器来迁移数据" class="headerlink" title="6.3 利用数据卷容器来迁移数据"></a>6.3 利用数据卷容器来迁移数据</h3><h3 id="6-4-本章小结"><a href="#6-4-本章小结" class="headerlink" title="6.4 本章小结"></a>6.4 本章小结</h3><hr>
