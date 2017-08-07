@@ -431,7 +431,113 @@ Docker可理解为一种轻量级的沙盒。每个容器内运行着一个应�
 </li>
 <li>下载镜像后，利用镜像创建容器，在容器中执行bash应用：<code>docker run -it ubuntu:14.04 bash</code>，bash中执行命令：<code>ping localhost</code></li>
 </ul>
-<h3 id="3-2-查看镜像信息"><a href="#3-2-查看镜像信息" class="headerlink" title="3.2 查看镜像信息"></a>3.2 查看镜像信息</h3><h3 id="3-3-搜寻镜像"><a href="#3-3-搜寻镜像" class="headerlink" title="3.3 搜寻镜像"></a>3.3 搜寻镜像</h3><h3 id="3-4-删除镜像"><a href="#3-4-删除镜像" class="headerlink" title="3.4 删除镜像"></a>3.4 删除镜像</h3><h3 id="3-5-创建镜像"><a href="#3-5-创建镜像" class="headerlink" title="3.5 创建镜像"></a>3.5 创建镜像</h3><h3 id="3-6-存出和载入镜像"><a href="#3-6-存出和载入镜像" class="headerlink" title="3.6 存出和载入镜像"></a>3.6 存出和载入镜像</h3><h3 id="3-7-上传镜像"><a href="#3-7-上传镜像" class="headerlink" title="3.7 上传镜像"></a>3.7 上传镜像</h3><h3 id="3-8-本章小结"><a href="#3-8-本章小结" class="headerlink" title="3.8 本章小结"></a>3.8 本章小结</h3><hr>
+<h3 id="3-2-查看镜像信息"><a href="#3-2-查看镜像信息" class="headerlink" title="3.2 查看镜像信息"></a>3.2 查看镜像信息</h3><ul>
+<li>列出镜像：<code>docker images</code><ul>
+<li>镜像大小信息仅表示其逻辑大小，物理占用存储空间会小于各镜像逻辑体积之和。</li>
+<li>images子命令选项<ul>
+<li>-a, –all=true|false：列出所有镜像文件，默认为否</li>
+<li>–digests=true|false：列出镜像数字摘要值，默认为否</li>
+<li>-f, –filter=[]：过滤列出的镜像，如dangling=true只显示未被使用的镜像；也可指定带有特定标注的镜像。</li>
+<li>–format=”TEMPLATE”：控制输出格式，如.ID代表ID信息，.Repository代表仓库信息。</li>
+<li>–no-trunc=true|false：对输出结果中太长部分是否截断，如镜像ID，默认为是。</li>
+<li>-q, –quiet=true|false：仅输出ID，默认为否。</li>
+</ul>
+</li>
+<li>更多子命令：<code>man docker-images</code></li>
+</ul>
+</li>
+<li>使用tag命令为本地镜像添加标签：<code>docker tag ubuntu:latest myubuntu:latest</code><ul>
+<li>添加标签后，镜像ID并没有改变，只是一个别名。</li>
+</ul>
+</li>
+<li>查看镜像详细信息：<code>docker inspect ubuntu:14.04</code></li>
+<li>查看镜像历史(镜像创建过程)：<code>docker history ubuntu:14.04</code></li>
+</ul>
+<h3 id="3-3-搜寻镜像"><a href="#3-3-搜寻镜像" class="headerlink" title="3.3 搜寻镜像"></a>3.3 搜寻镜像</h3><ul>
+<li>搜索远程仓库镜像：<code>docker search TERM</code></li>
+<li>子命令<ul>
+<li>–automated=true|false：仅显示自动创建的镜像，默认为否</li>
+<li>–no-trunc=true|false：输出信息不截断显示，默认为否</li>
+<li>-s, –stars=X：仅显示评价为指定星级以上的镜像，默认为0，即输出所有镜像</li>
+</ul>
+</li>
+<li><code>docker search --automated -s 3 nginx</code></li>
+<li>默认按星级评价排序</li>
+</ul>
+<h3 id="3-4-删除镜像"><a href="#3-4-删除镜像" class="headerlink" title="3.4 删除镜像"></a>3.4 删除镜像</h3><ul>
+<li>docker rmi IMAGE [IMAGE…]<ul>
+<li>IMAGE可以为标签或ID</li>
+<li>docker rmi myubuntu:latest</li>
+<li>若镜像有多个标签，docker rmi只会删除1个标签，镜像本身还存在；但若镜像只有一个标签，则会删除镜像文件的所有层。</li>
+</ul>
+</li>
+<li>使用镜像ID删除镜像<ul>
+<li>docker rmi ID，会先尝试删除镜像所有标签，再删除镜像文件本身。</li>
+<li>当有镜像创建的容器存在，镜像文件默认无法删除</li>
+<li>强行删除镜像（即使有容器存在）：docker rmi -f ubuntu:14.04</li>
+<li>不推荐强行删除镜像，一般先删除镜像的所有容器，再删除镜像。</li>
+</ul>
+</li>
+<li>查看本机上所有容器<ul>
+<li>docker ps -a</li>
+</ul>
+</li>
+</ul>
+<h3 id="3-5-创建镜像（3种方式）"><a href="#3-5-创建镜像（3种方式）" class="headerlink" title="3.5 创建镜像（3种方式）"></a>3.5 创建镜像（3种方式）</h3><ul>
+<li><p>基于已有镜像的容器创建</p>
+<ul>
+<li>docker commit [OPTIONS] CONTAINER [REPOSITORY[:TAG]]<ul>
+<li>-a, –author=””：作者</li>
+<li>-c, –change=[]：提交时执行Dockerfile指令，包括CMD|ENTRYPOINT|ENV|EXPOSE|LABEL|ONBUILD|USER|VOLUME|WORKDIR等</li>
+<li>-m, –message=””：提交消息</li>
+<li>-p, –pause=true：提交时暂停容器运行。</li>
+</ul>
+</li>
+<li>创建步骤<ul>
+<li>启动容器：docker run -it ubuntu:14.04 /bin/bash</li>
+<li>记住容器ID</li>
+<li>在容器中进行修改</li>
+<li>以容器为基准创建新镜像<ul>
+<li>docker commit -m “修改的具体内容” -a “马面” 容器ID test:0.1</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>基于本地模板导入</p>
+<ul>
+<li>docker import [OPTIONS] file|URL|-[REPOSITORY[:TAG]]</li>
+<li><a href="http://openvz.org/Download/templates/precreated" target="_blank" rel="external">OPENVZ模板下载</a></li>
+<li>cat ubuntu-14.04-x86_64-minimal.tar.gz | docker import - ubuntu:14.04</li>
+</ul>
+</li>
+<li><p>基于Dockerfile创建</p>
+<ul>
+<li>略</li>
+</ul>
+</li>
+</ul>
+<h3 id="3-6-存出和载入镜像"><a href="#3-6-存出和载入镜像" class="headerlink" title="3.6 存出和载入镜像"></a>3.6 存出和载入镜像</h3><ul>
+<li>存出镜像：导出镜像到本地文件<ul>
+<li>docker save -o ubuntu_14.04.tar ubuntu:14.04</li>
+</ul>
+</li>
+<li>载入镜像<ul>
+<li>docker load –input ubuntu_14.04.tar 或 docker load &lt; ubuntu_14.04.tar</li>
+</ul>
+</li>
+</ul>
+<h3 id="3-7-上传镜像"><a href="#3-7-上传镜像" class="headerlink" title="3.7 上传镜像"></a>3.7 上传镜像</h3><ul>
+<li>docker push NAME[:TAG] | [REGISTRY_HOST[:REGISTRY_PORT]/]NAME[:TAG]</li>
+<li>用户在docker hub网站注册后即可上传自制镜像<ul>
+<li>docker tag test:latest user/test:latest</li>
+<li>docker push user/test:latest</li>
+</ul>
+</li>
+<li>第1次上传会提示输入登录信息。</li>
+</ul>
+<h3 id="3-8-本章小结"><a href="#3-8-本章小结" class="headerlink" title="3.8 本章小结"></a>3.8 本章小结</h3><hr>
 <h1 id="第4章-操作docker容器"><a href="#第4章-操作docker容器" class="headerlink" title="第4章 操作docker容器"></a>第4章 操作docker容器</h1><h3 id="4-1-创建容器"><a href="#4-1-创建容器" class="headerlink" title="4.1 创建容器"></a>4.1 创建容器</h3><h3 id="4-2-终止容器"><a href="#4-2-终止容器" class="headerlink" title="4.2 终止容器"></a>4.2 终止容器</h3><h3 id="4-3-进入容器"><a href="#4-3-进入容器" class="headerlink" title="4.3 进入容器"></a>4.3 进入容器</h3><h3 id="4-4-删除容器"><a href="#4-4-删除容器" class="headerlink" title="4.4 删除容器"></a>4.4 删除容器</h3><h3 id="4-5-导入和导出容器"><a href="#4-5-导入和导出容器" class="headerlink" title="4.5 导入和导出容器"></a>4.5 导入和导出容器</h3><h3 id="4-6-本章小结"><a href="#4-6-本章小结" class="headerlink" title="4.6 本章小结"></a>4.6 本章小结</h3><hr>
 <h1 id="第5章-访问docker仓库"><a href="#第5章-访问docker仓库" class="headerlink" title="第5章 访问docker仓库"></a>第5章 访问docker仓库</h1><h3 id="5-1-docker-hub公共镜像市场"><a href="#5-1-docker-hub公共镜像市场" class="headerlink" title="5.1 docker hub公共镜像市场"></a>5.1 docker hub公共镜像市场</h3><h3 id="5-2-时速云镜像市场"><a href="#5-2-时速云镜像市场" class="headerlink" title="5.2 时速云镜像市场"></a>5.2 时速云镜像市场</h3><h3 id="5-3-搭建本地私有仓库"><a href="#5-3-搭建本地私有仓库" class="headerlink" title="5.3 搭建本地私有仓库"></a>5.3 搭建本地私有仓库</h3><h3 id="5-4-本章小结"><a href="#5-4-本章小结" class="headerlink" title="5.4 本章小结"></a>5.4 本章小结</h3><hr>
 <h1 id="第6章-docker数据管理"><a href="#第6章-docker数据管理" class="headerlink" title="第6章 docker数据管理"></a>第6章 docker数据管理</h1><h3 id="6-1-数据卷"><a href="#6-1-数据卷" class="headerlink" title="6.1 数据卷"></a>6.1 数据卷</h3><h3 id="6-2-数据卷容器"><a href="#6-2-数据卷容器" class="headerlink" title="6.2 数据卷容器"></a>6.2 数据卷容器</h3><h3 id="6-3-利用数据卷容器来迁移数据"><a href="#6-3-利用数据卷容器来迁移数据" class="headerlink" title="6.3 利用数据卷容器来迁移数据"></a>6.3 利用数据卷容器来迁移数据</h3><h3 id="6-4-本章小结"><a href="#6-4-本章小结" class="headerlink" title="6.4 本章小结"></a>6.4 本章小结</h3><hr>
