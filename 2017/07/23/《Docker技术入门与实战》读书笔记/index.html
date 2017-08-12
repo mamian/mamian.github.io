@@ -538,7 +538,167 @@ Docker可理解为一种轻量级的沙盒。每个容器内运行着一个应�
 <li>第1次上传会提示输入登录信息。</li>
 </ul>
 <h3 id="3-8-本章小结"><a href="#3-8-本章小结" class="headerlink" title="3.8 本章小结"></a>3.8 本章小结</h3><hr>
-<h1 id="第4章-操作docker容器"><a href="#第4章-操作docker容器" class="headerlink" title="第4章 操作docker容器"></a>第4章 操作docker容器</h1><h3 id="4-1-创建容器"><a href="#4-1-创建容器" class="headerlink" title="4.1 创建容器"></a>4.1 创建容器</h3><h3 id="4-2-终止容器"><a href="#4-2-终止容器" class="headerlink" title="4.2 终止容器"></a>4.2 终止容器</h3><h3 id="4-3-进入容器"><a href="#4-3-进入容器" class="headerlink" title="4.3 进入容器"></a>4.3 进入容器</h3><h3 id="4-4-删除容器"><a href="#4-4-删除容器" class="headerlink" title="4.4 删除容器"></a>4.4 删除容器</h3><h3 id="4-5-导入和导出容器"><a href="#4-5-导入和导出容器" class="headerlink" title="4.5 导入和导出容器"></a>4.5 导入和导出容器</h3><h3 id="4-6-本章小结"><a href="#4-6-本章小结" class="headerlink" title="4.6 本章小结"></a>4.6 本章小结</h3><hr>
+<h1 id="第4章-操作docker容器"><a href="#第4章-操作docker容器" class="headerlink" title="第4章 操作docker容器"></a>第4章 操作docker容器</h1><ul>
+<li>容器为镜像的运行实例，镜像为静态的只读文件，容器有可写文件层。</li>
+</ul>
+<h3 id="4-1-创建容器"><a href="#4-1-创建容器" class="headerlink" title="4.1 创建容器"></a>4.1 创建容器</h3><h5 id="新建容器"><a href="#新建容器" class="headerlink" title="新建容器"></a>新建容器</h5><ul>
+<li>docker create -it ubuntu:latest</li>
+<li>create后容器处于停止状态</li>
+<li>create命令与容器运行模式相关的选项</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>选项</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-a, –attach=[]</td>
+<td>是否绑定到标准输入、输出和错误  </td>
+</tr>
+<tr>
+<td>-d, – detach=true</td>
+<td>false</td>
+<td>是否在后台运行容器，默认否  </td>
+</tr>
+<tr>
+<td>–detach-keys=””</td>
+<td>从attach模式退出的快捷键</td>
+</tr>
+<tr>
+<td>–entrypoint=””</td>
+<td>镜像存在入口命令时，覆盖为新的命令</td>
+</tr>
+<tr>
+<td>–expose=[]</td>
+<td>指定容器暴露出来的端口或端口范围</td>
+</tr>
+<tr>
+<td>–group-add=[]</td>
+<td>运行容器的用户组</td>
+</tr>
+<tr>
+<td>-i, –interactive=true</td>
+<td>false</td>
+<td>保持标准输入打开，默认否</td>
+</tr>
+<tr>
+<td>–ipc=””</td>
+<td>容器IPC命名空间，可以为其他容器或主机</td>
+</tr>
+<tr>
+<td>–ioslation=”default”</td>
+<td>容器使用的隔离机制</td>
+</tr>
+<tr>
+<td>–log-driver=”json-file”</td>
+<td>指定容器的日志驱动类型，可以为json-file、syslog、journald、gelf、fluentd、awslogs、splunk、etwlogs、gcplogs或none</td>
+</tr>
+<tr>
+<td>–log-opt=[]</td>
+<td>传递给日志驱动的选项</td>
+</tr>
+<tr>
+<td>–net=”bridge”</td>
+<td>指定容器网络模式，包括bridge、none、其他容器内网络、host的网络或某个现有网络等</td>
+</tr>
+<tr>
+<td>–net-alias=[]</td>
+<td>容器在网络中的别名</td>
+</tr>
+<tr>
+<td>-P, –publish-all=true</td>
+<td>false</td>
+<td>通过NAT机制将容器标记暴露的端口自动映射到本地主机的监时端口</td>
+</tr>
+<tr>
+<td>-p, –publish=[]</td>
+<td>指定如何映射到本地主机端口，如 -p 11234-12234:1234-2234</td>
+</tr>
+<tr>
+<td>–pid=host</td>
+<td>容器的pid命名空间</td>
+</tr>
+<tr>
+<td>–userns=””</td>
+<td>启动userns-remap时配置用户命名空间的模式</td>
+</tr>
+<tr>
+<td>–uts=host</td>
+<td>容器的UTS命名空间</td>
+</tr>
+<tr>
+<td>–restart=”no”</td>
+<td>容器重启策略，包括no、on-failure[:max-retry]、always、uniess-stopped等</td>
+</tr>
+<tr>
+<td>–rm=true</td>
+<td>false</td>
+<td>容器退出后是否自动删除，不能跟-d同时使用</td>
+</tr>
+<tr>
+<td>-t, –tty=true</td>
+<td>false</td>
+<td>是否分配一个伪终端，默认否</td>
+</tr>
+<tr>
+<td>–tmpfs=[]</td>
+<td>挂载临时文件系统到容器</td>
+</tr>
+<tr>
+<td>-v</td>
+<td>–volume[=[[HOST-DIR:] CONTAINER-DIR[:OPTIONS]]]</td>
+<td>挂载主机上的文件卷到容器内</td>
+</tr>
+<tr>
+<td>–volume-driver=””</td>
+<td>挂载文件卷的驱动类型</td>
+</tr>
+<tr>
+<td>–volume-from=[]</td>
+<td>从其他容器挂载卷</td>
+</tr>
+<tr>
+<td>-w, –workdir=””</td>
+<td>容器内的默认工作目录</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><p>create命令与容器环境和配置相关的选项</p>
+</li>
+<li><p>create命令与容器资源限制和安全保护相关的选项</p>
+</li>
+</ul>
+<h5 id="启动容器"><a href="#启动容器" class="headerlink" title="启动容器"></a>启动容器</h5><ul>
+<li>docker start af8f4f922daf</li>
+</ul>
+<h5 id="新建并启动容器"><a href="#新建并启动容器" class="headerlink" title="新建并启动容器"></a>新建并启动容器</h5><ul>
+<li>docker run ubuntu /bin/echo “Hello World!”</li>
+<li>等价于 docker create + docker run</li>
+<li>启动容器并进入终端<ul>
+<li>docker run -it ubuntu:latest /bin/bash</li>
+<li>-t选项让docker分配一个伪终端并绑定到容器的标准输入上</li>
+<li>-i选项让容器的标准输入保持打开</li>
+<li>exit命令退出容器</li>
+<li>exit退出后，容器自动处于退出状态</li>
+</ul>
+</li>
+<li>docker run常见错误码<ul>
+<li>125：docker daemon执行出错，不支持的docker命令参数</li>
+<li>126：所指定命令无法执行，如权限出错</li>
+<li>127：容器内命令无法找到</li>
+</ul>
+</li>
+<li>守护态执行<ul>
+<li>docker run <code>-d</code> ubuntu /bin/sh -c “while true; do echo hello world; sleep 1; done”</li>
+<li>获取容器的输出信息：docker logs CONTAINER_ID</li>
+</ul>
+</li>
+</ul>
+<h3 id="4-2-终止容器"><a href="#4-2-终止容器" class="headerlink" title="4.2 终止容器"></a>4.2 终止容器</h3><h3 id="4-3-进入容器"><a href="#4-3-进入容器" class="headerlink" title="4.3 进入容器"></a>4.3 进入容器</h3><h3 id="4-4-删除容器"><a href="#4-4-删除容器" class="headerlink" title="4.4 删除容器"></a>4.4 删除容器</h3><h3 id="4-5-导入和导出容器"><a href="#4-5-导入和导出容器" class="headerlink" title="4.5 导入和导出容器"></a>4.5 导入和导出容器</h3><h3 id="4-6-本章小结"><a href="#4-6-本章小结" class="headerlink" title="4.6 本章小结"></a>4.6 本章小结</h3><hr>
 <h1 id="第5章-访问docker仓库"><a href="#第5章-访问docker仓库" class="headerlink" title="第5章 访问docker仓库"></a>第5章 访问docker仓库</h1><h3 id="5-1-docker-hub公共镜像市场"><a href="#5-1-docker-hub公共镜像市场" class="headerlink" title="5.1 docker hub公共镜像市场"></a>5.1 docker hub公共镜像市场</h3><h3 id="5-2-时速云镜像市场"><a href="#5-2-时速云镜像市场" class="headerlink" title="5.2 时速云镜像市场"></a>5.2 时速云镜像市场</h3><h3 id="5-3-搭建本地私有仓库"><a href="#5-3-搭建本地私有仓库" class="headerlink" title="5.3 搭建本地私有仓库"></a>5.3 搭建本地私有仓库</h3><h3 id="5-4-本章小结"><a href="#5-4-本章小结" class="headerlink" title="5.4 本章小结"></a>5.4 本章小结</h3><hr>
 <h1 id="第6章-docker数据管理"><a href="#第6章-docker数据管理" class="headerlink" title="第6章 docker数据管理"></a>第6章 docker数据管理</h1><h3 id="6-1-数据卷"><a href="#6-1-数据卷" class="headerlink" title="6.1 数据卷"></a>6.1 数据卷</h3><h3 id="6-2-数据卷容器"><a href="#6-2-数据卷容器" class="headerlink" title="6.2 数据卷容器"></a>6.2 数据卷容器</h3><h3 id="6-3-利用数据卷容器来迁移数据"><a href="#6-3-利用数据卷容器来迁移数据" class="headerlink" title="6.3 利用数据卷容器来迁移数据"></a>6.3 利用数据卷容器来迁移数据</h3><h3 id="6-4-本章小结"><a href="#6-4-本章小结" class="headerlink" title="6.4 本章小结"></a>6.4 本章小结</h3><hr>
 <h1 id="第7章-端口映射与容器互联"><a href="#第7章-端口映射与容器互联" class="headerlink" title="第7章 端口映射与容器互联"></a>第7章 端口映射与容器互联</h1><h3 id="7-1-端口映射实现访问容器"><a href="#7-1-端口映射实现访问容器" class="headerlink" title="7.1 端口映射实现访问容器"></a>7.1 端口映射实现访问容器</h3><h3 id="7-2-互联机制实现便捷互动"><a href="#7-2-互联机制实现便捷互动" class="headerlink" title="7.2 互联机制实现便捷互动"></a>7.2 互联机制实现便捷互动</h3><h3 id="7-3-本章小结"><a href="#7-3-本章小结" class="headerlink" title="7.3 本章小结"></a>7.3 本章小结</h3><hr>
