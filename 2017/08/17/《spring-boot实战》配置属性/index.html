@@ -10,11 +10,6 @@
 
     <!--Description-->
     
-        <meta name="description" content="定义：使用共享对象可有效地支持大量的细粒度对象。是池技术的重要实现方式。
-享元模式：将实例存放到内存中。内存中存在大量实例对象，但并不是所有的实例均有效，可能GC还未到回收时机，采用享元模式可节省内存。如对象池机制可以节省大量实例占用的内存空间。
-代码：
-public class SignInfo ">
-    
 
     <!--Author-->
     
@@ -23,7 +18,7 @@ public class SignInfo ">
 
     <!--Open Graph Title-->
     
-        <meta property="og:title" content="设计模式读书笔记-享元模式"/>
+        <meta property="og:title" content="《spring-boot实战》配置属性"/>
     
 
     <!--Open Graph Description-->
@@ -45,7 +40,7 @@ public class SignInfo ">
 
     <!-- Title -->
     
-    <title>设计模式读书笔记-享元模式 - 马面</title>
+    <title>《spring-boot实战》配置属性 - 马面</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
@@ -160,12 +155,12 @@ public class SignInfo ">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                 <div class="post-heading">
-                    <h1>设计模式读书笔记-享元模式</h1>
+                    <h1>《spring-boot实战》配置属性</h1>
                     
                     <span class="meta">
                         <!-- Date and Author -->
                         
-                        2016-08-21
+                        2017-08-17
                     </span>
                 </div>
             </div>
@@ -180,91 +175,13 @@ public class SignInfo ">
 
             <!-- Tags and categories -->
            
-                <div class="col-lg-4 col-lg-offset-2 col-md-5 col-md-offset-1 post-tags">
-                    
-                        
-
-
-<a href="/tags/设计模式/">#设计模式</a>
-
-
-                    
-                </div>
-                <div class="col-lg-4 col-md-5 post-categories">
-                    
-                        
-
-<a href="/categories/读书笔记/">读书笔记</a>
-
-                    
-                </div>
-            
 
             <!-- Gallery -->
             
 
             <!-- Post Main Content -->
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <ul>
-<li>定义：使用共享对象可有效地支持大量的细粒度对象。是池技术的重要实现方式。</li>
-<li>享元模式：将实例存放到内存中。内存中存在大量实例对象，但并不是所有的实例均有效，可能GC还未到回收时机，采用享元模式可节省内存。如对象池机制可以节省大量实例占用的内存空间。</li>
-<li><p>代码：</p>
-<pre><code>public class SignInfo {
-
-    private String id;//考试人员ID
-    private String location;//考点
-    private String address;
-    private String phone;
-
-    public void printSignInfo(){
-        System.out.println(&quot;考试人员ID：&quot;+id+&quot;，考点：&quot;+location+&quot;，地址：&quot;+address+&quot;，电话：&quot;+phone);
-    }
-}
-
-public class SignInfo4Pool extends SignInfo{//给SignInfo对象增加key属性
-
-    private String key;//get  set
-
-    public SignInfo4Pool(String key){
-        this.key = key;
-    }
-}
-
-public class SignInfoFactory {
-
-    private static HashMap&lt;String,SignInfo&gt; pool = new HashMap&lt;String,SignInfo&gt;();
-
-    public static SignInfo getSignInfo(String key){
-        SignInfo result = null;
-        if(!pool.containsKey(key)){
-            result = new SignInfo4Pool(key);
-            pool.put(key, result);
-            System.out.println(&quot;建立对象--&quot;+key+&quot;--，并放置到对象池中&quot;);
-        }else{
-            result = pool.get(key);
-            System.out.println(&quot;直接从对象池中取对象：&quot;+key);
-        }
-        return result;
-    }
-}
-
-public class Client {
-
-    public static void main(String[] args) {
-        for(int i=0;i&lt;4;i++){
-            String location = &quot;考点&quot;+i;
-            for(int j=0;j&lt;10;j++){
-                String key = location+&quot;，人员&quot;+j;
-            }
-        }
-
-        SignInfo signInfo = SignInfoFactory.getSignInfo(&quot;考点3，人员5&quot;);
-        signInfo.printSignInfo();
-    }
-}
-</code></pre></li>
-</ul>
-
+                
 
                 
             </div>
@@ -288,7 +205,7 @@ public class Client {
         }(document, 'script', 'facebook-jssdk'));
     </script>
 
-    <div class="fb-comments" data-href="http://www.mamian.net/2016/08/21/设计模式读书笔记-享元模式/index.html" data-num-posts="5" data-width="100%" data-colorscheme="light"></div>
+    <div class="fb-comments" data-href="http://www.mamian.net/2017/08/17/《spring-boot实战》配置属性/index.html" data-num-posts="5" data-width="100%" data-colorscheme="light"></div>
 
 
                 </div>
