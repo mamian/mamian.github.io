@@ -10,7 +10,16 @@
 
     <!--Description-->
     
-        <meta name="description" content="官网">
+        <meta name="description" content="官网
+
+xwiki需要2个容器：mysql、xwiki
+
+为xwiki创建专用的docker网络
+docker network create -d bridge xwiki-nw
+
+运行mysql容器（编码为utf8）
+将mysql数据保存到宿主机
+docker run –net=xwiki-nw ">
     
 
     <!--Author-->
@@ -184,6 +193,38 @@
             <!-- Post Main Content -->
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                 <p><a href="http://www.xwiki.org/" target="_blank" rel="external">官网</a></p>
+<ul>
+<li>xwiki需要2个容器：mysql、xwiki</li>
+</ul>
+<h1 id="为xwiki创建专用的docker网络"><a href="#为xwiki创建专用的docker网络" class="headerlink" title="为xwiki创建专用的docker网络"></a>为xwiki创建专用的docker网络</h1><ul>
+<li>docker network create -d bridge xwiki-nw</li>
+</ul>
+<h1 id="运行mysql容器（编码为utf8）"><a href="#运行mysql容器（编码为utf8）" class="headerlink" title="运行mysql容器（编码为utf8）"></a>运行mysql容器（编码为utf8）</h1><ul>
+<li>将mysql数据保存到宿主机<ul>
+<li>docker run –net=xwiki-nw –name mysql-xwiki -v /var/mamian/mysql/data:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=xwiki -e MYSQL_USER=xwiki -e MYSQL_PASSWORD=xwiki -e MYSQL_DATABASE=xwiki -d mysql:5.7 –character-set-server=uft8 –collation-server=utf8_bin –explicit-defaults-for-timestamp=1</li>
+</ul>
+</li>
+</ul>
+<h1 id="启动xwiki"><a href="#启动xwiki" class="headerlink" title="启动xwiki"></a>启动xwiki</h1><ul>
+<li>docker run –net=xwiki-nw –name xwiki -p 28080:8080 -v /var/mamian/xwiki:/usr/local/xwiki -e DB_USER=xwiki -e DB_PASSWORD=xwiki -e DB_DATABASE=xwiki -e DB_HOST=mysql-xwiki xwiki:mysql-tomcat</li>
+<li>若需守护进程，直接命令中加-d即可</li>
+<li>将本地的28080端口转发到容器的8080端口</li>
+</ul>
+<h1 id="子域名"><a href="#子域名" class="headerlink" title="子域名"></a>子域名</h1><ul>
+<li><p>修改nginx配置文件，使wiki.XX.com转发到服务器的28080端口，再转发给xwiki容器的8080端口。</p>
+<pre><code>server_names_hash_bucket_size 64;
+
+server {
+    listen 80;
+    server_name wiki.xxx.com wiki.yyy.com;
+
+    location / {
+        proxy_pass http://127.0.0.1:28080/;
+        proxy_redirect default;
+    }
+}
+</code></pre></li>
+</ul>
 
 
                 
