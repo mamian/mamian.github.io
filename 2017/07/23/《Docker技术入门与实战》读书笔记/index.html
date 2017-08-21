@@ -955,17 +955,23 @@ Docker可理解为一种轻量级的沙盒。每个容器内运行着一个应�
 <h5 id="11-7-2-Gitlab"><a href="#11-7-2-Gitlab" class="headerlink" title="11.7.2 Gitlab"></a>11.7.2 Gitlab</h5><ul>
 <li>gitlab官方提供DockerHub镜像</li>
 <li><p>命令</p>
-<pre><code>docker run --detabh \
-    --hostname gitlab.example.com \
+<pre><code>docker run --detach \
+    --hostname ip:port \
     --publish 443:443 --publish 80:80 --publish 23:23 \
     --name gitlab \
     --restart always \
     --volume /srv/gitlab/config:/etc/gitlab \
     --volume /srv/gitlab/logs:/var/log/gitlab \
     --volume /srv/gitlab/data:/var/opt/gitlab \
-</code></pre></li>
+    gitlab/gitlab-ce:latest
+</code></pre><ul>
+<li>hostname指外网ip或域名，git项目地址即为<a href="http://ip:port/projectname" target="_blank" rel="external">http://ip:port/projectname</a></li>
+<li>本地目录/srv/gitlab/*提前创建好</li>
+<li>几分钟后gitlab启动成功</li>
 </ul>
-<h3 id="11-8-本章小结"><a href="#11-8-本章小结" class="headerlink" title="11.8 本章小结"></a>11.8 本章小结</h3><hr>
+</li>
+</ul>
+<hr>
 <h1 id="第12章-数据库应用"><a href="#第12章-数据库应用" class="headerlink" title="第12章 数据库应用"></a>第12章 数据库应用</h1><h3 id="12-1-MySQL"><a href="#12-1-MySQL" class="headerlink" title="12.1 MySQL"></a>12.1 MySQL</h3><ul>
 <li>官方镜像<ul>
 <li>docker run –name hi-mysql -e MYSQL_ROOT_PASSWORD=123 -d mysql:latest</li>
