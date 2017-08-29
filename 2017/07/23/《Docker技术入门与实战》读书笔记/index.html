@@ -1043,9 +1043,55 @@ Docker可理解为一种轻量级的沙盒。每个容器内运行着一个应�
 </li>
 </ul>
 <h3 id="6-1-数据卷"><a href="#6-1-数据卷" class="headerlink" title="6.1 数据卷"></a>6.1 数据卷</h3><ul>
-<li><h3 id="6-2-数据卷容器"><a href="#6-2-数据卷容器" class="headerlink" title="6.2 数据卷容器"></a>6.2 数据卷容器</h3><h3 id="6-3-利用数据卷容器来迁移数据"><a href="#6-3-利用数据卷容器来迁移数据" class="headerlink" title="6.3 利用数据卷容器来迁移数据"></a>6.3 利用数据卷容器来迁移数据</h3><h3 id="6-4-本章小结"><a href="#6-4-本章小结" class="headerlink" title="6.4 本章小结"></a>6.4 本章小结</h3></li>
+<li>将主机操作系统目录映射进容器，类似linux中的mount操作。</li>
+<li>优势<ul>
+<li>容器间共享和重用、数据传递</li>
+<li>对数据卷内数据修改会立马生效</li>
+<li>对数据卷更新不会影响镜像，解耦应用与数据</li>
+<li>卷一直存在，直到没有容器使用，可安全缷载</li>
 </ul>
-<hr>
+</li>
+</ul>
+<h5 id="容器内创建数据卷"><a href="#容器内创建数据卷" class="headerlink" title="容器内创建数据卷"></a>容器内创建数据卷</h5><ul>
+<li>使用training/webapp镜像创建web容器，并创建数据卷挂载到容器的/webapp目录：<ul>
+<li>docker run -d -p –name web -v /webapp training/webapp python app.py</li>
+</ul>
+</li>
+</ul>
+<h5 id="挂载一个主机目录作为数据卷"><a href="#挂载一个主机目录作为数据卷" class="headerlink" title="挂载一个主机目录作为数据卷"></a>挂载一个主机目录作为数据卷</h5><ul>
+<li>加载主机的/src/webapp到容器的/opt/webapp<ul>
+<li>docker run -d -p –name web -v /src/webapp:/opt/webapp training/webapp python app.py</li>
+</ul>
+</li>
+<li>docker挂载数据卷的默认权限为rw，可通过ro指定为只读<ul>
+<li>docker run -d -p –name web -v /src/webapp:/opt/webapp:ro training/webapp python app.py</li>
+</ul>
+</li>
+</ul>
+<h5 id="挂载一个本地主机文件作为数据卷-不推荐"><a href="#挂载一个本地主机文件作为数据卷-不推荐" class="headerlink" title="挂载一个本地主机文件作为数据卷(不推荐)"></a>挂载一个本地主机文件作为数据卷(不推荐)</h5><ul>
+<li>docker run –rm -it -v ~/.bash_history:/.bash_history ubuntu /bin/bash</li>
+</ul>
+<h3 id="6-2-数据卷容器"><a href="#6-2-数据卷容器" class="headerlink" title="6.2 数据卷容器"></a>6.2 数据卷容器</h3><ul>
+<li>多容器间共享持续更新的数据，使用数据卷容器较方便。其也是容器，专用来提供数据卷供其他容器挂载。</li>
+<li>创建数据卷容器dbdata，并在其中创建一个数据卷挂载到/dbdata<ul>
+<li>docker run -it -v /dbdata –name dbdata ubuntu</li>
+<li>新建了一个名为dbdata的容器，容器中有个目录/dbdata，创建了数据卷挂载到容器dbdata的/dbdata目录下。</li>
+</ul>
+</li>
+<li>其他容器(如db1、db2)挂载容器dbdata中的数据卷<ul>
+<li>docker run -it –volumes-from dbdata –name db1 ubuntu</li>
+<li>docker run -it –volumes-from dbdata –name db2 ubuntu</li>
+<li>此时db1、db2都挂载同一个数据卷到相同的/dbdata目录。三个容器任何一方在该目录下写，其他容器均可见。</li>
+</ul>
+</li>
+<li>多次使用–volumes-from从多个容器挂载多个数据卷。还可从其他已经挂载了容器卷的容器来挂载数据卷<ul>
+<li>docker run -d –name db3 –volumes-from db1 training/postgres</li>
+</ul>
+</li>
+<li>使用–volumes-from所挂载数据卷的容器自身并不需要保持在运行状态。</li>
+<li>如删除挂载的容器，数据卷不会自动删除。如需删除数据卷，必须在删除最后一个还挂载着它的容器时显式使用docker rm -v命令来指定同时删除关联的容器。</li>
+</ul>
+<h3 id="6-3-利用数据卷容器来迁移数据"><a href="#6-3-利用数据卷容器来迁移数据" class="headerlink" title="6.3 利用数据卷容器来迁移数据"></a>6.3 利用数据卷容器来迁移数据</h3><h3 id="6-4-本章小结"><a href="#6-4-本章小结" class="headerlink" title="6.4 本章小结"></a>6.4 本章小结</h3><hr>
 <h1 id="第7章-端口映射与容器互联"><a href="#第7章-端口映射与容器互联" class="headerlink" title="第7章 端口映射与容器互联"></a>第7章 端口映射与容器互联</h1><h3 id="7-1-端口映射实现访问容器"><a href="#7-1-端口映射实现访问容器" class="headerlink" title="7.1 端口映射实现访问容器"></a>7.1 端口映射实现访问容器</h3><h3 id="7-2-互联机制实现便捷互动"><a href="#7-2-互联机制实现便捷互动" class="headerlink" title="7.2 互联机制实现便捷互动"></a>7.2 互联机制实现便捷互动</h3><h3 id="7-3-本章小结"><a href="#7-3-本章小结" class="headerlink" title="7.3 本章小结"></a>7.3 本章小结</h3><hr>
 <h1 id="第8章-使用dockerfile创建镜像"><a href="#第8章-使用dockerfile创建镜像" class="headerlink" title="第8章 使用dockerfile创建镜像"></a>第8章 使用dockerfile创建镜像</h1><h3 id="8-1-基本结构"><a href="#8-1-基本结构" class="headerlink" title="8.1 基本结构"></a>8.1 基本结构</h3><h3 id="8-2-指令说明"><a href="#8-2-指令说明" class="headerlink" title="8.2 指令说明"></a>8.2 指令说明</h3><h3 id="8-3-创建镜像"><a href="#8-3-创建镜像" class="headerlink" title="8.3 创建镜像"></a>8.3 创建镜像</h3><h3 id="8-4-使用-dockerignore文件"><a href="#8-4-使用-dockerignore文件" class="headerlink" title="8.4 使用.dockerignore文件"></a>8.4 使用.dockerignore文件</h3><h3 id="8-5-最佳实践"><a href="#8-5-最佳实践" class="headerlink" title="8.5 最佳实践"></a>8.5 最佳实践</h3><h3 id="8-6-本章小结"><a href="#8-6-本章小结" class="headerlink" title="8.6 本章小结"></a>8.6 本章小结</h3><hr>
 <h1 id="第9章-操作系统"><a href="#第9章-操作系统" class="headerlink" title="第9章 操作系统"></a>第9章 操作系统</h1><h3 id="9-1-BusyBox"><a href="#9-1-BusyBox" class="headerlink" title="9.1 BusyBox"></a>9.1 BusyBox</h3><h3 id="9-2-Alpine"><a href="#9-2-Alpine" class="headerlink" title="9.2 Alpine"></a>9.2 Alpine</h3><h3 id="9-3-Debian-Ubuntu"><a href="#9-3-Debian-Ubuntu" class="headerlink" title="9.3 Debian/Ubuntu"></a>9.3 Debian/Ubuntu</h3><h3 id="9-4-CentOS-Fedora"><a href="#9-4-CentOS-Fedora" class="headerlink" title="9.4 CentOS/Fedora"></a>9.4 CentOS/Fedora</h3><h3 id="9-5-本章小结"><a href="#9-5-本章小结" class="headerlink" title="9.5 本章小结"></a>9.5 本章小结</h3><hr>
