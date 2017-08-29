@@ -1091,7 +1091,30 @@ Docker可理解为一种轻量级的沙盒。每个容器内运行着一个应�
 <li>使用–volumes-from所挂载数据卷的容器自身并不需要保持在运行状态。</li>
 <li>如删除挂载的容器，数据卷不会自动删除。如需删除数据卷，必须在删除最后一个还挂载着它的容器时显式使用docker rm -v命令来指定同时删除关联的容器。</li>
 </ul>
-<h3 id="6-3-利用数据卷容器来迁移数据"><a href="#6-3-利用数据卷容器来迁移数据" class="headerlink" title="6.3 利用数据卷容器来迁移数据"></a>6.3 利用数据卷容器来迁移数据</h3><h3 id="6-4-本章小结"><a href="#6-4-本章小结" class="headerlink" title="6.4 本章小结"></a>6.4 本章小结</h3><hr>
+<h3 id="6-3-利用数据卷容器来迁移数据"><a href="#6-3-利用数据卷容器来迁移数据" class="headerlink" title="6.3 利用数据卷容器来迁移数据"></a>6.3 利用数据卷容器来迁移数据</h3><ul>
+<li>可利用数据卷容器对其中的数据进行备份、恢复，以实现数据迁移。</li>
+</ul>
+<h5 id="备份"><a href="#备份" class="headerlink" title="备份"></a>备份</h5><ul>
+<li>备份dbdata数据卷容器内的数据卷<ul>
+<li>docker run –volumes-from dbdata -v $(pwd):/backup –name worker ubuntu tar cvf /backup/backup.tar /dbdata</li>
+<li>首先用ubuntu镜像创建了容器worker</li>
+<li>使用 –volumes-from dbdata 让worker容器挂载dbdata容器的数据卷（即dbdata数据卷）</li>
+<li>使用 -v $(pwd):/backup 来挂载本地的当前目录到worker容器的/backup目录</li>
+<li>worker启动后，使用 tar cvf /backup/backup.tar /dbdata 将/dbdata下内容备份为容器内的 /backup/backup.tar，即宿主机当前目录下的backup.tar</li>
+</ul>
+</li>
+</ul>
+<h5 id="恢复"><a href="#恢复" class="headerlink" title="恢复"></a>恢复</h5><ul>
+<li>创建一个带数据卷的容器dbdata2<ul>
+<li>docker run -v /dbdata –name dbdata2 ubuntu /bin/bash</li>
+</ul>
+</li>
+<li>创建另一个新容器，挂载dbdata2容器，并使用untar解压备份文件到所挂载的容器卷中<ul>
+<li>docker run –volumes-from dbdata2 -v $(pwd):/backup busybox tar xvf /backup/backup.tar</li>
+</ul>
+</li>
+</ul>
+<hr>
 <h1 id="第7章-端口映射与容器互联"><a href="#第7章-端口映射与容器互联" class="headerlink" title="第7章 端口映射与容器互联"></a>第7章 端口映射与容器互联</h1><h3 id="7-1-端口映射实现访问容器"><a href="#7-1-端口映射实现访问容器" class="headerlink" title="7.1 端口映射实现访问容器"></a>7.1 端口映射实现访问容器</h3><h3 id="7-2-互联机制实现便捷互动"><a href="#7-2-互联机制实现便捷互动" class="headerlink" title="7.2 互联机制实现便捷互动"></a>7.2 互联机制实现便捷互动</h3><h3 id="7-3-本章小结"><a href="#7-3-本章小结" class="headerlink" title="7.3 本章小结"></a>7.3 本章小结</h3><hr>
 <h1 id="第8章-使用dockerfile创建镜像"><a href="#第8章-使用dockerfile创建镜像" class="headerlink" title="第8章 使用dockerfile创建镜像"></a>第8章 使用dockerfile创建镜像</h1><h3 id="8-1-基本结构"><a href="#8-1-基本结构" class="headerlink" title="8.1 基本结构"></a>8.1 基本结构</h3><h3 id="8-2-指令说明"><a href="#8-2-指令说明" class="headerlink" title="8.2 指令说明"></a>8.2 指令说明</h3><h3 id="8-3-创建镜像"><a href="#8-3-创建镜像" class="headerlink" title="8.3 创建镜像"></a>8.3 创建镜像</h3><h3 id="8-4-使用-dockerignore文件"><a href="#8-4-使用-dockerignore文件" class="headerlink" title="8.4 使用.dockerignore文件"></a>8.4 使用.dockerignore文件</h3><h3 id="8-5-最佳实践"><a href="#8-5-最佳实践" class="headerlink" title="8.5 最佳实践"></a>8.5 最佳实践</h3><h3 id="8-6-本章小结"><a href="#8-6-本章小结" class="headerlink" title="8.6 本章小结"></a>8.6 本章小结</h3><hr>
 <h1 id="第9章-操作系统"><a href="#第9章-操作系统" class="headerlink" title="第9章 操作系统"></a>第9章 操作系统</h1><h3 id="9-1-BusyBox"><a href="#9-1-BusyBox" class="headerlink" title="9.1 BusyBox"></a>9.1 BusyBox</h3><h3 id="9-2-Alpine"><a href="#9-2-Alpine" class="headerlink" title="9.2 Alpine"></a>9.2 Alpine</h3><h3 id="9-3-Debian-Ubuntu"><a href="#9-3-Debian-Ubuntu" class="headerlink" title="9.3 Debian/Ubuntu"></a>9.3 Debian/Ubuntu</h3><h3 id="9-4-CentOS-Fedora"><a href="#9-4-CentOS-Fedora" class="headerlink" title="9.4 CentOS/Fedora"></a>9.4 CentOS/Fedora</h3><h3 id="9-5-本章小结"><a href="#9-5-本章小结" class="headerlink" title="9.5 本章小结"></a>9.5 本章小结</h3><hr>
@@ -1212,7 +1235,7 @@ Docker可理解为一种轻量级的沙盒。每个容器内运行着一个应�
 
 
     <hr />
-    <h3>Kommentare:</h3>
+    <h3>Comments:</h3>
     <div id="fb-root"></div>
     <script>
         (function(d, s, id) {
