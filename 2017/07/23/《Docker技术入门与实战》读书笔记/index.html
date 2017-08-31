@@ -1179,7 +1179,7 @@ Docker可理解为一种轻量级的沙盒。每个容器内运行着一个应�
 </li>
 <li>docker run -d -P <code>--name web</code> training/webapp python app.py</li>
 <li>查看容器名<ul>
-<li>docker inspect -f “{ .Name }” CONTAINER_ID</li>
+<li>docker inspect -f “{ { .Name } }” CONTAINER_ID</li>
 </ul>
 </li>
 <li>容器名唯一，如已命名web容器，当再次使用web名称时，需先docker rm删除之前的同名容器</li>
