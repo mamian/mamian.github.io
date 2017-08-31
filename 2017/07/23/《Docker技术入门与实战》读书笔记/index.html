@@ -1172,9 +1172,59 @@ Docker可理解为一种轻量级的沙盒。每个容器内运行着一个应�
 <li>容器互联：多容器中应用快速交互。容器间建立连接，通过容器名快速访问，无需指定具体IP。</li>
 </ul>
 <h5 id="自定义容器命名"><a href="#自定义容器命名" class="headerlink" title="自定义容器命名"></a>自定义容器命名</h5><ul>
-<li><h5 id="容器互联"><a href="#容器互联" class="headerlink" title="容器互联"></a>容器互联</h5></li>
+<li>创建容器时会有默认名称，但自定义名称：<ul>
+<li>好记</li>
+<li>使用方便：连接其他容器时（即便重启）可使用容器名</li>
 </ul>
-<h3 id="7-3-本章小结"><a href="#7-3-本章小结" class="headerlink" title="7.3 本章小结"></a>7.3 本章小结</h3><hr>
+</li>
+<li>docker run -d -P <code>--name web</code> training/webapp python app.py</li>
+<li>查看容器名<ul>
+<li>docker inspect -f “{ .Name }” CONTAINER_ID</li>
+</ul>
+</li>
+<li>容器名唯一，如已命名web容器，当再次使用web名称时，需先docker rm删除之前的同名容器</li>
+<li>容器终止时立即删除容器<ul>
+<li>docker run … <code>--rm</code> …</li>
+<li>–rm与-d不可同时使用</li>
+</ul>
+</li>
+</ul>
+<h5 id="容器互联"><a href="#容器互联" class="headerlink" title="容器互联"></a>容器互联</h5><ul>
+<li>现有容器db：docker run -d –name db training/postgres</li>
+<li>创建新容器web，并连接到db容器<ul>
+<li>docker run -d -P –name web <code>--link db:db</code> training/webapp python app.py</li>
+</ul>
+</li>
+<li>–link格式：–link name:alias<ul>
+<li>name：要连接的容器</li>
+<li>alias：这个连接的别名</li>
+</ul>
+</li>
+<li>此时存在2个容器：db，web。容器db的2个name：db、web/db。</li>
+<li>docker 相当于在2个互联的容器间创建虚拟通道，无需映射容器端口到宿主机。启动db时并没有使用-p，避免暴露数据库服务端口到外部网络。</li>
+<li>docker公开容器连接信息方式<ul>
+<li>更新环境变量</li>
+<li>更新 /etc/hosts 文件</li>
+</ul>
+</li>
+<li>查看web容器环境变量<ul>
+<li>docker run –rm –name web2 –link db:db training/webapp <code>env</code></li>
+<li>环境变量中以 DB_开头（即以大写的连接别名开头）的环境变量为 web容器连接db容器使用的。</li>
+</ul>
+</li>
+<li>除环境变量，docker还添加host信息到父容器（web）的 /etc/hosts 文件<ul>
+<li>docker run -t -i –rm –link db:db training/webapp /bin/bash</li>
+<li>进入父容器后执行：cat /etc/hosts</li>
+<li>由hosts文件可知：第1个为web容器自己，第2个为db容器的ip和主机名。</li>
+</ul>
+</li>
+<li>可连接多个子容器到父容器，比如可连接多个web到同一个db容器。</li>
+</ul>
+<h3 id="7-3-本章小结"><a href="#7-3-本章小结" class="headerlink" title="7.3 本章小结"></a>7.3 本章小结</h3><ul>
+<li>生产环境更复杂，包括跨主机或跨数据中心通信，需引入额外机制，如SDN(软件定义网络)、NFV(网络功能虚拟化)</li>
+<li>docker使用libnetwork实现跨主机通信</li>
+</ul>
+<hr>
 <h1 id="第8章-使用dockerfile创建镜像"><a href="#第8章-使用dockerfile创建镜像" class="headerlink" title="第8章 使用dockerfile创建镜像"></a>第8章 使用dockerfile创建镜像</h1><h3 id="8-1-基本结构"><a href="#8-1-基本结构" class="headerlink" title="8.1 基本结构"></a>8.1 基本结构</h3><h3 id="8-2-指令说明"><a href="#8-2-指令说明" class="headerlink" title="8.2 指令说明"></a>8.2 指令说明</h3><h3 id="8-3-创建镜像"><a href="#8-3-创建镜像" class="headerlink" title="8.3 创建镜像"></a>8.3 创建镜像</h3><h3 id="8-4-使用-dockerignore文件"><a href="#8-4-使用-dockerignore文件" class="headerlink" title="8.4 使用.dockerignore文件"></a>8.4 使用.dockerignore文件</h3><h3 id="8-5-最佳实践"><a href="#8-5-最佳实践" class="headerlink" title="8.5 最佳实践"></a>8.5 最佳实践</h3><h3 id="8-6-本章小结"><a href="#8-6-本章小结" class="headerlink" title="8.6 本章小结"></a>8.6 本章小结</h3><hr>
 <h1 id="第9章-操作系统"><a href="#第9章-操作系统" class="headerlink" title="第9章 操作系统"></a>第9章 操作系统</h1><h3 id="9-1-BusyBox"><a href="#9-1-BusyBox" class="headerlink" title="9.1 BusyBox"></a>9.1 BusyBox</h3><h3 id="9-2-Alpine"><a href="#9-2-Alpine" class="headerlink" title="9.2 Alpine"></a>9.2 Alpine</h3><h3 id="9-3-Debian-Ubuntu"><a href="#9-3-Debian-Ubuntu" class="headerlink" title="9.3 Debian/Ubuntu"></a>9.3 Debian/Ubuntu</h3><h3 id="9-4-CentOS-Fedora"><a href="#9-4-CentOS-Fedora" class="headerlink" title="9.4 CentOS/Fedora"></a>9.4 CentOS/Fedora</h3><h3 id="9-5-本章小结"><a href="#9-5-本章小结" class="headerlink" title="9.5 本章小结"></a>9.5 本章小结</h3><hr>
 <h1 id="第10章-为镜像添加SSH服务"><a href="#第10章-为镜像添加SSH服务" class="headerlink" title="第10章 为镜像添加SSH服务"></a>第10章 为镜像添加SSH服务</h1><h3 id="10-1-基于commit命令创建"><a href="#10-1-基于commit命令创建" class="headerlink" title="10.1 基于commit命令创建"></a>10.1 基于commit命令创建</h3><h3 id="10-2-使用dockerfile创建"><a href="#10-2-使用dockerfile创建" class="headerlink" title="10.2 使用dockerfile创建"></a>10.2 使用dockerfile创建</h3><h3 id="10-3-本章小结"><a href="#10-3-本章小结" class="headerlink" title="10.3 本章小结"></a>10.3 本章小结</h3><hr>
