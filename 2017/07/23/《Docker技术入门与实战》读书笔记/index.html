@@ -1313,7 +1313,104 @@ Docker可理解为一种轻量级的沙盒。每个容器内运行着一个应�
 </tr>
 </tbody>
 </table>
-<h5 id="FROM"><a href="#FROM" class="headerlink" title="FROM"></a>FROM</h5><h5 id="MAINTAINER"><a href="#MAINTAINER" class="headerlink" title="MAINTAINER"></a>MAINTAINER</h5><h5 id="RUN"><a href="#RUN" class="headerlink" title="RUN"></a>RUN</h5><h5 id="CMD"><a href="#CMD" class="headerlink" title="CMD"></a>CMD</h5><h5 id="LABEL"><a href="#LABEL" class="headerlink" title="LABEL"></a>LABEL</h5><h5 id="EXPOSE"><a href="#EXPOSE" class="headerlink" title="EXPOSE"></a>EXPOSE</h5><h5 id="ENV"><a href="#ENV" class="headerlink" title="ENV"></a>ENV</h5><h5 id="ADD"><a href="#ADD" class="headerlink" title="ADD"></a>ADD</h5><h5 id="COPY"><a href="#COPY" class="headerlink" title="COPY"></a>COPY</h5><h5 id="ENTRYPOINT"><a href="#ENTRYPOINT" class="headerlink" title="ENTRYPOINT"></a>ENTRYPOINT</h5><h5 id="VOLUME"><a href="#VOLUME" class="headerlink" title="VOLUME"></a>VOLUME</h5><h5 id="USER"><a href="#USER" class="headerlink" title="USER"></a>USER</h5><h5 id="WORKDIR"><a href="#WORKDIR" class="headerlink" title="WORKDIR"></a>WORKDIR</h5><h5 id="ARG"><a href="#ARG" class="headerlink" title="ARG"></a>ARG</h5><h5 id="ONBUILD"><a href="#ONBUILD" class="headerlink" title="ONBUILD"></a>ONBUILD</h5><h5 id="STOPSIGNAL"><a href="#STOPSIGNAL" class="headerlink" title="STOPSIGNAL"></a>STOPSIGNAL</h5><h5 id="HEALTHCHECK"><a href="#HEALTHCHECK" class="headerlink" title="HEALTHCHECK"></a>HEALTHCHECK</h5><h5 id="SHELL"><a href="#SHELL" class="headerlink" title="SHELL"></a>SHELL</h5><h3 id="8-3-创建镜像"><a href="#8-3-创建镜像" class="headerlink" title="8.3 创建镜像"></a>8.3 创建镜像</h3><h3 id="8-4-使用-dockerignore文件"><a href="#8-4-使用-dockerignore文件" class="headerlink" title="8.4 使用.dockerignore文件"></a>8.4 使用.dockerignore文件</h3><h3 id="8-5-最佳实践"><a href="#8-5-最佳实践" class="headerlink" title="8.5 最佳实践"></a>8.5 最佳实践</h3><h3 id="8-6-本章小结"><a href="#8-6-本章小结" class="headerlink" title="8.6 本章小结"></a>8.6 本章小结</h3><hr>
+<h5 id="FROM"><a href="#FROM" class="headerlink" title="FROM"></a>FROM</h5><ul>
+<li>所创建镜像的基础镜像</li>
+<li>格式： FROM<image>、FROM<image>:<tag>、FROM<image>@<digest></digest></image></tag></image></image></li>
+<li>dockerfile第一条指令必为FROM。同一dockerfile中创建多个镜像，可使用多个FROM（每个镜像一次）</li>
+</ul>
+<h5 id="MAINTAINER"><a href="#MAINTAINER" class="headerlink" title="MAINTAINER"></a>MAINTAINER</h5><ul>
+<li>指定维护者信息</li>
+<li>格式：MAINTAINER<name><ul>
+<li>MAINTAINER image_creator@docker.com</li>
+</ul>
+</name></li>
+<li>被写入生成镜像的Author属性域中。</li>
+</ul>
+<h5 id="RUN"><a href="#RUN" class="headerlink" title="RUN"></a>RUN</h5><ul>
+<li>运行指定命令</li>
+<li>格式：RUN<command>、RUN [“executable”,”param1”,”param2”]<ul>
+<li>RUN [“executable”,”param1”,”param2”]会被解析为Json数组，必须用双引号；使用exec执行，不会启动shell</li>
+<li>RUN<command>默认在shell中运行，即 /bin/sh -c</li>
+</ul>
+</li>
+<li>每条Run指令在当前镜像基础上执行，并提交为新镜像</li>
+</ul>
+<h5 id="CMD"><a href="#CMD" class="headerlink" title="CMD"></a>CMD</h5><ul>
+<li>启动容器时默认执行的命令</li>
+<li>格式<ul>
+<li>CMD [“executable”,”param1”,”param2”]：使用exec执行，推荐使用</li>
+<li>CMD command param1 param2：在/bin/sh中执行，提供给需要交互的应用</li>
+<li>CMD [“param1”,”param2”]：提供给ENTRYPOINT的默认参数</li>
+</ul>
+</li>
+<li>每个dockerfile只能有一条CMD，若有多条只有最后一条生效</li>
+<li>用户启动容器时手动指定了运行命令（run参数），则覆盖CMD。</li>
+</ul>
+<h5 id="LABEL"><a href="#LABEL" class="headerlink" title="LABEL"></a>LABEL</h5><ul>
+<li>指定生成镜像的元数据标签信息</li>
+<li><p>格式：LABEL &lt; key&gt;=&lt; value&gt; &lt; key&gt;=&lt; value&gt; &lt; key&gt;=&lt; value&gt;…</p>
+<pre><code>LABLE version=&quot;1.0&quot;
+LABEL description=&quot;XXX&quot;
+</code></pre></li>
+</ul>
+<h5 id="EXPOSE"><a href="#EXPOSE" class="headerlink" title="EXPOSE"></a>EXPOSE</h5><ul>
+<li>镜像内服务所监听端口</li>
+<li>格式：EXPOST <port> [<port>…]<ul>
+<li>EXPOST 22 80 8443</li>
+</ul>
+</port></port></li>
+<li>仅声明，并不会自动完成端口映射</li>
+<li>启动容器时需使用 -P，docker主机会自动分配宿主机的临时端口转发到指定端口；-p可具体指定宿主机的哪个本地端口映射。    </li>
+</ul>
+<h5 id="ENV"><a href="#ENV" class="headerlink" title="ENV"></a>ENV</h5><ul>
+<li>指定环境变量，镜像生成过程中会被RUN指令使用，在镜像启动的容器中也会存在。</li>
+<li><p>格式：ENV &lt; key&gt; &lt; value&gt;、ENV &lt; key&gt;=&lt; value&gt;…</p>
+<pre><code>ENV PG_MAJOR 9.3
+RUN XXX
+ENV PATH /usr/local/XXX:$PATH
+</code></pre></li>
+<li>运行时可被覆盖，如docker run –env XXX build_image</li>
+</ul>
+<h5 id="ADD"><a href="#ADD" class="headerlink" title="ADD"></a>ADD</h5><ul>
+<li>复制<src>路径下内容到容器的<dest></dest></src></li>
+<li>格式：ADD <src> <dest><ul>
+<li>src可以是dockerfile所在目录的一个相对路径；也可为URL；或tar文件（tar文件会自动解压到dest下）</li>
+<li>dest可为镜像内绝对路径，或相对于工作目录（WORKDIR）的相对路径。</li>
+<li>ADD *.c /code</li>
+</ul>
+</dest></src></li>
+</ul>
+<h5 id="COPY"><a href="#COPY" class="headerlink" title="COPY"></a>COPY</h5><ul>
+<li>复制本地主机<src>(为dockerfile所在目录的相对路径、文件或目录)下内容到镜像中的<dest>下。目标路径不存在时自动创建</dest></src></li>
+<li>格式：COPY <src> <dest></dest></src></li>
+<li>使用本地目录为源目录时,推荐使用COPY</li>
+</ul>
+<h5 id="ENTRYPOINT"><a href="#ENTRYPOINT" class="headerlink" title="ENTRYPOINT"></a>ENTRYPOINT</h5><ul>
+<li>指定镜像的默认入口命令，在启动容器时作为根命令执行，所有传入值作为该命令的参数。</li>
+<li>格式<ul>
+<li>ENTRYPOINT [“executable”,”param1”,”param2”]：exec调用执行</li>
+<li>ENTRYPOINT command param1 param2：shell中执行</li>
+</ul>
+</li>
+<li>CMD指令的指定值将作为根命令参数</li>
+<li>每个dockerfile中只能有一个ENTRYPOINT，指定多个时仅最后一个生效。</li>
+<li>运行时可被–entrypoint覆盖</li>
+</ul>
+<h5 id="VOLUME"><a href="#VOLUME" class="headerlink" title="VOLUME"></a>VOLUME</h5><ul>
+<li>创建数据卷挂载点</li>
+<li>格式：VOLUME [“/data”]</li>
+<li>可从本地主机或其他容器挂载数据卷，一般用来存放数据库和需要保存的数据</li>
+</ul>
+<h5 id="USER"><a href="#USER" class="headerlink" title="USER"></a>USER</h5><ul>
+<li>指定运行容器时的用户名或UID，后续RUN指令也会使用此用户。</li>
+<li>格式：USER daemon</li>
+<li>服务无需管理员权限时，可通过此命令指定运行用户，并可在之前创建所需用户<ul>
+<li>RUN groupadd -r postgres &amp;&amp; useradd -r -g postgres postgres</li>
+</ul>
+</li>
+<li>要临时获取管理员权限可使用gosu或sudo</li>
+</ul>
+<h5 id="WORKDIR"><a href="#WORKDIR" class="headerlink" title="WORKDIR"></a>WORKDIR</h5><h5 id="ARG"><a href="#ARG" class="headerlink" title="ARG"></a>ARG</h5><h5 id="ONBUILD"><a href="#ONBUILD" class="headerlink" title="ONBUILD"></a>ONBUILD</h5><h5 id="STOPSIGNAL"><a href="#STOPSIGNAL" class="headerlink" title="STOPSIGNAL"></a>STOPSIGNAL</h5><h5 id="HEALTHCHECK"><a href="#HEALTHCHECK" class="headerlink" title="HEALTHCHECK"></a>HEALTHCHECK</h5><h5 id="SHELL"><a href="#SHELL" class="headerlink" title="SHELL"></a>SHELL</h5><h3 id="8-3-创建镜像"><a href="#8-3-创建镜像" class="headerlink" title="8.3 创建镜像"></a>8.3 创建镜像</h3><h3 id="8-4-使用-dockerignore文件"><a href="#8-4-使用-dockerignore文件" class="headerlink" title="8.4 使用.dockerignore文件"></a>8.4 使用.dockerignore文件</h3><h3 id="8-5-最佳实践"><a href="#8-5-最佳实践" class="headerlink" title="8.5 最佳实践"></a>8.5 最佳实践</h3><h3 id="8-6-本章小结"><a href="#8-6-本章小结" class="headerlink" title="8.6 本章小结"></a>8.6 本章小结</h3><hr>
 <h1 id="第9章-操作系统"><a href="#第9章-操作系统" class="headerlink" title="第9章 操作系统"></a>第9章 操作系统</h1><h3 id="9-1-BusyBox"><a href="#9-1-BusyBox" class="headerlink" title="9.1 BusyBox"></a>9.1 BusyBox</h3><h3 id="9-2-Alpine"><a href="#9-2-Alpine" class="headerlink" title="9.2 Alpine"></a>9.2 Alpine</h3><h3 id="9-3-Debian-Ubuntu"><a href="#9-3-Debian-Ubuntu" class="headerlink" title="9.3 Debian/Ubuntu"></a>9.3 Debian/Ubuntu</h3><h3 id="9-4-CentOS-Fedora"><a href="#9-4-CentOS-Fedora" class="headerlink" title="9.4 CentOS/Fedora"></a>9.4 CentOS/Fedora</h3><h3 id="9-5-本章小结"><a href="#9-5-本章小结" class="headerlink" title="9.5 本章小结"></a>9.5 本章小结</h3><hr>
 <h1 id="第10章-为镜像添加SSH服务"><a href="#第10章-为镜像添加SSH服务" class="headerlink" title="第10章 为镜像添加SSH服务"></a>第10章 为镜像添加SSH服务</h1><h3 id="10-1-基于commit命令创建"><a href="#10-1-基于commit命令创建" class="headerlink" title="10.1 基于commit命令创建"></a>10.1 基于commit命令创建</h3><h3 id="10-2-使用dockerfile创建"><a href="#10-2-使用dockerfile创建" class="headerlink" title="10.2 使用dockerfile创建"></a>10.2 使用dockerfile创建</h3><h3 id="10-3-本章小结"><a href="#10-3-本章小结" class="headerlink" title="10.3 本章小结"></a>10.3 本章小结</h3><hr>
 <h1 id="第11章-Web服务与应用"><a href="#第11章-Web服务与应用" class="headerlink" title="第11章 Web服务与应用"></a>第11章 Web服务与应用</h1><h3 id="11-1-Apache"><a href="#11-1-Apache" class="headerlink" title="11.1 Apache"></a>11.1 Apache</h3><h3 id="11-2-Nginx"><a href="#11-2-Nginx" class="headerlink" title="11.2 Nginx"></a>11.2 Nginx</h3><h3 id="11-3-Tomcat"><a href="#11-3-Tomcat" class="headerlink" title="11.3 Tomcat"></a>11.3 Tomcat</h3><h3 id="11-4-Jetty"><a href="#11-4-Jetty" class="headerlink" title="11.4 Jetty"></a>11.4 Jetty</h3><h3 id="11-5-LAMP"><a href="#11-5-LAMP" class="headerlink" title="11.5 LAMP"></a>11.5 LAMP</h3><h3 id="11-6-CMS"><a href="#11-6-CMS" class="headerlink" title="11.6 CMS"></a>11.6 CMS</h3><h5 id="11-6-1-WordPress"><a href="#11-6-1-WordPress" class="headerlink" title="11.6.1 WordPress"></a>11.6.1 WordPress</h5><h5 id="11-6-2-Ghost"><a href="#11-6-2-Ghost" class="headerlink" title="11.6.2 Ghost"></a>11.6.2 Ghost</h5><h3 id="11-7-持续开发与管理"><a href="#11-7-持续开发与管理" class="headerlink" title="11.7 持续开发与管理"></a>11.7 持续开发与管理</h3><ul>
@@ -1432,7 +1529,7 @@ Docker可理解为一种轻量级的沙盒。每个容器内运行着一个应�
 
 
     <hr />
-    <h3>Kommentare:</h3>
+    <h3>Comments:</h3>
     <div id="fb-root"></div>
     <script>
         (function(d, s, id) {
