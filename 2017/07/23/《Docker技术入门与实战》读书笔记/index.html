@@ -1410,7 +1410,53 @@ ENV PATH /usr/local/XXX:$PATH
 </li>
 <li>要临时获取管理员权限可使用gosu或sudo</li>
 </ul>
-<h5 id="WORKDIR"><a href="#WORKDIR" class="headerlink" title="WORKDIR"></a>WORKDIR</h5><h5 id="ARG"><a href="#ARG" class="headerlink" title="ARG"></a>ARG</h5><h5 id="ONBUILD"><a href="#ONBUILD" class="headerlink" title="ONBUILD"></a>ONBUILD</h5><h5 id="STOPSIGNAL"><a href="#STOPSIGNAL" class="headerlink" title="STOPSIGNAL"></a>STOPSIGNAL</h5><h5 id="HEALTHCHECK"><a href="#HEALTHCHECK" class="headerlink" title="HEALTHCHECK"></a>HEALTHCHECK</h5><h5 id="SHELL"><a href="#SHELL" class="headerlink" title="SHELL"></a>SHELL</h5><h3 id="8-3-创建镜像"><a href="#8-3-创建镜像" class="headerlink" title="8.3 创建镜像"></a>8.3 创建镜像</h3><h3 id="8-4-使用-dockerignore文件"><a href="#8-4-使用-dockerignore文件" class="headerlink" title="8.4 使用.dockerignore文件"></a>8.4 使用.dockerignore文件</h3><h3 id="8-5-最佳实践"><a href="#8-5-最佳实践" class="headerlink" title="8.5 最佳实践"></a>8.5 最佳实践</h3><h3 id="8-6-本章小结"><a href="#8-6-本章小结" class="headerlink" title="8.6 本章小结"></a>8.6 本章小结</h3><hr>
+<h5 id="WORKDIR"><a href="#WORKDIR" class="headerlink" title="WORKDIR"></a>WORKDIR</h5><ul>
+<li>为后续的RUN、CMD、ENTRYPOINT指令配置工作目录。可多个WORKDIR，后续命令如为相对路径，则会基于之前指定的WORKDIR。</li>
+<li><p>格式：WORKDIR /path/XXX</p>
+<pre><code>WORKDIR /a
+WORKDIR b
+WORKDIR c
+</code></pre><ul>
+<li>则最终路径为/a/b/c</li>
+</ul>
+</li>
+</ul>
+<h5 id="ARG"><a href="#ARG" class="headerlink" title="ARG"></a>ARG</h5><ul>
+<li>指定镜像内使用的参数，这些参数在执行docker build命令时才以–build-arg&lt; varname&gt;=&lt; value&gt;格式传入。</li>
+<li>格式：ARG&lt; name&gt;[=&lt; default value&gt;]</li>
+<li>可用 docker build –build-arg&lt; name&gt;=&lt; value&gt; 来指定参数值。</li>
+</ul>
+<h5 id="ONBUILD"><a href="#ONBUILD" class="headerlink" title="ONBUILD"></a>ONBUILD</h5><ul>
+<li>当创建的镜像作为其他镜像的基础镜像时，所执行的创建操作指令。</li>
+<li>格式：ONBUILD [INSTRUCTION]</li>
+<li></li>
+</ul>
+<h5 id="STOPSIGNAL"><a href="#STOPSIGNAL" class="headerlink" title="STOPSIGNAL"></a>STOPSIGNAL</h5><ul>
+<li>指定所创建镜像启动的容器，接收退出的信号值</li>
+<li>格式：STOPSIGNAL signal</li>
+</ul>
+<h5 id="HEALTHCHECK"><a href="#HEALTHCHECK" class="headerlink" title="HEALTHCHECK"></a>HEALTHCHECK</h5><ul>
+<li>配置所启动容器如何进行健康检查</li>
+<li>格式<ul>
+<li>HEALTHCHECK [OPTIONS] CMD command：根据所执行命令返回值是否为0来判断</li>
+<li>HEALTHCHECK NONE：禁止基础镜像中的健康检查</li>
+</ul>
+</li>
+<li>OPTION支持<ul>
+<li>–interval=DURATION(默认30s)：多久检查1次</li>
+<li>–timeout=DURATION(默认30s)：每次检查等待结果的超时</li>
+<li>–retries=N(默认3)：如失败，重试几次才确定失败</li>
+</ul>
+</li>
+</ul>
+<h5 id="SHELL"><a href="#SHELL" class="headerlink" title="SHELL"></a>SHELL</h5><ul>
+<li>指定其他命令使用shell时的默认shell类型。</li>
+<li>格式：SHELL [“executable”,”parameters”]<ul>
+<li>默认：[“/bin/bash”,”-c”]</li>
+</ul>
+</li>
+</ul>
+<h3 id="8-3-创建镜像"><a href="#8-3-创建镜像" class="headerlink" title="8.3 创建镜像"></a>8.3 创建镜像</h3><h3 id="8-4-使用-dockerignore文件"><a href="#8-4-使用-dockerignore文件" class="headerlink" title="8.4 使用.dockerignore文件"></a>8.4 使用.dockerignore文件</h3><h3 id="8-5-最佳实践"><a href="#8-5-最佳实践" class="headerlink" title="8.5 最佳实践"></a>8.5 最佳实践</h3><h3 id="8-6-本章小结"><a href="#8-6-本章小结" class="headerlink" title="8.6 本章小结"></a>8.6 本章小结</h3><hr>
 <h1 id="第9章-操作系统"><a href="#第9章-操作系统" class="headerlink" title="第9章 操作系统"></a>第9章 操作系统</h1><h3 id="9-1-BusyBox"><a href="#9-1-BusyBox" class="headerlink" title="9.1 BusyBox"></a>9.1 BusyBox</h3><h3 id="9-2-Alpine"><a href="#9-2-Alpine" class="headerlink" title="9.2 Alpine"></a>9.2 Alpine</h3><h3 id="9-3-Debian-Ubuntu"><a href="#9-3-Debian-Ubuntu" class="headerlink" title="9.3 Debian/Ubuntu"></a>9.3 Debian/Ubuntu</h3><h3 id="9-4-CentOS-Fedora"><a href="#9-4-CentOS-Fedora" class="headerlink" title="9.4 CentOS/Fedora"></a>9.4 CentOS/Fedora</h3><h3 id="9-5-本章小结"><a href="#9-5-本章小结" class="headerlink" title="9.5 本章小结"></a>9.5 本章小结</h3><hr>
 <h1 id="第10章-为镜像添加SSH服务"><a href="#第10章-为镜像添加SSH服务" class="headerlink" title="第10章 为镜像添加SSH服务"></a>第10章 为镜像添加SSH服务</h1><h3 id="10-1-基于commit命令创建"><a href="#10-1-基于commit命令创建" class="headerlink" title="10.1 基于commit命令创建"></a>10.1 基于commit命令创建</h3><h3 id="10-2-使用dockerfile创建"><a href="#10-2-使用dockerfile创建" class="headerlink" title="10.2 使用dockerfile创建"></a>10.2 使用dockerfile创建</h3><h3 id="10-3-本章小结"><a href="#10-3-本章小结" class="headerlink" title="10.3 本章小结"></a>10.3 本章小结</h3><hr>
 <h1 id="第11章-Web服务与应用"><a href="#第11章-Web服务与应用" class="headerlink" title="第11章 Web服务与应用"></a>第11章 Web服务与应用</h1><h3 id="11-1-Apache"><a href="#11-1-Apache" class="headerlink" title="11.1 Apache"></a>11.1 Apache</h3><h3 id="11-2-Nginx"><a href="#11-2-Nginx" class="headerlink" title="11.2 Nginx"></a>11.2 Nginx</h3><h3 id="11-3-Tomcat"><a href="#11-3-Tomcat" class="headerlink" title="11.3 Tomcat"></a>11.3 Tomcat</h3><h3 id="11-4-Jetty"><a href="#11-4-Jetty" class="headerlink" title="11.4 Jetty"></a>11.4 Jetty</h3><h3 id="11-5-LAMP"><a href="#11-5-LAMP" class="headerlink" title="11.5 LAMP"></a>11.5 LAMP</h3><h3 id="11-6-CMS"><a href="#11-6-CMS" class="headerlink" title="11.6 CMS"></a>11.6 CMS</h3><h5 id="11-6-1-WordPress"><a href="#11-6-1-WordPress" class="headerlink" title="11.6.1 WordPress"></a>11.6.1 WordPress</h5><h5 id="11-6-2-Ghost"><a href="#11-6-2-Ghost" class="headerlink" title="11.6.2 Ghost"></a>11.6.2 Ghost</h5><h3 id="11-7-持续开发与管理"><a href="#11-7-持续开发与管理" class="headerlink" title="11.7 持续开发与管理"></a>11.7 持续开发与管理</h3><ul>
@@ -1529,7 +1575,7 @@ ENV PATH /usr/local/XXX:$PATH
 
 
     <hr />
-    <h3>Comments:</h3>
+    <h3>Kommentare:</h3>
     <div id="fb-root"></div>
     <script>
         (function(d, s, id) {
