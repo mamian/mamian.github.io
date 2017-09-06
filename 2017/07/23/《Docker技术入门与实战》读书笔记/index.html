@@ -1429,7 +1429,15 @@ WORKDIR c
 <h5 id="ONBUILD"><a href="#ONBUILD" class="headerlink" title="ONBUILD"></a>ONBUILD</h5><ul>
 <li>当创建的镜像作为其他镜像的基础镜像时，所执行的创建操作指令。</li>
 <li>格式：ONBUILD [INSTRUCTION]</li>
-<li></li>
+<li><p>如image-A镜像的dockerfile包含</p>
+<pre><code>ONBUILD ADD . /app/src
+ONBUILD RUN /usr/local/bin/python-build --dir /app/src
+</code></pre><ul>
+<li>则基于image-A创建新镜像时，新dockerfile中使用FROM image-A，会自动执行如上ONBUILD指令。</li>
+</ul>
+</li>
+<li><p>使用ONBUILD指令的镜像，推荐在标签中注册，如ruby:1.9-onbuild</p>
+</li>
 </ul>
 <h5 id="STOPSIGNAL"><a href="#STOPSIGNAL" class="headerlink" title="STOPSIGNAL"></a>STOPSIGNAL</h5><ul>
 <li>指定所创建镜像启动的容器，接收退出的信号值</li>
@@ -1575,7 +1583,7 @@ WORKDIR c
 
 
     <hr />
-    <h3>Comments:</h3>
+    <h3>Kommentare:</h3>
     <div id="fb-root"></div>
     <script>
         (function(d, s, id) {
