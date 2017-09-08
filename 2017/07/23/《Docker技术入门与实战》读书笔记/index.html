@@ -1464,8 +1464,65 @@ ONBUILD RUN /usr/local/bin/python-build --dir /app/src
 </ul>
 </li>
 </ul>
-<h3 id="8-3-创建镜像"><a href="#8-3-创建镜像" class="headerlink" title="8.3 创建镜像"></a>8.3 创建镜像</h3><h3 id="8-4-使用-dockerignore文件"><a href="#8-4-使用-dockerignore文件" class="headerlink" title="8.4 使用.dockerignore文件"></a>8.4 使用.dockerignore文件</h3><h3 id="8-5-最佳实践"><a href="#8-5-最佳实践" class="headerlink" title="8.5 最佳实践"></a>8.5 最佳实践</h3><h3 id="8-6-本章小结"><a href="#8-6-本章小结" class="headerlink" title="8.6 本章小结"></a>8.6 本章小结</h3><hr>
-<h1 id="第9章-操作系统"><a href="#第9章-操作系统" class="headerlink" title="第9章 操作系统"></a>第9章 操作系统</h1><h3 id="9-1-BusyBox"><a href="#9-1-BusyBox" class="headerlink" title="9.1 BusyBox"></a>9.1 BusyBox</h3><h3 id="9-2-Alpine"><a href="#9-2-Alpine" class="headerlink" title="9.2 Alpine"></a>9.2 Alpine</h3><h3 id="9-3-Debian-Ubuntu"><a href="#9-3-Debian-Ubuntu" class="headerlink" title="9.3 Debian/Ubuntu"></a>9.3 Debian/Ubuntu</h3><h3 id="9-4-CentOS-Fedora"><a href="#9-4-CentOS-Fedora" class="headerlink" title="9.4 CentOS/Fedora"></a>9.4 CentOS/Fedora</h3><h3 id="9-5-本章小结"><a href="#9-5-本章小结" class="headerlink" title="9.5 本章小结"></a>9.5 本章小结</h3><hr>
+<h3 id="8-3-创建镜像"><a href="#8-3-创建镜像" class="headerlink" title="8.3 创建镜像"></a>8.3 创建镜像</h3><ul>
+<li>编写完dockerfile后通过 <code>docker build</code> 来创建镜像。</li>
+<li>指定dockerfile路径为/tmp/docker_builder/，且生成镜像标签为build_repo/first_image<ul>
+<li>docker build -t build_repo/first_image /tmp/docker_builder/</li>
+</ul>
+</li>
+<li>一般建议放置dockerfile的目录为空目录。docker build将读取指定路径下的dockerfile，并将此路径下所有内容发送给docker服务端。</li>
+</ul>
+<h3 id="8-4-使用-dockerignore文件"><a href="#8-4-使用-dockerignore文件" class="headerlink" title="8.4 使用.dockerignore文件"></a>8.4 使用.dockerignore文件</h3><ul>
+<li>使用.dockerignore来让docker忽略匹配模式路径下的目录和文件。</li>
+</ul>
+<h3 id="8-5-最佳实践"><a href="#8-5-最佳实践" class="headerlink" title="8.5 最佳实践"></a>8.5 最佳实践</h3><ol>
+<li>精减镜像用途：避免大而复杂、多功能的镜像</li>
+<li>选用合适的基础镜像：大镜像太臃肿，推荐小巧的debian镜像</li>
+<li>提供足够清晰的命令注释和维护者信息：dockerfile文件清晰</li>
+<li>正确使用版本号：使用明确版本号而不是latest</li>
+<li>减少镜像层数：尽量合并指令（多个RUN合并为一条）可减少层数</li>
+<li>及时删除临时文件和缓存文件：执行apt-get后/var/cache/apt下会缓存安装包</li>
+<li>提高生成速度：合理用缓存，减少内容目录下文件；或使用.dockerignore</li>
+<li>调整合理的指令顺序：开启缓存时，内容不变的指令尽量放前面，可尽量复用</li>
+<li>减少外部源的干扰：使用外部资源需指定持久地址并带有版本信息</li>
+</ol>
+<hr>
+<h1 id="第9章-操作系统"><a href="#第9章-操作系统" class="headerlink" title="第9章 操作系统"></a>第9章 操作系统</h1><h3 id="9-1-BusyBox"><a href="#9-1-BusyBox" class="headerlink" title="9.1 BusyBox"></a>9.1 BusyBox</h3><ul>
+<li>集成常用linux指令，只有几M大小（2M）。</li>
+<li>docker pull busybox:latest</li>
+<li>docker run -it busybox</li>
+</ul>
+<h3 id="9-2-Alpine"><a href="#9-2-Alpine" class="headerlink" title="9.2 Alpine"></a>9.2 Alpine</h3><ul>
+<li>面向安全的轻型linux发行版</li>
+<li>体积小：5M左右</li>
+<li>采用了 musl libc 和 busybox</li>
+</ul>
+<h5 id="使用官方镜像"><a href="#使用官方镜像" class="headerlink" title="使用官方镜像"></a>使用官方镜像</h5><ul>
+<li>docker run alpine echo ‘123’</li>
+</ul>
+<h5 id="迁移至Alpine基础镜像"><a href="#迁移至Alpine基础镜像" class="headerlink" title="迁移至Alpine基础镜像"></a>迁移至Alpine基础镜像</h5><ul>
+<li>大部分docker官方镜像已支持alpine作为基础镜像，很容易进行迁移。<ul>
+<li>ubuntu/debian &gt; alpine</li>
+<li>python:2.7 &gt; python:2.7-alpine</li>
+<li>ruby:2.3 &gt; ruby:2.3-alpine</li>
+</ul>
+</li>
+<li>使用alpine替换ubuntu作基础镜像，需使用apk替换apt工具安装软件。<ul>
+<li>apk add –no-cache <package></package></li>
+</ul>
+</li>
+</ul>
+<h3 id="9-3-Debian-Ubuntu"><a href="#9-3-Debian-Ubuntu" class="headerlink" title="9.3 Debian/Ubuntu"></a>9.3 Debian/Ubuntu</h3><ul>
+<li>docker清除了ubuntu的apt仓库信息<ul>
+<li>apt-get update</li>
+<li>apt-get install XXX</li>
+</ul>
+</li>
+</ul>
+<h3 id="9-4-CentOS-Fedora"><a href="#9-4-CentOS-Fedora" class="headerlink" title="9.4 CentOS/Fedora"></a>9.4 CentOS/Fedora</h3><h3 id="9-5-本章小结"><a href="#9-5-本章小结" class="headerlink" title="9.5 本章小结"></a>9.5 本章小结</h3><ul>
+<li>出于安全考虑，几乎所有官方镜像均无SSH服务，无法使用用户名、密码直接登录。</li>
+</ul>
+<hr>
 <h1 id="第10章-为镜像添加SSH服务"><a href="#第10章-为镜像添加SSH服务" class="headerlink" title="第10章 为镜像添加SSH服务"></a>第10章 为镜像添加SSH服务</h1><h3 id="10-1-基于commit命令创建"><a href="#10-1-基于commit命令创建" class="headerlink" title="10.1 基于commit命令创建"></a>10.1 基于commit命令创建</h3><h3 id="10-2-使用dockerfile创建"><a href="#10-2-使用dockerfile创建" class="headerlink" title="10.2 使用dockerfile创建"></a>10.2 使用dockerfile创建</h3><h3 id="10-3-本章小结"><a href="#10-3-本章小结" class="headerlink" title="10.3 本章小结"></a>10.3 本章小结</h3><hr>
 <h1 id="第11章-Web服务与应用"><a href="#第11章-Web服务与应用" class="headerlink" title="第11章 Web服务与应用"></a>第11章 Web服务与应用</h1><h3 id="11-1-Apache"><a href="#11-1-Apache" class="headerlink" title="11.1 Apache"></a>11.1 Apache</h3><h3 id="11-2-Nginx"><a href="#11-2-Nginx" class="headerlink" title="11.2 Nginx"></a>11.2 Nginx</h3><h3 id="11-3-Tomcat"><a href="#11-3-Tomcat" class="headerlink" title="11.3 Tomcat"></a>11.3 Tomcat</h3><h3 id="11-4-Jetty"><a href="#11-4-Jetty" class="headerlink" title="11.4 Jetty"></a>11.4 Jetty</h3><h3 id="11-5-LAMP"><a href="#11-5-LAMP" class="headerlink" title="11.5 LAMP"></a>11.5 LAMP</h3><h3 id="11-6-CMS"><a href="#11-6-CMS" class="headerlink" title="11.6 CMS"></a>11.6 CMS</h3><h5 id="11-6-1-WordPress"><a href="#11-6-1-WordPress" class="headerlink" title="11.6.1 WordPress"></a>11.6.1 WordPress</h5><h5 id="11-6-2-Ghost"><a href="#11-6-2-Ghost" class="headerlink" title="11.6.2 Ghost"></a>11.6.2 Ghost</h5><h3 id="11-7-持续开发与管理"><a href="#11-7-持续开发与管理" class="headerlink" title="11.7 持续开发与管理"></a>11.7 持续开发与管理</h3><ul>
 <li>持续集成CI，持续交付CD</li>
