@@ -1670,7 +1670,119 @@ COPY ./public-html /usr/local/apache2/htdocs/
 </ul>
 </li>
 </ul>
-<h5 id="自定义镜像"><a href="#自定义镜像" class="headerlink" title="自定义镜像"></a>自定义镜像</h5><h3 id="11-2-Nginx"><a href="#11-2-Nginx" class="headerlink" title="11.2 Nginx"></a>11.2 Nginx</h3><h3 id="11-3-Tomcat"><a href="#11-3-Tomcat" class="headerlink" title="11.3 Tomcat"></a>11.3 Tomcat</h3><h3 id="11-4-Jetty"><a href="#11-4-Jetty" class="headerlink" title="11.4 Jetty"></a>11.4 Jetty</h3><h3 id="11-5-LAMP"><a href="#11-5-LAMP" class="headerlink" title="11.5 LAMP"></a>11.5 LAMP</h3><h5 id="linode-lamp镜像"><a href="#linode-lamp镜像" class="headerlink" title="linode/lamp镜像"></a>linode/lamp镜像</h5><ul>
+<h5 id="自定义镜像"><a href="#自定义镜像" class="headerlink" title="自定义镜像"></a>自定义镜像</h5><h3 id="11-2-Nginx"><a href="#11-2-Nginx" class="headerlink" title="11.2 Nginx"></a>11.2 Nginx</h3><ul>
+<li>支持协议：http、https、smtp、pop3、imap</li>
+<li>官方镜像：docker run -d -p 80:80 –name webserver nginx</li>
+<li>自定义web页面<ul>
+<li>docker run –name nginx-container -p 80:80 -v index.html:/usr/share/nginx/html:ro -d nginx</li>
+</ul>
+</li>
+<li><p>dockerfile构建镜像</p>
+<pre><code>FROM nginx
+COPY ./index.html /usr/share/nginx/html
+</code></pre><ul>
+<li>docker build -t my-nginx .</li>
+<li>docker run –name nginx-container -d my-nginx</li>
+</ul>
+</li>
+</ul>
+<h3 id="11-3-Tomcat"><a href="#11-3-Tomcat" class="headerlink" title="11.3 Tomcat"></a>11.3 Tomcat</h3><h5 id="准备-1"><a href="#准备-1" class="headerlink" title="准备"></a>准备</h5><ul>
+<li>创建dockerfile、run.sh<ul>
+<li>mkdir tomcat7_jdk6</li>
+<li>cd tomcat7_jdk6</li>
+<li>touch Dockerfile run.sh</li>
+<li>下载tomcat并解压到tomcat7_jdk6</li>
+<li>Dockerfile、run.sh、apache-tomcat-7.0.56 jdk</li>
+</ul>
+</li>
+</ul>
+<h5 id="dockerfile文件、脚本文件"><a href="#dockerfile文件、脚本文件" class="headerlink" title="dockerfile文件、脚本文件"></a>dockerfile文件、脚本文件</h5><ul>
+<li><p>Dockerfile</p>
+<pre><code>FROM sshd:dockerfile
+# 设置继承自用户创建的sshd镜像
+MAINTAINER docker_user (user@docker.com)
+# 下面是一些创建者的基本信息
+
+# 设置环境变量，所有操作都是非交互式的
+ENV DEBIAN_FRONTEND noninteractive
+
+# 注意这里要更改系统的时区设置
+RUN echo &quot;Asia/Shanghai&quot; &gt; /etc/timezone &amp;&amp; dpkg-reconfigure -f noninteractive tzdata
+
+# 安装跟 tomcat 用户认证相关的软件
+RUN apt-get install -yq --no-install-recommends wget pwgen ca-certificates &amp;&amp; apt-get clean &amp;&amp; rm -rf /var/lib/apt/lists/*
+
+# 设置 tomcat 的环境变量，若读者有其他环境变量需要设置，也可在此添加
+ENV CATALINA_HOME /tomcat
+ENV JAVA_HOME /jdk
+
+# 复制 tomcat 和 jdk 文件到镜像中
+ADD apache-tomcat-7.0.56 /tomcat
+ADD jdk /jdk
+
+ADD create_tomcat_admin_user.sh /create_tomcat_admin_user.sh
+ADD run.sh /run.sh
+RUN chmod +x /*.sh
+RUN chmod +x /tomcat/bin/*.sh
+
+EXPOSE 8080
+CMD [&quot;/run.sh&quot;]
+</code></pre></li>
+<li><p>创建 tomcat 用户和密码脚本文件 create_tomcat_admin_user.sh</p>
+<pre><code>#!/bin/bash
+
+if [ -f /.tomcat_admin_created ]; then
+    echo &quot;Tomcat &apos;admin&apos; user already created&quot;
+    exit 0
+fi
+
+#generate password
+PASS=${TOMCAT_PASS:-$(pwgen -s 12 1)}
+_word=$( [ ${TOMCAT_PASS}] &amp;&amp; echo &quot;preset&quot; || echo &quot;random&quot; )
+
+echo &quot;=&gt; Creating and admin user with a ${_word} password in Tomcat&quot;
+sed -i -r &apos;s/&lt;\/tomcat-users&gt;//&apos; ${CATALINA_HOME}/conf/tomcat-users.xml
+echo &apos;&lt;role rolename=&quot;manager-gui&quot;/&gt;&apos; &gt;&gt; ${CATALINA_HOME}/conf/tomcat-users.xml
+echo &apos;&lt;role rolename=&quot;manager-script&quot;/&gt;&apos; &gt;&gt; ${CATALINA_HOME}/conf/tomcat-users.xml
+echo &apos;&lt;role rolename=&quot;manager-jmx&quot;/&gt;&apos; &gt;&gt; ${CATALINA_HOME}/conf/tomcat-users.xml
+echo &apos;&lt;role rolename=&quot;admin-gui&quot;/&gt;&apos; &gt;&gt; ${CATALINA_HOME}/conf/tomcat-users.xml
+echo &apos;&lt;role rolename=&quot;admin&quot;-script&quot;/&gt;&apos; &gt;&gt; ${CATALINA_HOME}/conf/tomcat-users.xml
+echo &quot;&lt;user username=\&quot;admin\&quot; password=\&quot;${PASS}\&quot; roles=\&quot;manager-gui,manager-script,manager-jmx,admin-gui,admin-script\&quot;/&gt;&quot; &gt;&gt; ${CATALINA_HOME}/conf/tomcat-users.xml
+echo &apos;&lt;/tomcat-users&gt;&apos; &gt;&gt; ${CATALINA_HOME}/conf/tomcat-users.xml
+echo &quot;=&gt; Done!&quot;
+touch /.tomcat_admin_created
+
+echo &quot;======================&quot;
+echo &quot;You can now configure to this Tomcat server using:&quot;
+echo &quot;&quot;
+echo &quot;   admin:${PASS}&quot;
+echo &quot;&quot;
+echo &quot;======================&quot;
+</code></pre></li>
+<li><p>run.sh</p>
+<pre><code>#!/bin/bash
+
+if [ ! -f /.tomcat_admin_created ]; then
+    /create_tomcat_admin_user.sh
+fi
+/usr/sbin/sshd -D &amp; exec ${CATALINA_HOME}/bin/catalina.sh run
+</code></pre></li>
+</ul>
+<h5 id="创建、测试镜像"><a href="#创建、测试镜像" class="headerlink" title="创建、测试镜像"></a>创建、测试镜像</h5><ul>
+<li>docker build -t tomcat7:jdk6</li>
+<li>docker run -d -P tomcat7:jdk6</li>
+<li>获取 tomcat 密码：docker logs CONTAINER_ID</li>
+<li>docker ps</li>
+<li>可用-v来挂载Tomcat日志文件、程序所在目录、tomcat相关配置。</li>
+</ul>
+<h3 id="11-4-Jetty"><a href="#11-4-Jetty" class="headerlink" title="11.4 Jetty"></a>11.4 Jetty</h3><ul>
+<li>docker run -d jetty<ul>
+<li>docker run -d -p 80:8080 -p 443:8443 jetty</li>
+</ul>
+</li>
+<li>container-ip:8080</li>
+</ul>
+<h3 id="11-5-LAMP"><a href="#11-5-LAMP" class="headerlink" title="11.5 LAMP"></a>11.5 LAMP</h3><h5 id="linode-lamp镜像"><a href="#linode-lamp镜像" class="headerlink" title="linode/lamp镜像"></a>linode/lamp镜像</h5><ul>
 <li>docker run -p 80:80 -t -i linode/lamp /bin/bash</li>
 <li>进入容器启动apache、mysql<ul>
 <li>service apache2 start</li>
