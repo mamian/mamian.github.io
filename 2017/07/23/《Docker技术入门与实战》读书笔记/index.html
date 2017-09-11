@@ -1670,7 +1670,18 @@ COPY ./public-html /usr/local/apache2/htdocs/
 </ul>
 </li>
 </ul>
-<h5 id="自定义镜像"><a href="#自定义镜像" class="headerlink" title="自定义镜像"></a>自定义镜像</h5><h3 id="11-2-Nginx"><a href="#11-2-Nginx" class="headerlink" title="11.2 Nginx"></a>11.2 Nginx</h3><h3 id="11-3-Tomcat"><a href="#11-3-Tomcat" class="headerlink" title="11.3 Tomcat"></a>11.3 Tomcat</h3><h3 id="11-4-Jetty"><a href="#11-4-Jetty" class="headerlink" title="11.4 Jetty"></a>11.4 Jetty</h3><h3 id="11-5-LAMP"><a href="#11-5-LAMP" class="headerlink" title="11.5 LAMP"></a>11.5 LAMP</h3><h3 id="11-6-CMS"><a href="#11-6-CMS" class="headerlink" title="11.6 CMS"></a>11.6 CMS</h3><h5 id="11-6-1-WordPress"><a href="#11-6-1-WordPress" class="headerlink" title="11.6.1 WordPress"></a>11.6.1 WordPress</h5><ul>
+<h5 id="自定义镜像"><a href="#自定义镜像" class="headerlink" title="自定义镜像"></a>自定义镜像</h5><h3 id="11-2-Nginx"><a href="#11-2-Nginx" class="headerlink" title="11.2 Nginx"></a>11.2 Nginx</h3><h3 id="11-3-Tomcat"><a href="#11-3-Tomcat" class="headerlink" title="11.3 Tomcat"></a>11.3 Tomcat</h3><h3 id="11-4-Jetty"><a href="#11-4-Jetty" class="headerlink" title="11.4 Jetty"></a>11.4 Jetty</h3><h3 id="11-5-LAMP"><a href="#11-5-LAMP" class="headerlink" title="11.5 LAMP"></a>11.5 LAMP</h3><h5 id="linode-lamp镜像"><a href="#linode-lamp镜像" class="headerlink" title="linode/lamp镜像"></a>linode/lamp镜像</h5><ul>
+<li>docker run -p 80:80 -t -i linode/lamp /bin/bash</li>
+<li>进入容器启动apache、mysql<ul>
+<li>service apache2 start</li>
+<li>service mysql start</li>
+</ul>
+</li>
+</ul>
+<h5 id="tutum-lamp镜像"><a href="#tutum-lamp镜像" class="headerlink" title="tutum/lamp镜像"></a>tutum/lamp镜像</h5><ul>
+<li>docker run -d -p 80:80 -p 3306:3306 tutum/lamp</li>
+</ul>
+<h3 id="11-6-CMS"><a href="#11-6-CMS" class="headerlink" title="11.6 CMS"></a>11.6 CMS</h3><h5 id="11-6-1-WordPress"><a href="#11-6-1-WordPress" class="headerlink" title="11.6.1 WordPress"></a>11.6.1 WordPress</h5><ul>
 <li>基于 PHP 和 Mysql</li>
 <li>使用官方镜像<ul>
 <li>下载：docker pull wordpress</li>
@@ -1833,7 +1844,7 @@ db:
 
 
     <hr />
-    <h3>Comments:</h3>
+    <h3>Kommentare:</h3>
     <div id="fb-root"></div>
     <script>
         (function(d, s, id) {
