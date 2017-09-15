@@ -2053,7 +2053,81 @@ fi
 </ul>
 </li>
 </ul>
-<h3 id="12-3-Redis"><a href="#12-3-Redis" class="headerlink" title="12.3 Redis"></a>12.3 Redis</h3><h3 id="12-4-Memcached"><a href="#12-4-Memcached" class="headerlink" title="12.4 Memcached"></a>12.4 Memcached</h3><h3 id="12-5-CouchDB"><a href="#12-5-CouchDB" class="headerlink" title="12.5 CouchDB"></a>12.5 CouchDB</h3><h3 id="12-6-Cassandra"><a href="#12-6-Cassandra" class="headerlink" title="12.6 Cassandra"></a>12.6 Cassandra</h3><h3 id="12-7-本章小结"><a href="#12-7-本章小结" class="headerlink" title="12.7 本章小结"></a>12.7 本章小结</h3><hr>
+<h3 id="12-3-Redis"><a href="#12-3-Redis" class="headerlink" title="12.3 Redis"></a>12.3 Redis</h3><ul>
+<li>docker run –name redis-container -d redis</li>
+<li>容器中启动bash：docker exec -it CONTAINER_ID bash</li>
+</ul>
+<h5 id="连接redis容器"><a href="#连接redis容器" class="headerlink" title="连接redis容器"></a>连接redis容器</h5><ul>
+<li>docker run -it –link redis-container:db alpine sh</li>
+<li>进入容器后<ul>
+<li>ping db</li>
+<li>检测redis服务可用性：nc db 6379</li>
+</ul>
+</li>
+<li>官方镜像自事了redis客户端<ul>
+<li>docker run -it –link redis-container:db –entrypoint redis-cli redis -h db</li>
+</ul>
+</li>
+</ul>
+<h5 id="使用自定义配置"><a href="#使用自定义配置" class="headerlink" title="使用自定义配置"></a>使用自定义配置</h5><ul>
+<li>docker run -v /myredis/conf/redis.conf:/usr/local/etc/redis/redis.conf –name myredis redis redis-server /usr/local/etc/redis/redis.conf</li>
+</ul>
+<h3 id="12-4-Memcached"><a href="#12-4-Memcached" class="headerlink" title="12.4 Memcached"></a>12.4 Memcached</h3><ul>
+<li>docker run –name memcached-container -d memcached</li>
+<li>设定 memcached server 内存大小<ul>
+<li>docker run –name memcached-container -d memcached memcached -m64</li>
+</ul>
+</li>
+<li>宿主机测试<ul>
+<li>telnet 192.168.99.100 11211</li>
+</ul>
+</li>
+</ul>
+<h3 id="12-5-CouchDB"><a href="#12-5-CouchDB" class="headerlink" title="12.5 CouchDB"></a>12.5 CouchDB</h3><ul>
+<li>面向文档的 nosql 数据库，json格式存数据。兼容 ACID</li>
+<li>CouchDB侧重AP(可用性和分区容忍度)；MongoDB侧重CP(一致性和分区容忍度)，Neo4j则提供特有的面向图形的结构。</li>
+<li>docker run -d –name couchdb-container couchdb<ul>
+<li>默认端口：5984</li>
+</ul>
+</li>
+<li>容器链接：docker run –name couchdb-app –link couchdb-container:couch couchdb</li>
+</ul>
+<h3 id="12-6-Cassandra"><a href="#12-6-Cassandra" class="headerlink" title="12.6 Cassandra"></a>12.6 Cassandra</h3><ul>
+<li>实现容错及无单点故障</li>
+<li>引入p2p技术，具备大规模可分区行存储能力。支持 Spart、Storm、Hadoop集成，类似工具有 HBase。</li>
+<li>docker run –name my-cassandra -d cassandra:latest</li>
+<li>将另一容器的应用与Cassandra容器连接，应用容器需暴露Cassandra需使用的端口（Cassandra默认服务端口为rpc_host:9160；CQL默认本地服务端口为native_transport_host:9042）<ul>
+<li>docker run –name my-app –link my-cassandra:cassandra -d app-this-uses-cassandra</li>
+</ul>
+</li>
+</ul>
+<h5 id="搭建-cassandra-集群"><a href="#搭建-cassandra-集群" class="headerlink" title="搭建 cassandra 集群"></a>搭建 cassandra 集群</h5><ul>
+<li>单机模式（所有实例集中到一台机器）、多机模式（实例分布在多台机器）</li>
+<li>如需启动更多实例，需在指令中配置首个实例信息<ul>
+<li>docker run –name my-cassandra2 -d -e CASSANDRA_SEEDS=”$(docker inspect –format=’{ { .NetworkSettings.IPAddress } }’ my-cassandra)” cassasndra:latest</li>
+<li>my-cassandra即为首个 Cassandra Server 的实例名。docker inspect 用以获取首个实例ip地址。</li>
+</ul>
+</li>
+<li>连接2个cassandra实例<ul>
+<li>docker run –name my-cassandra2 -d –link my-cassandra:cassandra cassasndra:latest</li>
+</ul>
+</li>
+<li>多机模式，需通过环境变量配置 Cassandra Server 容器的IP广播地址(-e标签)。如容器1的ip为10.22.22.22，容器2 的ip为10.23.23.23，Gossip端口为 7000<ul>
+<li>启动容器1的Cassandra实例<ul>
+<li>docker run –name my-cassandra -d -e CASSANDRA_BROADCAST_ADDRESS=10.22.22.22 -p 7000:7000 cassandra:latest</li>
+</ul>
+</li>
+<li>启动容器2的Cassandra实例，同样需暴露 Gossip 端口，并通过环境变量声明容器1的 IP<ul>
+<li>docker run –name my-cassandra -d -e CASSANDRA_BROADCAST_ADDRESS=10.23.23.23 -p 7000:7000 -e CASSANDRA_SEEDS=10.22.22.22 cassandra:latest</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="12-7-本章小结"><a href="#12-7-本章小结" class="headerlink" title="12.7 本章小结"></a>12.7 本章小结</h3><ul>
+<li>数据库文件映射到宿主主机：一方面减少容器文件系统带来的性能损耗，另一方面实现数据持久化。</li>
+</ul>
+<hr>
 <h1 id="第13章-分布式处理与大数据平台"><a href="#第13章-分布式处理与大数据平台" class="headerlink" title="第13章 分布式处理与大数据平台"></a>第13章 分布式处理与大数据平台</h1><h3 id="13-1-RabbitMQ"><a href="#13-1-RabbitMQ" class="headerlink" title="13.1 RabbitMQ"></a>13.1 RabbitMQ</h3><h3 id="13-2-Celery"><a href="#13-2-Celery" class="headerlink" title="13.2 Celery"></a>13.2 Celery</h3><h3 id="13-3-Hadoop"><a href="#13-3-Hadoop" class="headerlink" title="13.3 Hadoop"></a>13.3 Hadoop</h3><h3 id="13-4-Spark"><a href="#13-4-Spark" class="headerlink" title="13.4 Spark"></a>13.4 Spark</h3><h5 id="13-4-1-使用官方镜像"><a href="#13-4-1-使用官方镜像" class="headerlink" title="13.4.1 使用官方镜像"></a>13.4.1 使用官方镜像</h5><h5 id="13-4-2-验证"><a href="#13-4-2-验证" class="headerlink" title="13.4.2 验证"></a>13.4.2 验证</h5><h3 id="13-5-Storm"><a href="#13-5-Storm" class="headerlink" title="13.5 Storm"></a>13.5 Storm</h3><h3 id="13-6-ElasticSearch"><a href="#13-6-ElasticSearch" class="headerlink" title="13.6 ElasticSearch"></a>13.6 ElasticSearch</h3><h3 id="13-7-本章小结"><a href="#13-7-本章小结" class="headerlink" title="13.7 本章小结"></a>13.7 本章小结</h3><hr>
 <h1 id="第14章-编程开发"><a href="#第14章-编程开发" class="headerlink" title="第14章 编程开发"></a>第14章 编程开发</h1><h3 id="14-1-C-C"><a href="#14-1-C-C" class="headerlink" title="14.1 C/C++"></a>14.1 C/C++</h3><h5 id="14-1-1-GCC"><a href="#14-1-1-GCC" class="headerlink" title="14.1.1 GCC"></a>14.1.1 GCC</h5><h5 id="14-1-2-LLVM"><a href="#14-1-2-LLVM" class="headerlink" title="14.1.2 LLVM"></a>14.1.2 LLVM</h5><h5 id="14-1-3-Clang"><a href="#14-1-3-Clang" class="headerlink" title="14.1.3 Clang"></a>14.1.3 Clang</h5><h3 id="14-2-Java"><a href="#14-2-Java" class="headerlink" title="14.2 Java"></a>14.2 Java</h3><h3 id="14-3-Python"><a href="#14-3-Python" class="headerlink" title="14.3 Python"></a>14.3 Python</h3><h5 id="14-3-1-使用官方的Python镜像"><a href="#14-3-1-使用官方的Python镜像" class="headerlink" title="14.3.1 使用官方的Python镜像"></a>14.3.1 使用官方的Python镜像</h5><h5 id="14-3-2-使用PyPy"><a href="#14-3-2-使用PyPy" class="headerlink" title="14.3.2 使用PyPy"></a>14.3.2 使用PyPy</h5><h3 id="14-4-JavaScript"><a href="#14-4-JavaScript" class="headerlink" title="14.4 JavaScript"></a>14.4 JavaScript</h3><h3 id="14-5-Go"><a href="#14-5-Go" class="headerlink" title="14.5 Go"></a>14.5 Go</h3><h5 id="14-5-1-搭建并运行Go容器"><a href="#14-5-1-搭建并运行Go容器" class="headerlink" title="14.5.1 搭建并运行Go容器"></a>14.5.1 搭建并运行Go容器</h5><h5 id="14-5-2-Beego"><a href="#14-5-2-Beego" class="headerlink" title="14.5.2 Beego"></a>14.5.2 Beego</h5><h5 id="14-5-3-Gogs-基于Go的Git服务"><a href="#14-5-3-Gogs-基于Go的Git服务" class="headerlink" title="14.5.3 Gogs:基于Go的Git服务"></a>14.5.3 Gogs:基于Go的Git服务</h5><h3 id="14-6-PHP"><a href="#14-6-PHP" class="headerlink" title="14.6 PHP"></a>14.6 PHP</h3><h3 id="14-7-Ruby"><a href="#14-7-Ruby" class="headerlink" title="14.7 Ruby"></a>14.7 Ruby</h3><h5 id="14-7-1-使用Ruby官方镜像"><a href="#14-7-1-使用Ruby官方镜像" class="headerlink" title="14.7.1 使用Ruby官方镜像"></a>14.7.1 使用Ruby官方镜像</h5><h5 id="14-7-2-JRuby"><a href="#14-7-2-JRuby" class="headerlink" title="14.7.2 JRuby"></a>14.7.2 JRuby</h5><h5 id="14-7-3-Ruby-on-Rails"><a href="#14-7-3-Ruby-on-Rails" class="headerlink" title="14.7.3 Ruby on Rails"></a>14.7.3 Ruby on Rails</h5><h3 id="14-8-Perl"><a href="#14-8-Perl" class="headerlink" title="14.8 Perl"></a>14.8 Perl</h3><h3 id="14-9-R"><a href="#14-9-R" class="headerlink" title="14.9 R"></a>14.9 R</h3><h3 id="14-10-Erlang"><a href="#14-10-Erlang" class="headerlink" title="14.10 Erlang"></a>14.10 Erlang</h3><h3 id="14-11-本章小结"><a href="#14-11-本章小结" class="headerlink" title="14.11 本章小结"></a>14.11 本章小结</h3><hr>
 <h1 id="第15章-容器与云服务"><a href="#第15章-容器与云服务" class="headerlink" title="第15章 容器与云服务"></a>第15章 容器与云服务</h1><h3 id="15-1-公有云容器服务"><a href="#15-1-公有云容器服务" class="headerlink" title="15.1 公有云容器服务"></a>15.1 公有云容器服务</h3><h5 id="15-1-1-AWS"><a href="#15-1-1-AWS" class="headerlink" title="15.1.1 AWS"></a>15.1.1 AWS</h5><h5 id="15-1-2-Google-Cloud-Platform"><a href="#15-1-2-Google-Cloud-Platform" class="headerlink" title="15.1.2 Google Cloud Platform"></a>15.1.2 Google Cloud Platform</h5><h5 id="15-1-3-Azure"><a href="#15-1-3-Azure" class="headerlink" title="15.1.3 Azure"></a>15.1.3 Azure</h5><h5 id="15-1-4-腾讯云"><a href="#15-1-4-腾讯云" class="headerlink" title="15.1.4 腾讯云"></a>15.1.4 腾讯云</h5><h5 id="15-1-5-阿里云"><a href="#15-1-5-阿里云" class="headerlink" title="15.1.5 阿里云"></a>15.1.5 阿里云</h5><h5 id="15-1-6-华为云"><a href="#15-1-6-华为云" class="headerlink" title="15.1.6 华为云"></a>15.1.6 华为云</h5><h5 id="15-1-7-UCloud"><a href="#15-1-7-UCloud" class="headerlink" title="15.1.7 UCloud"></a>15.1.7 UCloud</h5><h3 id="15-2-容器云服务"><a href="#15-2-容器云服务" class="headerlink" title="15.2 容器云服务"></a>15.2 容器云服务</h3><h5 id="15-2-1-基本要素与关键特性"><a href="#15-2-1-基本要素与关键特性" class="headerlink" title="15.2.1 基本要素与关键特性"></a>15.2.1 基本要素与关键特性</h5><h5 id="15-2-2-网易蜂巢"><a href="#15-2-2-网易蜂巢" class="headerlink" title="15.2.2 网易蜂巢"></a>15.2.2 网易蜂巢</h5><h5 id="15-2-3-时速云"><a href="#15-2-3-时速云" class="headerlink" title="15.2.3 时速云"></a>15.2.3 时速云</h5><h5 id="15-2-4-Daocloud"><a href="#15-2-4-Daocloud" class="headerlink" title="15.2.4 Daocloud"></a>15.2.4 Daocloud</h5><h5 id="15-2-5-灵雀云"><a href="#15-2-5-灵雀云" class="headerlink" title="15.2.5 灵雀云"></a>15.2.5 灵雀云</h5><h5 id="15-2-6-数人云"><a href="#15-2-6-数人云" class="headerlink" title="15.2.6 数人云"></a>15.2.6 数人云</h5><h3 id="15-3-阿里云容器服务"><a href="#15-3-阿里云容器服务" class="headerlink" title="15.3 阿里云容器服务"></a>15.3 阿里云容器服务</h3><h3 id="15-4-时速云容器平台"><a href="#15-4-时速云容器平台" class="headerlink" title="15.4 时速云容器平台"></a>15.4 时速云容器平台</h3><h3 id="15-5-本章小结"><a href="#15-5-本章小结" class="headerlink" title="15.5 本章小结"></a>15.5 本章小结</h3><hr>
@@ -2082,7 +2156,7 @@ fi
 
 
     <hr />
-    <h3>Kommentare:</h3>
+    <h3>Comments:</h3>
     <div id="fb-root"></div>
     <script>
         (function(d, s, id) {
