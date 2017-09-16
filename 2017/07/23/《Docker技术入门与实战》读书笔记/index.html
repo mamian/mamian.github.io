@@ -2128,7 +2128,107 @@ fi
 <li>数据库文件映射到宿主主机：一方面减少容器文件系统带来的性能损耗，另一方面实现数据持久化。</li>
 </ul>
 <hr>
-<h1 id="第13章-分布式处理与大数据平台"><a href="#第13章-分布式处理与大数据平台" class="headerlink" title="第13章 分布式处理与大数据平台"></a>第13章 分布式处理与大数据平台</h1><h3 id="13-1-RabbitMQ"><a href="#13-1-RabbitMQ" class="headerlink" title="13.1 RabbitMQ"></a>13.1 RabbitMQ</h3><h3 id="13-2-Celery"><a href="#13-2-Celery" class="headerlink" title="13.2 Celery"></a>13.2 Celery</h3><h3 id="13-3-Hadoop"><a href="#13-3-Hadoop" class="headerlink" title="13.3 Hadoop"></a>13.3 Hadoop</h3><h3 id="13-4-Spark"><a href="#13-4-Spark" class="headerlink" title="13.4 Spark"></a>13.4 Spark</h3><h5 id="13-4-1-使用官方镜像"><a href="#13-4-1-使用官方镜像" class="headerlink" title="13.4.1 使用官方镜像"></a>13.4.1 使用官方镜像</h5><h5 id="13-4-2-验证"><a href="#13-4-2-验证" class="headerlink" title="13.4.2 验证"></a>13.4.2 验证</h5><h3 id="13-5-Storm"><a href="#13-5-Storm" class="headerlink" title="13.5 Storm"></a>13.5 Storm</h3><h3 id="13-6-ElasticSearch"><a href="#13-6-ElasticSearch" class="headerlink" title="13.6 ElasticSearch"></a>13.6 ElasticSearch</h3><h3 id="13-7-本章小结"><a href="#13-7-本章小结" class="headerlink" title="13.7 本章小结"></a>13.7 本章小结</h3><hr>
+<h1 id="第13章-分布式处理与大数据平台"><a href="#第13章-分布式处理与大数据平台" class="headerlink" title="第13章 分布式处理与大数据平台"></a>第13章 分布式处理与大数据平台</h1><h3 id="13-1-RabbitMQ"><a href="#13-1-RabbitMQ" class="headerlink" title="13.1 RabbitMQ"></a>13.1 RabbitMQ</h3><ul>
+<li>支持AMQP的开源消息队列实现，Erlang编写。</li>
+<li>客户端：java、python、php、.net、ruby、javascript。</li>
+<li>消息发送者与接收者间无须知道彼此的存在。</li>
+<li>重要组件<ul>
+<li>服务端：Broker包括Exchange、Queue)</li>
+<li>客户端：Producer、Consumer</li>
+<li>Producer 产生消息，发送给 Exchange，经由 Queue，最终由 Consumer 接收。</li>
+</ul>
+</li>
+<li>RabbitMQ 将数据存储在 Node 中，默认为 hostname。运行容器时指定每个 rabbitmq daemon 运行的主机名，以便管理和维护数据。<ul>
+<li>docker run -d –hostname my-rabbit –name some-rabbit rabbitmq:3</li>
+</ul>
+</li>
+<li>使用 rabbitmqctl 工具进行远程管理（或跨容器管理），需设置持久化的 cookie。<ul>
+<li>docker run -d –hostname my-rabbit –name some-rabbit -e RABBITMQ_ERLANG_COOKIE=’secret cookie here’ rabbitmq:3</li>
+</ul>
+</li>
+<li>使用 cookie 连接至1个独立的实例<ul>
+<li>docker run -it –rm –link some-rabbit:my-rabbit -e RABBITMQ_ERLANG_COOKIE=’secret cookie here’ rabbitmq:3 bash</li>
+<li>rabbitmyctl -n rabbit@my-rabbit list_users</li>
+<li>使用 RABBITMQ_NODENAME 简化指令<ul>
+<li>docker run -it –rm –link some-rabbit:my-rabbit -e RABBITMQ_ERLANG_COOKIE=’secret cookie here’ -e RABBITMQ_NODENAME=rabbit@my-rabbit rabbitmq:3 bash</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>默认rabbitmq会启动一些管控插件，如 rabbitmq:3-management，通过默认用户名密码及标准管控端口 15672 访问插件。<ul>
+<li>docker run -d –hostname my-rabbit –name some-rabbit rabbitmq:3-management</li>
+<li><a href="http://container-ip:15672" target="_blank" rel="external">http://container-ip:15672</a></li>
+<li>如需从宿主机外访问，可使用 8080 端口<ul>
+<li>docker run -d –hostname my-rabbit –name some-rabbit -p 8080:15672 rabbitmq:3-management</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>修改默认用户名密码<ul>
+<li>docker run -d –hostname my-rabbit –name some-rabbit -e RABBITMQ_DEFAULT_USER=user -e RABBITMQ_DEFAULT_PASS=password rabbitmq:3-management</li>
+</ul>
+</li>
+<li>修改默认 vhost<ul>
+<li>docker run -d –hostname my-rabbit –name some-rabbit -e RABBITMQ_DEFAULT_VHOST=my_vhost rabbitmq:3-management</li>
+</ul>
+</li>
+<li>连接到 daemon<ul>
+<li>docker run –name some-app –link some-rabbit:rabbit -d application-that-uses-rabbitmq</li>
+</ul>
+</li>
+</ul>
+<h3 id="13-2-Celery"><a href="#13-2-Celery" class="headerlink" title="13.2 Celery"></a>13.2 Celery</h3><ul>
+<li>分布式任务处理系统，专注实时处理的任务队列管理，同时支持任务调度。</li>
+<li>基于python实现，可集成 Django、Pyramid、Pylons、Flask、Tornado 等web框架。</li>
+<li>Celery 可单机运行，也可多机或跨数据中心运行。</li>
+</ul>
+<h5 id="使用官方镜像-2"><a href="#使用官方镜像-2" class="headerlink" title="使用官方镜像"></a>使用官方镜像</h5><ul>
+<li>启动1个 celery worker，即 RabbitMQ Broker<ul>
+<li>docker run –link some-rabbit:rabbit –name some-celery -d celery:latest</li>
+<li>检查集群状态<ul>
+<li>docker run –link some-rabbit:rabbit –rm celery celery status</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>启动1个 celery worker，即 Redis Broker<ul>
+<li>docker run –link some-redis:redis -e CELERY_BROKER_URL=redis://redis –name some-celery -d celery</li>
+<li>检查集群状态<ul>
+<li>docker run –link some-redis:redis -e CELERY_BROKER_URL=redis://redis –rm celery celery status</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h5 id="使用-Celery-库"><a href="#使用-Celery-库" class="headerlink" title="使用 Celery 库"></a>使用 Celery 库</h5><ul>
+<li><p>如用户的web框架已有 Celery 库，则更方便。Python 调用 Celery 示例：</p>
+<pre><code>from celery import Celery
+app = Celery(&apos;hello&apos;, broker=&apos;amqp://guest@localhost//&apos;)
+
+@app.task
+def hello();
+    return &apos;hello world&apos;
+</code></pre></li>
+</ul>
+<h3 id="13-3-Hadoop"><a href="#13-3-Hadoop" class="headerlink" title="13.3 Hadoop"></a>13.3 Hadoop</h3><ul>
+<li>HDFS：文件系统；YARN：资源管理系统（相当于Linux的进程调度和内存分配模块）；MapReduce：运行在YARN上的应用，负责分布式处理管理。</li>
+</ul>
+<h5 id="使用官方镜像-3"><a href="#使用官方镜像-3" class="headerlink" title="使用官方镜像"></a>使用官方镜像</h5><ul>
+<li>docker run -it sequenceiq/hadoop-docker:2.7.0 /etc/bootstrap.sh -bash</li>
+<li>查看namenode日志<ul>
+<li>cat /usr/local/hadoop/logs/hadoop-root-namenode-d4e1e9d8f24f.out</li>
+</ul>
+</li>
+</ul>
+<h5 id="安装验证（验证-hadoop-是否安装成功）"><a href="#安装验证（验证-hadoop-是否安装成功）" class="headerlink" title="安装验证（验证 hadoop 是否安装成功）"></a>安装验证（验证 hadoop 是否安装成功）</h5><ul>
+<li>打开容器bash<ul>
+<li>cd /usr/local/hadoop</li>
+<li>bin/hadoop jar share/hadoop/mapreduce/hadoop-mapreduce-examples-2.7.0.jar grep input output ‘dfs[a-z.]+’</li>
+<li>检查输出结果：bin/hdfs dfs -cat output/*</li>
+</ul>
+</li>
+</ul>
+<h3 id="13-4-Spark"><a href="#13-4-Spark" class="headerlink" title="13.4 Spark"></a>13.4 Spark</h3><h5 id="13-4-1-使用官方镜像"><a href="#13-4-1-使用官方镜像" class="headerlink" title="13.4.1 使用官方镜像"></a>13.4.1 使用官方镜像</h5><h5 id="13-4-2-验证"><a href="#13-4-2-验证" class="headerlink" title="13.4.2 验证"></a>13.4.2 验证</h5><h3 id="13-5-Storm"><a href="#13-5-Storm" class="headerlink" title="13.5 Storm"></a>13.5 Storm</h3><h3 id="13-6-ElasticSearch"><a href="#13-6-ElasticSearch" class="headerlink" title="13.6 ElasticSearch"></a>13.6 ElasticSearch</h3><h3 id="13-7-本章小结"><a href="#13-7-本章小结" class="headerlink" title="13.7 本章小结"></a>13.7 本章小结</h3><hr>
 <h1 id="第14章-编程开发"><a href="#第14章-编程开发" class="headerlink" title="第14章 编程开发"></a>第14章 编程开发</h1><h3 id="14-1-C-C"><a href="#14-1-C-C" class="headerlink" title="14.1 C/C++"></a>14.1 C/C++</h3><h5 id="14-1-1-GCC"><a href="#14-1-1-GCC" class="headerlink" title="14.1.1 GCC"></a>14.1.1 GCC</h5><h5 id="14-1-2-LLVM"><a href="#14-1-2-LLVM" class="headerlink" title="14.1.2 LLVM"></a>14.1.2 LLVM</h5><h5 id="14-1-3-Clang"><a href="#14-1-3-Clang" class="headerlink" title="14.1.3 Clang"></a>14.1.3 Clang</h5><h3 id="14-2-Java"><a href="#14-2-Java" class="headerlink" title="14.2 Java"></a>14.2 Java</h3><h3 id="14-3-Python"><a href="#14-3-Python" class="headerlink" title="14.3 Python"></a>14.3 Python</h3><h5 id="14-3-1-使用官方的Python镜像"><a href="#14-3-1-使用官方的Python镜像" class="headerlink" title="14.3.1 使用官方的Python镜像"></a>14.3.1 使用官方的Python镜像</h5><h5 id="14-3-2-使用PyPy"><a href="#14-3-2-使用PyPy" class="headerlink" title="14.3.2 使用PyPy"></a>14.3.2 使用PyPy</h5><h3 id="14-4-JavaScript"><a href="#14-4-JavaScript" class="headerlink" title="14.4 JavaScript"></a>14.4 JavaScript</h3><h3 id="14-5-Go"><a href="#14-5-Go" class="headerlink" title="14.5 Go"></a>14.5 Go</h3><h5 id="14-5-1-搭建并运行Go容器"><a href="#14-5-1-搭建并运行Go容器" class="headerlink" title="14.5.1 搭建并运行Go容器"></a>14.5.1 搭建并运行Go容器</h5><h5 id="14-5-2-Beego"><a href="#14-5-2-Beego" class="headerlink" title="14.5.2 Beego"></a>14.5.2 Beego</h5><h5 id="14-5-3-Gogs-基于Go的Git服务"><a href="#14-5-3-Gogs-基于Go的Git服务" class="headerlink" title="14.5.3 Gogs:基于Go的Git服务"></a>14.5.3 Gogs:基于Go的Git服务</h5><h3 id="14-6-PHP"><a href="#14-6-PHP" class="headerlink" title="14.6 PHP"></a>14.6 PHP</h3><h3 id="14-7-Ruby"><a href="#14-7-Ruby" class="headerlink" title="14.7 Ruby"></a>14.7 Ruby</h3><h5 id="14-7-1-使用Ruby官方镜像"><a href="#14-7-1-使用Ruby官方镜像" class="headerlink" title="14.7.1 使用Ruby官方镜像"></a>14.7.1 使用Ruby官方镜像</h5><h5 id="14-7-2-JRuby"><a href="#14-7-2-JRuby" class="headerlink" title="14.7.2 JRuby"></a>14.7.2 JRuby</h5><h5 id="14-7-3-Ruby-on-Rails"><a href="#14-7-3-Ruby-on-Rails" class="headerlink" title="14.7.3 Ruby on Rails"></a>14.7.3 Ruby on Rails</h5><h3 id="14-8-Perl"><a href="#14-8-Perl" class="headerlink" title="14.8 Perl"></a>14.8 Perl</h3><h3 id="14-9-R"><a href="#14-9-R" class="headerlink" title="14.9 R"></a>14.9 R</h3><h3 id="14-10-Erlang"><a href="#14-10-Erlang" class="headerlink" title="14.10 Erlang"></a>14.10 Erlang</h3><h3 id="14-11-本章小结"><a href="#14-11-本章小结" class="headerlink" title="14.11 本章小结"></a>14.11 本章小结</h3><hr>
 <h1 id="第15章-容器与云服务"><a href="#第15章-容器与云服务" class="headerlink" title="第15章 容器与云服务"></a>第15章 容器与云服务</h1><h3 id="15-1-公有云容器服务"><a href="#15-1-公有云容器服务" class="headerlink" title="15.1 公有云容器服务"></a>15.1 公有云容器服务</h3><h5 id="15-1-1-AWS"><a href="#15-1-1-AWS" class="headerlink" title="15.1.1 AWS"></a>15.1.1 AWS</h5><h5 id="15-1-2-Google-Cloud-Platform"><a href="#15-1-2-Google-Cloud-Platform" class="headerlink" title="15.1.2 Google Cloud Platform"></a>15.1.2 Google Cloud Platform</h5><h5 id="15-1-3-Azure"><a href="#15-1-3-Azure" class="headerlink" title="15.1.3 Azure"></a>15.1.3 Azure</h5><h5 id="15-1-4-腾讯云"><a href="#15-1-4-腾讯云" class="headerlink" title="15.1.4 腾讯云"></a>15.1.4 腾讯云</h5><h5 id="15-1-5-阿里云"><a href="#15-1-5-阿里云" class="headerlink" title="15.1.5 阿里云"></a>15.1.5 阿里云</h5><h5 id="15-1-6-华为云"><a href="#15-1-6-华为云" class="headerlink" title="15.1.6 华为云"></a>15.1.6 华为云</h5><h5 id="15-1-7-UCloud"><a href="#15-1-7-UCloud" class="headerlink" title="15.1.7 UCloud"></a>15.1.7 UCloud</h5><h3 id="15-2-容器云服务"><a href="#15-2-容器云服务" class="headerlink" title="15.2 容器云服务"></a>15.2 容器云服务</h3><h5 id="15-2-1-基本要素与关键特性"><a href="#15-2-1-基本要素与关键特性" class="headerlink" title="15.2.1 基本要素与关键特性"></a>15.2.1 基本要素与关键特性</h5><h5 id="15-2-2-网易蜂巢"><a href="#15-2-2-网易蜂巢" class="headerlink" title="15.2.2 网易蜂巢"></a>15.2.2 网易蜂巢</h5><h5 id="15-2-3-时速云"><a href="#15-2-3-时速云" class="headerlink" title="15.2.3 时速云"></a>15.2.3 时速云</h5><h5 id="15-2-4-Daocloud"><a href="#15-2-4-Daocloud" class="headerlink" title="15.2.4 Daocloud"></a>15.2.4 Daocloud</h5><h5 id="15-2-5-灵雀云"><a href="#15-2-5-灵雀云" class="headerlink" title="15.2.5 灵雀云"></a>15.2.5 灵雀云</h5><h5 id="15-2-6-数人云"><a href="#15-2-6-数人云" class="headerlink" title="15.2.6 数人云"></a>15.2.6 数人云</h5><h3 id="15-3-阿里云容器服务"><a href="#15-3-阿里云容器服务" class="headerlink" title="15.3 阿里云容器服务"></a>15.3 阿里云容器服务</h3><h3 id="15-4-时速云容器平台"><a href="#15-4-时速云容器平台" class="headerlink" title="15.4 时速云容器平台"></a>15.4 时速云容器平台</h3><h3 id="15-5-本章小结"><a href="#15-5-本章小结" class="headerlink" title="15.5 本章小结"></a>15.5 本章小结</h3><hr>
 <h1 id="第16章-容器实战思考"><a href="#第16章-容器实战思考" class="headerlink" title="第16章 容器实战思考"></a>第16章 容器实战思考</h1><h3 id="16-1-docker为什么会成功"><a href="#16-1-docker为什么会成功" class="headerlink" title="16.1 docker为什么会成功"></a>16.1 docker为什么会成功</h3><h3 id="16-2-研发人员该如何看容器"><a href="#16-2-研发人员该如何看容器" class="headerlink" title="16.2 研发人员该如何看容器"></a>16.2 研发人员该如何看容器</h3><h3 id="16-3-容器化开发模式"><a href="#16-3-容器化开发模式" class="headerlink" title="16.3 容器化开发模式"></a>16.3 容器化开发模式</h3><h3 id="16-4-容器与生产环境"><a href="#16-4-容器与生产环境" class="headerlink" title="16.4 容器与生产环境"></a>16.4 容器与生产环境</h3><h3 id="16-5-本章小结"><a href="#16-5-本章小结" class="headerlink" title="16.5 本章小结"></a>16.5 本章小结</h3><hr>
@@ -2156,7 +2256,7 @@ fi
 
 
     <hr />
-    <h3>Comments:</h3>
+    <h3>Kommentare:</h3>
     <div id="fb-root"></div>
     <script>
         (function(d, s, id) {
