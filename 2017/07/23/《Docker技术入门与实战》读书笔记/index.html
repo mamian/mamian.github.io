@@ -348,7 +348,7 @@ Docker可理解为一种轻量级的沙盒。每个容器内运行着一个应�
 <h5 id="2-2-2-Centos环境下安装docker"><a href="#2-2-2-Centos环境下安装docker" class="headerlink" title="2.2.2 Centos环境下安装docker"></a>2.2.2 Centos环境下安装docker</h5><ul>
 <li><p>添加yum源</p>
 <ul>
-<li>sudo tee /etc/yum.repos.d/docker.repo &lt;&lt;-‘EOF’<br>name=Docker Repository<br>baseurl=<a href="https://yum.dockerproject.org/repo/main/centos/$releasever/" target="_blank" rel="external">https://yum.dockerproject.org/repo/main/centos/$releasever/</a><br>enabled=1<br>gpgcheck=1<br>gpgkey=<a href="https://yum.dockerproject.org/gpg" target="_blank" rel="external">https://yum.dockerproject.org/gpg</a><br>EOF</li>
+<li>sudo tee /etc/yum.repos.d/docker.repo &lt;&lt;-‘EOF’<br>[docker]<br>name=Docker Repository<br>baseurl=<a href="https://yum.dockerproject.org/repo/main/centos/$releasever/" target="_blank" rel="external">https://yum.dockerproject.org/repo/main/centos/$releasever/</a><br>enabled=1<br>gpgcheck=1<br>gpgkey=<a href="https://yum.dockerproject.org/gpg" target="_blank" rel="external">https://yum.dockerproject.org/gpg</a><br>EOF</li>
 </ul>
 </li>
 <li><p>更新yum软件源缓存</p>
@@ -2532,7 +2532,7 @@ func main() {
 
 
     <hr />
-    <h3>Comments:</h3>
+    <h3>Kommentare:</h3>
     <div id="fb-root"></div>
     <script>
         (function(d, s, id) {
