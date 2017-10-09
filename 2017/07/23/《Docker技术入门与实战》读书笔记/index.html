@@ -2510,7 +2510,27 @@ func main() {
 </ul>
 <h3 id="17-3-控制组"><a href="#17-3-控制组" class="headerlink" title="17.3 控制组"></a>17.3 控制组</h3><ul>
 <li>控制组为linux内核特性，用于对共享资源进行隔离、限制、审计。</li>
-<li>提控容器的内存、CPU、磁盘IO等资源进行限制和计费管理。</li>
+<li>提控容器对内存、CPU、磁盘IO等资源进行限制和计费管理。</li>
+<li>控制组提供<ul>
+<li>资源限制：将组设置为不超过设定的内存限制。如内存子系统可为进程组设置内存上限，一旦进程组达到上限后再申请内存将 Out of Memory 警告。</li>
+<li>优先级：通过优先级让一些组优先得到更多的cpu等资源。</li>
+<li>资源审计：统计使用多少资源，如可用cpuacct子系统记录某个进程组使用的cpu时间。</li>
+<li>隔离：为组隔离命名空间，一个组不会看到另一个组的进程、网络连接、文件系统。</li>
+<li>控制：挂起、恢复、重启</li>
+</ul>
+</li>
+<li>查看Docker组应用的各种限制项<ul>
+<li>cd /sys/fs/cgroup/memory/docker</li>
+<li>ls</li>
+<li>可修改文件值来控制Docker应用资源</li>
+</ul>
+</li>
+<li>进入对应的容器文件夹，可看到对应容器的状态<ul>
+<li>cd 42352bb6c</li>
+<li>ls</li>
+<li>开发容器工具时，往往需要一些容器运行状态数据，可从这里获取</li>
+</ul>
+</li>
 </ul>
 <h3 id="17-4-联合文件系统"><a href="#17-4-联合文件系统" class="headerlink" title="17.4 联合文件系统"></a>17.4 联合文件系统</h3><h3 id="17-5-Linux网络虚拟化"><a href="#17-5-Linux网络虚拟化" class="headerlink" title="17.5 Linux网络虚拟化"></a>17.5 Linux网络虚拟化</h3><h3 id="17-6-本章小结"><a href="#17-6-本章小结" class="headerlink" title="17.6 本章小结"></a>17.6 本章小结</h3><hr>
 <h1 id="第18章-配置私有仓库"><a href="#第18章-配置私有仓库" class="headerlink" title="第18章 配置私有仓库"></a>第18章 配置私有仓库</h1><h3 id="18-1-安装Docker-Registry"><a href="#18-1-安装Docker-Registry" class="headerlink" title="18.1 安装Docker Registry"></a>18.1 安装Docker Registry</h3><h3 id="18-2-配置TLS证书"><a href="#18-2-配置TLS证书" class="headerlink" title="18.2 配置TLS证书"></a>18.2 配置TLS证书</h3><h3 id="18-3-管理访问权限"><a href="#18-3-管理访问权限" class="headerlink" title="18.3 管理访问权限"></a>18.3 管理访问权限</h3><h3 id="18-4-配置Registry"><a href="#18-4-配置Registry" class="headerlink" title="18.4 配置Registry"></a>18.4 配置Registry</h3><h5 id="18-4-1-示例配置"><a href="#18-4-1-示例配置" class="headerlink" title="18.4.1 示例配置"></a>18.4.1 示例配置</h5><h5 id="18-4-2-选项"><a href="#18-4-2-选项" class="headerlink" title="18.4.2 选项"></a>18.4.2 选项</h5><h3 id="18-5-批量管理镜像"><a href="#18-5-批量管理镜像" class="headerlink" title="18.5 批量管理镜像"></a>18.5 批量管理镜像</h3><h3 id="18-6-使用通知系统"><a href="#18-6-使用通知系统" class="headerlink" title="18.6 使用通知系统"></a>18.6 使用通知系统</h3><h5 id="18-6-1-相关配置"><a href="#18-6-1-相关配置" class="headerlink" title="18.6.1 相关配置"></a>18.6.1 相关配置</h5><h5 id="18-6-2-Notification的使用场景"><a href="#18-6-2-Notification的使用场景" class="headerlink" title="18.6.2 Notification的使用场景"></a>18.6.2 Notification的使用场景</h5><h3 id="18-7-本章小结"><a href="#18-7-本章小结" class="headerlink" title="18.7 本章小结"></a>18.7 本章小结</h3><hr>
