@@ -2578,11 +2578,48 @@ func main() {
 <li>docker run 启动容器时，可通过 –net 参数指定容器的网络配置<ul>
 <li>–net=bridge：默认，在 Docker 网桥 docker0 上为容器创建新的网络栈。</li>
 <li>–net=none：让 Docker 将新容器放到隔离的网络栈中，但不进行网络配置。</li>
-<li>–net=container:NAME_or_ID：</li>
+<li>–net=container:NAME_or_ID：新容器与某已存在的容器共享 IP 地址和端口等网络资源，2者进程可直接通过lo环回接口通信。</li>
+<li>–net=host：容器使用本地主机网络，此时容器拥有完全的本地主机接口访问权限。容器进程可跟主机其他root进程一样打开低范围的端口，可访问本地网络服务（如D-bus）。甚至可配置主机的网络栈，此选项要特别小心</li>
+<li>–net=user_defined_network：用户自行用network命令创建一个网络，此方式将容器连接到指定的已创建网络上去。</li>
 </ul>
 </li>
 </ul>
-<h5 id="手动配置网络"><a href="#手动配置网络" class="headerlink" title="手动配置网络"></a>手动配置网络</h5><h3 id="17-6-本章小结"><a href="#17-6-本章小结" class="headerlink" title="17.6 本章小结"></a>17.6 本章小结</h3><hr>
+<h5 id="手动配置网络"><a href="#手动配置网络" class="headerlink" title="手动配置网络"></a>手动配置网络</h5><ul>
+<li>使用–net=none后，Docker不对容器网络进行配置，需手动完成配置。<ul>
+<li>启动容器，设定–net=none<ul>
+<li>docker run -it –rm –net=none base /bin/bash</li>
+</ul>
+</li>
+<li>本地主机中查找容器进程id，并为它创建网络命名空间<ul>
+<li>docker inspect -f ‘{ {.State.Pid} }’ CONTAINER_ID</li>
+<li>pid=XXX</li>
+<li>sudo mkdir -p /var/run/netns</li>
+<li>sudo ln -s /proc/$pid/ns/net /var/run/netns/$pid</li>
+</ul>
+</li>
+<li>检查桥接网卡的IP和子网掩码<ul>
+<li>ip addr show docker0</li>
+</ul>
+</li>
+<li>创建一对“veth pair”接口A和B，绑定A接口到网桥docker0，并启用<ul>
+<li>sudo ip link add A type veth peer name B</li>
+<li>sudo brctl addif docker0 A</li>
+<li>sudo ip link set A up</li>
+</ul>
+</li>
+<li>将B接口放到容器的网络命名空间，命名为etho，启动它并配置一个可用ip（桥接网段）和默认网关<ul>
+<li>sudo ip link set B netns $pid</li>
+<li>sudo ip netns exec $pid ip link set dev B name eth0</li>
+<li>sudo ip netns exec $pid ip link set eth0 up</li>
+<li>sudo ip netns exec $pid ip addr add 172.17.42.99/16 dev eth0</li>
+<li>sudo ip netns exec $pid ip route add default via 172.17.42.1</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>容器终止后，Docker清空容器，容器内网络接口会随网络命名空间一起被清除，A接口也会自动从docker0缷载并清除。</li>
+</ul>
+<h3 id="17-6-本章小结"><a href="#17-6-本章小结" class="headerlink" title="17.6 本章小结"></a>17.6 本章小结</h3><hr>
 <h1 id="第18章-配置私有仓库"><a href="#第18章-配置私有仓库" class="headerlink" title="第18章 配置私有仓库"></a>第18章 配置私有仓库</h1><h3 id="18-1-安装Docker-Registry"><a href="#18-1-安装Docker-Registry" class="headerlink" title="18.1 安装Docker Registry"></a>18.1 安装Docker Registry</h3><h3 id="18-2-配置TLS证书"><a href="#18-2-配置TLS证书" class="headerlink" title="18.2 配置TLS证书"></a>18.2 配置TLS证书</h3><h3 id="18-3-管理访问权限"><a href="#18-3-管理访问权限" class="headerlink" title="18.3 管理访问权限"></a>18.3 管理访问权限</h3><h3 id="18-4-配置Registry"><a href="#18-4-配置Registry" class="headerlink" title="18.4 配置Registry"></a>18.4 配置Registry</h3><h5 id="18-4-1-示例配置"><a href="#18-4-1-示例配置" class="headerlink" title="18.4.1 示例配置"></a>18.4.1 示例配置</h5><h5 id="18-4-2-选项"><a href="#18-4-2-选项" class="headerlink" title="18.4.2 选项"></a>18.4.2 选项</h5><h3 id="18-5-批量管理镜像"><a href="#18-5-批量管理镜像" class="headerlink" title="18.5 批量管理镜像"></a>18.5 批量管理镜像</h3><h3 id="18-6-使用通知系统"><a href="#18-6-使用通知系统" class="headerlink" title="18.6 使用通知系统"></a>18.6 使用通知系统</h3><h5 id="18-6-1-相关配置"><a href="#18-6-1-相关配置" class="headerlink" title="18.6.1 相关配置"></a>18.6.1 相关配置</h5><h5 id="18-6-2-Notification的使用场景"><a href="#18-6-2-Notification的使用场景" class="headerlink" title="18.6.2 Notification的使用场景"></a>18.6.2 Notification的使用场景</h5><h3 id="18-7-本章小结"><a href="#18-7-本章小结" class="headerlink" title="18.7 本章小结"></a>18.7 本章小结</h3><hr>
 <h1 id="第19章-安全防护与配置"><a href="#第19章-安全防护与配置" class="headerlink" title="第19章 安全防护与配置"></a>第19章 安全防护与配置</h1><h3 id="19-1-命名空间隔离的安全"><a href="#19-1-命名空间隔离的安全" class="headerlink" title="19.1 命名空间隔离的安全"></a>19.1 命名空间隔离的安全</h3><h3 id="19-2-控制组资源控制的安全"><a href="#19-2-控制组资源控制的安全" class="headerlink" title="19.2 控制组资源控制的安全"></a>19.2 控制组资源控制的安全</h3><h3 id="19-3-内核能力机制"><a href="#19-3-内核能力机制" class="headerlink" title="19.3 内核能力机制"></a>19.3 内核能力机制</h3><h3 id="19-4-Docker服务端的防护"><a href="#19-4-Docker服务端的防护" class="headerlink" title="19.4 Docker服务端的防护"></a>19.4 Docker服务端的防护</h3><h3 id="19-5-更多安全特性的使用"><a href="#19-5-更多安全特性的使用" class="headerlink" title="19.5 更多安全特性的使用"></a>19.5 更多安全特性的使用</h3><h3 id="19-6-使用第三方检测工具"><a href="#19-6-使用第三方检测工具" class="headerlink" title="19.6 使用第三方检测工具"></a>19.6 使用第三方检测工具</h3><h5 id="19-6-1-Docker-Bench"><a href="#19-6-1-Docker-Bench" class="headerlink" title="19.6.1 Docker Bench"></a>19.6.1 Docker Bench</h5><h5 id="19-6-2-clair"><a href="#19-6-2-clair" class="headerlink" title="19.6.2 clair"></a>19.6.2 clair</h5><h3 id="19-7-本章小结"><a href="#19-7-本章小结" class="headerlink" title="19.7 本章小结"></a>19.7 本章小结</h3><hr>
 <h1 id="第20章-高级网络功能"><a href="#第20章-高级网络功能" class="headerlink" title="第20章 高级网络功能"></a>第20章 高级网络功能</h1><h3 id="20-1-网络启动与配置参数"><a href="#20-1-网络启动与配置参数" class="headerlink" title="20.1 网络启动与配置参数"></a>20.1 网络启动与配置参数</h3><h3 id="20-2-配置容器DNS和主机名"><a href="#20-2-配置容器DNS和主机名" class="headerlink" title="20.2 配置容器DNS和主机名"></a>20.2 配置容器DNS和主机名</h3><h3 id="20-3-容器访问控制"><a href="#20-3-容器访问控制" class="headerlink" title="20.3 容器访问控制"></a>20.3 容器访问控制</h3><h3 id="20-4-映射容器端口到宿主主机的实现"><a href="#20-4-映射容器端口到宿主主机的实现" class="headerlink" title="20.4 映射容器端口到宿主主机的实现"></a>20.4 映射容器端口到宿主主机的实现</h3><h3 id="20-5-配置docker0网桥"><a href="#20-5-配置docker0网桥" class="headerlink" title="20.5 配置docker0网桥"></a>20.5 配置docker0网桥</h3><h3 id="20-6-自定义网桥"><a href="#20-6-自定义网桥" class="headerlink" title="20.6 自定义网桥"></a>20.6 自定义网桥</h3><h3 id="20-7-使用OpenvSwitch网桥"><a href="#20-7-使用OpenvSwitch网桥" class="headerlink" title="20.7 使用OpenvSwitch网桥"></a>20.7 使用OpenvSwitch网桥</h3><h3 id="20-8-创建一个点到点连接"><a href="#20-8-创建一个点到点连接" class="headerlink" title="20.8 创建一个点到点连接"></a>20.8 创建一个点到点连接</h3><h3 id="20-9-本章小结"><a href="#20-9-本章小结" class="headerlink" title="20.9 本章小结"></a>20.9 本章小结</h3><hr>
