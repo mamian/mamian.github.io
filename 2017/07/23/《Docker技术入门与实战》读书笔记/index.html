@@ -2676,6 +2676,12 @@ func main() {
 <li>创建一个Docker容器时，同时创建一对 veth pair 接口（当数据包发送到一个接口时，另外一个接口也可以收到相同的数据包）。这对接口一端在容器内，即eth0；另一端在本地并被挂载到 docker0 网桥，名称以 veth 开头。通过这种方式，主机可跟容器通信，容器间也可相互通信。如此，Docker 创建了主机和所有容器间一个虚拟共享网络。</li>
 <li>Docker 网络命令参数<ul>
 <li>-b BRIDGE or –bridge=BRIDGE：指定容器挂载的网桥</li>
+<li>–bip=CIDR：定制 docker0 的掩码</li>
+<li>-H SOCKET … or –host=SOCKET … ：Docker服务端接收命令的通道</li>
+<li>–icc=true|false：是否支持容器间通信</li>
+<li>–ip-forward=true|false：启用 net.ipv4.ip_forward，即打开转发功能</li>
+<li>–iptables=true|false：禁止Docker添加iptables规则</li>
+<li>–mtu=BYTES：容器网络中的MTU</li>
 </ul>
 </li>
 </ul>
@@ -2700,7 +2706,7 @@ func main() {
 
 
     <hr />
-    <h3>Comments:</h3>
+    <h3>Kommentare:</h3>
     <div id="fb-root"></div>
     <script>
         (function(d, s, id) {
