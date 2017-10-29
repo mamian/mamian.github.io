@@ -2716,8 +2716,12 @@ func main() {
 </li>
 </ul>
 <h5 id="Windows-系统上的安装"><a href="#Windows-系统上的安装" class="headerlink" title="Windows 系统上的安装"></a>Windows 系统上的安装</h5><ul>
-<li>安装 git-bash</li>
-<li></li>
+<li>安装 git-bash<pre><code>if [[ ! -d &quot;$HOME/bin&quot;]]; then mkdir -p &quot;$HOME/bin&quot;; fi
+curl -L https://github.com/docker/machine/releases/download/v0.8.0/docker-machine_windows-amd64.zip &gt; machine.zip
+unzip machine.zip
+rm machine.zip
+mv -f docker-machine* &quot;$HOME/bin&quot;
+</code></pre></li>
 </ul>
 <h3 id="23-3-使用Machine"><a href="#23-3-使用Machine" class="headerlink" title="23.3 使用Machine"></a>23.3 使用Machine</h3><h3 id="23-4-Machine命令"><a href="#23-4-Machine命令" class="headerlink" title="23.4 Machine命令"></a>23.4 Machine命令</h3><h3 id="23-5-本章小结"><a href="#23-5-本章小结" class="headerlink" title="23.5 本章小结"></a>23.5 本章小结</h3><hr>
 <h1 id="第24章-Docker三剑客之Docker-Compose"><a href="#第24章-Docker三剑客之Docker-Compose" class="headerlink" title="第24章 Docker三剑客之Docker Compose"></a>第24章 Docker三剑客之Docker Compose</h1><h3 id="24-1简介"><a href="#24-1简介" class="headerlink" title="24.1简介"></a>24.1简介</h3><h3 id="24-2-安装与卸载"><a href="#24-2-安装与卸载" class="headerlink" title="24.2 安装与卸载"></a>24.2 安装与卸载</h3><h3 id="24-3-Compose命令说明"><a href="#24-3-Compose命令说明" class="headerlink" title="24.3 Compose命令说明"></a>24.3 Compose命令说明</h3><h3 id="24-4-Compose环境变量"><a href="#24-4-Compose环境变量" class="headerlink" title="24.4 Compose环境变量"></a>24.4 Compose环境变量</h3><h3 id="24-5-Compose模板文件"><a href="#24-5-Compose模板文件" class="headerlink" title="24.5 Compose模板文件"></a>24.5 Compose模板文件</h3><h3 id="24-6-Compose应用案例一-Web负载均衡"><a href="#24-6-Compose应用案例一-Web负载均衡" class="headerlink" title="24.6 Compose应用案例一:Web负载均衡"></a>24.6 Compose应用案例一:Web负载均衡</h3><h3 id="24-7-Compose应用案例二-大数据Spark集群"><a href="#24-7-Compose应用案例二-大数据Spark集群" class="headerlink" title="24.7 Compose应用案例二:大数据Spark集群"></a>24.7 Compose应用案例二:大数据Spark集群</h3><h3 id="24-8-本章小结"><a href="#24-8-本章小结" class="headerlink" title="24.8 本章小结"></a>24.8 本章小结</h3><hr>
