@@ -2691,6 +2691,17 @@ func main() {
 </li>
 <li>Docker 网络命令，仅docker run时可用：<ul>
 <li>-h HOSTNAME or –hostname=HOSTNAME：配置容器主机名</li>
+<li>–link=CONTAINER_NAME:ALIAS：添加到另一个容器的连接</li>
+<li>–net=bridge|none|container:NAME_or_ID|host|user_defined_netword：配置容器的桥接模式<ul>
+<li>–net=bridge：默认配置，为容器创建独立网络命名空间，分配网卡、IP地址等网络配置，并通过veth接口对将容器挂载到一个虚拟网桥(默认docker0)上</li>
+<li>–net=none：为容器创建独立网络命名空间，但不进行网络配置，即容器内没有创建网卡、IP地址</li>
+<li>–net=container:NAME_or_ID：新创建的容器共享指定的已存在容器的网络命名空间，2个容器内的网络配置共享，但其他资源（进程空间、文件系统）还是相互隔离的</li>
+<li>–net=host：不为容器创建独立命名空间，容器内看到的网络配置（网卡、路由表、Iptables规则）均与主机保持一致。注意其他资源还是与主机隔离的</li>
+<li>–net=user_defined_network：用户自行用network命令创建网络，同一网络内容器彼此可见，可采用更多类型的网络插件。</li>
+</ul>
+</li>
+<li>-p SPEC or –publish=SPEC：映射容器端口到宿主主机</li>
+<li>-P or –publish-all=true|false：映射容器所有端口到宿主主机</li>
 </ul>
 </li>
 </ul>
@@ -2750,7 +2761,7 @@ mv -f docker-machine* &quot;$HOME/bin&quot;
 
 
     <hr />
-    <h3>Kommentare:</h3>
+    <h3>Comments:</h3>
     <div id="fb-root"></div>
     <script>
         (function(d, s, id) {
